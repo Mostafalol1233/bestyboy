@@ -206,9 +206,15 @@ const createServerlessApp = async () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
-  // Static assets
+  // Setup all possible paths for static assets to ensure images work
+  // Try all possible directories where assets might be located
+  app.use('/assets', express.static(path.join(process.cwd(), 'assets')));
   app.use('/assets', express.static(path.join(process.cwd(), 'public', 'assets')));
+  app.use('/assets', express.static(path.join(process.cwd(), 'dist', 'public', 'assets')));
+  
+  app.use('/attached_assets', express.static(path.join(process.cwd(), 'attached_assets')));
   app.use('/attached_assets', express.static(path.join(process.cwd(), 'public', 'attached_assets')));
+  app.use('/attached_assets', express.static(path.join(process.cwd(), 'dist', 'public', 'attached_assets')));
 
   // Session middleware
   app.use(session({
