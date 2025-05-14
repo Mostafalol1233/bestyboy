@@ -38,7 +38,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     >
       <div className="relative h-48 overflow-hidden">
         <img 
-          src={`${window.location.origin}${voucher.imageUrl}`}
+          src={`${window.location.origin}/attached_assets/images${voucher.gameType === 'pubg' ? '(5)' : voucher.gameType === 'freefire' ? 'FB_IMG_1747248882099' : voucher.gameType === 'crossfire' ? '(3)' : '(3)'}.jpg`}
           alt={`${voucher.gameType} game card`} 
           className="w-full h-full object-cover"
         />
