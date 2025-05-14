@@ -46,6 +46,13 @@ export default function Home() {
       if (event.ctrlKey && event.shiftKey && event.key === 'P') {
         if (isAdmin) {
           setAdminPanelVisible(!adminPanelVisible);
+          toast({
+            title: adminPanelVisible ? "Admin Panel Closed" : "Admin Panel Opened",
+            description: adminPanelVisible 
+              ? "Admin panel has been hidden" 
+              : "Welcome to the admin panel. You can manage vouchers here.",
+            variant: "default"
+          });
         }
       }
     };
@@ -60,6 +67,13 @@ export default function Home() {
   const toggleAdminPanel = () => {
     if (isAdmin) {
       setAdminPanelVisible(!adminPanelVisible);
+      toast({
+        title: adminPanelVisible ? "Admin Panel Closed" : "Admin Panel Opened",
+        description: adminPanelVisible 
+          ? "Admin panel has been hidden" 
+          : "Welcome to the admin panel. You can manage vouchers here.",
+        variant: "default"
+      });
     } else {
       toast({
         variant: "destructive",
