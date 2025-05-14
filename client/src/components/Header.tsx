@@ -60,16 +60,7 @@ export default function Header() {
               Logout
             </Button>
           </div>
-        ) : (
-          <Link href="/admin">
-            <Button 
-              className="gaming-btn bg-purple-600 hover:bg-purple-700"
-              size="sm"
-            >
-              Admin Login
-            </Button>
-          </Link>
-        )}
+        ) : null}
       </div>
     </header>
   );

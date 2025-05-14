@@ -56,27 +56,7 @@ export default function GameNavigation({
         <span>Free Fire</span>
       </button>
       
-      {isAdmin && (
-        <div className="absolute right-0 top-0">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="icon"
-                  onClick={toggleAdminPanel}
-                  className="text-purple-400 hover:text-purple-300 hover:border-purple-600 transition-colors"
-                >
-                  <Settings className="h-5 w-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Admin Settings</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      )}
+      {/* Admin controls will be accessed via keyboard shortcut only */}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import GameNavigation from "@/components/GameNavigation";
 import GameSection from "@/components/GameSection";
 import { useToast } from "@/hooks/use-toast";
@@ -9,6 +10,7 @@ import AdminPanel from "@/components/AdminPanel";
 export default function Home() {
   const [activeGame, setActiveGame] = useState<string>("crossfire");
   const [adminPanelVisible, setAdminPanelVisible] = useState(false);
+  const [, navigate] = useLocation();
   const { isAdmin } = useAuth();
   const { 
     vouchers,
@@ -31,6 +33,29 @@ export default function Home() {
       });
     }
   }, [isError, toast]);
+  
+  // Add keyboard shortcuts for admin access
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Ctrl+Shift+A to navigate to admin login page
+      if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+        navigate('/admin');
+      }
+      
+      // Ctrl+Shift+P to toggle admin panel for authenticated admins
+      if (event.ctrlKey && event.shiftKey && event.key === 'P') {
+        if (isAdmin) {
+          setAdminPanelVisible(!adminPanelVisible);
+        }
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [navigate, isAdmin, adminPanelVisible]);
 
   const toggleAdminPanel = () => {
     if (isAdmin) {
