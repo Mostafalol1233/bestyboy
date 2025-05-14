@@ -6,6 +6,7 @@ import Home from "@/pages/Home";
 import Admin from "@/pages/Admin";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Footer />
       </div>
       <Toaster />
+      <Analytics />
     </TooltipProvider>
   );
 }
