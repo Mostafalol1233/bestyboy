@@ -58,15 +58,16 @@ export default function GameSection({
   return (
     <section className="game-section mb-10">
       {/* Game Hero Banner */}
-      <div className="game-bg rounded-xl overflow-hidden mb-8 relative h-48 md:h-64">
+      <div className="game-bg rounded-xl overflow-hidden mb-8 relative h-48 md:h-64 neon-border">
         <img 
           src={background} 
           alt={`${main} game background`} 
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <h2 className="text-3xl md:text-5xl font-rajdhani font-bold text-white text-center">
-            {main} <span className={color}>{accent}</span>
+          <h2 className="text-3xl md:text-6xl font-orbitron font-bold text-white text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            {main} <span className={color + " neon-text"}>{accent}</span>
           </h2>
         </div>
       </div>

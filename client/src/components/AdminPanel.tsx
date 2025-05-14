@@ -99,18 +99,20 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
   };
 
   return (
-    <Card className="admin-panel bg-secondary mb-6 relative">
+    <Card className="admin-panel bg-secondary mb-6 relative border border-purple-600 shadow-[0_0_15px_rgba(124,58,237,0.3)] neon-border">
       <Button 
         variant="ghost" 
         size="icon" 
-        className="absolute right-2 top-2 text-gray-400 hover:text-white"
+        className="absolute right-2 top-2 text-red-400 hover:text-red-300"
         onClick={onClose}
       >
         <X className="h-4 w-4" />
       </Button>
       
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-rajdhani font-semibold text-white">Admin Panel</CardTitle>
+        <CardTitle className="text-xl font-orbitron font-semibold text-purple-400 neon-text flex items-center gap-2">
+          <span className="bg-purple-500/20 p-1 rounded">🔒</span> Admin Panel
+        </CardTitle>
       </CardHeader>
       
       <CardContent>
@@ -118,7 +120,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
           <div>
             <Label className="block text-sm font-medium mb-1">Game Selection</Label>
             <Select value={selectedGame} onValueChange={setSelectedGame}>
-              <SelectTrigger className="w-full bg-gray-800 border border-gray-700 rounded">
+              <SelectTrigger className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded">
                 <SelectValue placeholder="Select game" />
               </SelectTrigger>
               <SelectContent>
@@ -140,7 +142,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
               onValueChange={setSelectedVoucherId}
               disabled={isLoading || !vouchers || vouchers.length === 0}
             >
-              <SelectTrigger className="w-full bg-gray-800 border border-gray-700 rounded">
+              <SelectTrigger className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded">
                 <SelectValue placeholder="Select card" />
               </SelectTrigger>
               <SelectContent>
@@ -164,7 +166,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
               type="number" 
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded text-white" 
+              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
               placeholder="5000"
               disabled={!selectedVoucherId}
             />

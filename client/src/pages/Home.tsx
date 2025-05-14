@@ -67,12 +67,12 @@ export default function Home() {
         isLoading={isLoading}
       />
       
-      {/* Featured Anime Character - Only visible on desktop */}
+      {/* Featured Gaming Character - Only visible on desktop */}
       <div className="fixed bottom-0 right-0 md:right-10 z-10 pointer-events-none hidden md:block">
         <img 
-          src="https://images.unsplash.com/photo-1534237710431-e2fc698436d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&h=400" 
+          src="/attached_assets/FB_IMG_1747248882099.jpg" 
           alt="Gaming character" 
-          className="h-60 w-auto object-contain opacity-80"
+          className="h-72 w-auto object-contain"
         />
       </div>
     </div>
