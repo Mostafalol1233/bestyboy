@@ -1,5 +1,6 @@
 import { Voucher } from "@shared/schema";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, FaShoppingCart } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 interface GameCardProps {
   voucher: Voucher;
@@ -22,34 +23,49 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
   };
 
   return (
-    <div className="game-card">
-      <div className="relative h-40 overflow-hidden">
+    <motion.div 
+      className="game-card"
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="relative h-48 overflow-hidden">
         <img 
           src={voucher.imageUrl} 
           alt={`${voucher.gameType} game card`} 
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-0 right-0 m-3 price-badge">
-          <span>{formattedAmount} {voucher.currency}</span>
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
+        
+        <div className="absolute top-3 right-3">
+          <div className="price-badge flex items-center justify-center">
+            <span className="font-orbitron">{formattedAmount} {voucher.currency}</span>
+          </div>
         </div>
-        <div className="absolute bottom-0 left-0 m-3 bonus-badge">
-          <span>BONUS: {voucher.bonus}</span>
+        
+        <div className="absolute bottom-3 left-3">
+          <div className="bonus-badge flex items-center justify-center">
+            <span className="font-orbitron">+{voucher.bonus} BONUS</span>
+          </div>
+        </div>
+        
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <h3 className="font-orbitron text-2xl font-bold text-white text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            {voucher.gameType.charAt(0).toUpperCase() + voucher.gameType.slice(1)}
+          </h3>
         </div>
       </div>
-      <div className="p-4 text-center">
-        <h3 className="font-rajdhani text-xl font-semibold text-white mb-2">
-          {voucher.gameType.charAt(0).toUpperCase() + voucher.gameType.slice(1)} Card
-        </h3>
-        <p className="text-gray-400 mb-4">{voucher.description}</p>
+      
+      <div className="p-5 text-center">
+        <p className="text-gray-300 mb-5 line-clamp-2">{voucher.description}</p>
         <a 
           href={generateWhatsAppLink()} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className={`inline-block ${buttonStyle} text-white font-bold py-2 px-4 rounded-lg transition-colors w-full flex items-center justify-center gap-2`}
+          className="gaming-btn w-full flex items-center justify-center gap-2 py-3"
         >
-          <FaWhatsapp className="text-lg" /> Buy Now
+          <FaShoppingCart className="text-lg" /> Buy Now
         </a>
       </div>
-    </div>
+    </motion.div>
   );
 }

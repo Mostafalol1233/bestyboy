@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { FaCrosshairs } from "react-icons/fa";
+import { AiFillFire } from "react-icons/ai";
+import { BsFillSuitSpadeFill } from "react-icons/bs";
 
 interface GameNavigationProps {
   activeGame: string;
@@ -16,24 +19,41 @@ export default function GameNavigation({
   isAdmin
 }: GameNavigationProps) {
   return (
-    <div className="flex flex-wrap justify-center mb-8 border-b border-gray-800 pb-4 space-x-2 md:space-x-8 relative">
+    <div className="flex flex-wrap justify-center items-center mb-8 border-b border-purple-900/30 pb-4 space-x-2 md:space-x-8 relative">
       <button 
-        className={`game-tab py-2 px-4 text-lg font-rajdhani ${activeGame === 'crossfire' ? 'tab-active' : 'text-gray-400'}`} 
+        className={`game-tab py-2 px-4 text-lg font-orbitron flex items-center gap-2 transition-all duration-200 ${
+          activeGame === 'crossfire' 
+            ? 'tab-active text-red-500' 
+            : 'text-gray-400 hover:text-gray-200'
+        }`} 
         onClick={() => setActiveGame('crossfire')}
       >
-        CrossFire
+        <FaCrosshairs className={activeGame === 'crossfire' ? 'text-red-500' : 'text-gray-500'} />
+        <span>CrossFire</span>
       </button>
+      
       <button 
-        className={`game-tab py-2 px-4 text-lg font-rajdhani ${activeGame === 'pubg' ? 'tab-active' : 'text-gray-400'}`}
+        className={`game-tab py-2 px-4 text-lg font-orbitron flex items-center gap-2 transition-all duration-200 ${
+          activeGame === 'pubg' 
+            ? 'tab-active text-yellow-500' 
+            : 'text-gray-400 hover:text-gray-200'
+        }`}
         onClick={() => setActiveGame('pubg')}
       >
-        PUBG Mobile
+        <BsFillSuitSpadeFill className={activeGame === 'pubg' ? 'text-yellow-500' : 'text-gray-500'} />
+        <span>PUBG Mobile</span>
       </button>
+      
       <button 
-        className={`game-tab py-2 px-4 text-lg font-rajdhani ${activeGame === 'freefire' ? 'tab-active' : 'text-gray-400'}`}
+        className={`game-tab py-2 px-4 text-lg font-orbitron flex items-center gap-2 transition-all duration-200 ${
+          activeGame === 'freefire' 
+            ? 'tab-active text-green-500' 
+            : 'text-gray-400 hover:text-gray-200'
+        }`}
         onClick={() => setActiveGame('freefire')}
       >
-        Free Fire
+        <AiFillFire className={activeGame === 'freefire' ? 'text-green-500' : 'text-gray-500'} />
+        <span>Free Fire</span>
       </button>
       
       {isAdmin && (
@@ -42,10 +62,10 @@ export default function GameNavigation({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button 
-                  variant="ghost" 
+                  variant="outline" 
                   size="icon"
                   onClick={toggleAdminPanel}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-purple-400 hover:text-purple-300 hover:border-purple-600 transition-colors"
                 >
                   <Settings className="h-5 w-5" />
                 </Button>

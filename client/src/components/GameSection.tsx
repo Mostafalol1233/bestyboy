@@ -5,9 +5,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // Game background images
 const gameBackgrounds = {
-  crossfire: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=500",
-  pubg: "https://pixabay.com/get/g0ee5207bfa58adebc1ceed150ddd46cf189eb1e2b7b0ac6e7dace4c1022bed7e0e0c350e11e5591cc4254c5ff9d77e573a63b86dfbb46fe702b331ad019d8edc_1280.jpg",
-  freefire: "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=500"
+  crossfire: "https://cdn.akamai.steamstatic.com/steam/apps/1150/header.jpg?t=1624467053",
+  pubg: "https://cdn1.epicgames.com/offer/4f85a887f57a40b88d5d27c36fceb7df/EGS_PUBGBATTLEGROUNDS_KraftonInc_S1_2560x1440-fb7aeacea0277acd08caf4b246773880",
+  freefire: "https://cdn.pocket-lint.com/r/s/970x/assets/images/159604-games-review-garena-free-fire-image1-e2nakk37tw-jpg.webp"
 };
 
 // Game section titles
@@ -29,12 +29,7 @@ const gameTitles = {
   }
 };
 
-// Buy button color by game type
-const buyButtonColors = {
-  crossfire: "bg-blue-500 hover:bg-blue-600",
-  pubg: "bg-yellow-500 hover:bg-yellow-600 text-black",
-  freefire: "bg-green-500 hover:bg-green-600"
-};
+// Buy button color by game type - Now using gaming-btn class
 
 interface GameSectionProps {
   gameType: string;
@@ -57,10 +52,8 @@ export default function GameSection({
     [gameType]
   );
   
-  const buttonStyle = useMemo(() => 
-    buyButtonColors[gameType as keyof typeof buyButtonColors] || buyButtonColors.crossfire,
-    [gameType]
-  );
+  // We're now using the gaming-btn class instead of custom button styles
+  const buttonStyle = "";
 
   return (
     <section className="game-section mb-10">
