@@ -15,7 +15,11 @@ export default function Header() {
       {/* Logo */}
       <Link href="/">
         <div className="flex items-center gap-2 cursor-pointer">
-          <FaGamepad className="text-2xl md:text-3xl text-purple-500" />
+          <img 
+            src="/assets/FB_IMG_1747248882099.jpg" 
+            alt="Highway Gaming" 
+            className="w-10 h-10 rounded-full border-2 border-purple-600"
+          />
           <span className="text-2xl md:text-3xl font-orbitron font-bold text-white neon-text">
             <span className="text-purple-500">Highway</span>
             <span className="text-red-500">Gaming</span>

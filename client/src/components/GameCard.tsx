@@ -9,17 +9,25 @@ interface GameCardProps {
 
 export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
   const formattedAmount = voucher.amount.toLocaleString();
+  const formattedK = (voucher.amount / 1000).toFixed(0);
+  
+  // Format description based on game type
+  const getFormattedDescription = () => {
+    let bonus = "";
+    if (voucher.bonus) {
+      if (voucher.gameType === 'crossfire') bonus = `+ ${voucher.bonus} zp bonus`;
+      if (voucher.gameType === 'pubg') bonus = `+ ${voucher.bonus} UC bonus`;
+      if (voucher.gameType === 'freefire') bonus = `+ ${voucher.bonus} Diamonds bonus`;
+    }
+    
+    const gameType = voucher.gameType.toLowerCase();
+    return `${gameType} card ${formattedK}k ${bonus}`.trim();
+  };
   
   // Generate WhatsApp link with custom message based on card value
   const generateWhatsAppLink = () => {
-    const formattedK = (voucher.amount / 1000).toString();
-    let textParam = `need%20${formattedK}k%20`;
-    
-    if (voucher.gameType === 'crossfire') textParam += 'zp%20card';
-    if (voucher.gameType === 'pubg') textParam += 'UC%20card';
-    if (voucher.gameType === 'freefire') textParam += 'Diamonds%20card';
-    
-    return `https://wa.me/201271916093?text=${textParam}`;
+    const message = encodeURIComponent(`I want to buy ${getFormattedDescription()}`);
+    return `https://wa.me/201271916093?text=${message}`;
   };
 
   return (
@@ -38,13 +46,13 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
         
         <div className="absolute top-3 right-3">
           <div className="price-badge flex items-center justify-center">
-            <span className="font-orbitron">{formattedAmount} {voucher.currency}</span>
+            <span className="gaming-digits">{formattedK}K {voucher.currency}</span>
           </div>
         </div>
         
         <div className="absolute bottom-3 left-3">
           <div className="bonus-badge flex items-center justify-center">
-            <span className="font-orbitron">+{voucher.bonus} BONUS</span>
+            <span className="gaming-digits">+{voucher.bonus} BONUS</span>
           </div>
         </div>
         
@@ -56,7 +64,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
       </div>
       
       <div className="p-5 text-center">
-        <p className="text-gray-300 mb-5 line-clamp-2">{voucher.description}</p>
+        <p className="text-gray-300 mb-5 line-clamp-2 font-medium">{getFormattedDescription()}</p>
         <a 
           href={generateWhatsAppLink()} 
           target="_blank" 
