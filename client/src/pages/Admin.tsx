@@ -110,7 +110,7 @@ export default function Admin() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-purple-500">
-            Default credentials: <span className="font-mono bg-gray-800 px-2 py-1 rounded">admin / admin123</span>
+            Please enter your admin credentials
           </p>
         </CardFooter>
       </Card>

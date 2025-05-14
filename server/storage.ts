@@ -36,7 +36,7 @@ const initialVouchers: InsertVoucher[] = [
     imageUrl: "/assets/images.jpg",
     description: "CrossFire card 100k + 2300 zp bonus",
   },
-  
+
   // PUBG vouchers
   {
     gameType: "pubg",
@@ -62,7 +62,7 @@ const initialVouchers: InsertVoucher[] = [
     imageUrl: "/assets/images(6).jpg",
     description: "PUBG card 50k + 1120 UC bonus",
   },
-  
+
   // Free Fire vouchers
   {
     gameType: "freefire",
@@ -96,7 +96,7 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   validateCredentials(username: string, password: string): Promise<User | null>;
-  
+
   // Voucher methods
   getAllVouchers(): Promise<Voucher[]>;
   getVouchersByGameType(gameType: string): Promise<Voucher[]>;
@@ -117,14 +117,14 @@ export class MemStorage implements IStorage {
     this.vouchers = new Map();
     this.userCurrentId = 1;
     this.voucherCurrentId = 1;
-    
+
     // Create initial admin user
     this.createUser({
       username: "admin",
-      password: bcrypt.hashSync("admin123", 10),
+      password: bcrypt.hashSync("highway123", 10),
       isAdmin: true,
     });
-    
+
     // Create initial vouchers
     initialVouchers.forEach((voucher) => {
       this.createVoucher(voucher);
@@ -153,11 +153,11 @@ export class MemStorage implements IStorage {
     this.users.set(id, user);
     return user;
   }
-  
+
   async validateCredentials(username: string, password: string): Promise<User | null> {
     const user = await this.getUserByUsername(username);
     if (!user) return null;
-    
+
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     return isPasswordValid ? user : null;
   }
@@ -166,33 +166,33 @@ export class MemStorage implements IStorage {
   async getAllVouchers(): Promise<Voucher[]> {
     return Array.from(this.vouchers.values());
   }
-  
+
   async getVouchersByGameType(gameType: string): Promise<Voucher[]> {
     return Array.from(this.vouchers.values()).filter(
       (voucher) => voucher.gameType === gameType,
     );
   }
-  
+
   async getVoucher(id: number): Promise<Voucher | undefined> {
     return this.vouchers.get(id);
   }
-  
+
   async createVoucher(insertVoucher: InsertVoucher): Promise<Voucher> {
     const id = this.voucherCurrentId++;
     const voucher: Voucher = { ...insertVoucher, id };
     this.vouchers.set(id, voucher);
     return voucher;
   }
-  
+
   async updateVoucher(id: number, voucherData: Partial<InsertVoucher>): Promise<Voucher | null> {
     const existingVoucher = this.vouchers.get(id);
     if (!existingVoucher) return null;
-    
+
     const updatedVoucher = { ...existingVoucher, ...voucherData };
     this.vouchers.set(id, updatedVoucher);
     return updatedVoucher;
   }
-  
+
   async deleteVoucher(id: number): Promise<boolean> {
     return this.vouchers.delete(id);
   }
