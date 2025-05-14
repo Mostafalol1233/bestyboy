@@ -16,7 +16,7 @@ export default function Header() {
       <Link href="/">
         <div className="flex items-center gap-2 cursor-pointer">
           <img 
-            src={`${window.location.origin}/assets/FB_IMG_1747248882099.jpg`} 
+            src={`${window.location.origin}/attached_assets/FB_IMG_1747248882099.jpg`} 
             alt="Highway Gaming" 
             className="w-10 h-10 rounded-full border-2 border-purple-600"
           />

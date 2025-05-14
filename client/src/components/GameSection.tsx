@@ -6,9 +6,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 // Game background images
 const baseUrl = window.location.origin;
 const gameBackgrounds = {
-  crossfire: `${baseUrl}/assets/images(3).jpg`,
-  pubg: `${baseUrl}/assets/images(5).jpg`,
-  freefire: `${baseUrl}/assets/FB_IMG_1747248882099.jpg`
+  crossfire: `${baseUrl}/attached_assets/Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg`,
+  pubg: `${baseUrl}/attached_assets/images(5).jpg`,
+  freefire: `${baseUrl}/attached_assets/FB_IMG_1747248882099.jpg`
 };
 
 // Game section titles

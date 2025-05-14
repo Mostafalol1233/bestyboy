@@ -109,7 +109,7 @@ export default function Home() {
       {/* Featured Gaming Character - Only visible on desktop */}
       <div className="fixed bottom-0 right-0 md:right-10 z-10 pointer-events-none hidden md:block">
         <img 
-          src="/attached_assets/FB_IMG_1747248882099.jpg" 
+          src={`${window.location.origin}/attached_assets/FB_IMG_1747248882099.jpg`}
           alt="Gaming character" 
           className="h-72 w-auto object-contain"
         />
