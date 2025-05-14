@@ -62,7 +62,8 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
 
   // Format voucher label
   const formatVoucherLabel = (voucher: any): string => {
-    return `${voucher.amount.toLocaleString()} ${voucher.currency} (${voucher.bonus} Bonus)`;
+    const amountInK = (voucher.amount / 1000).toFixed(0);
+    return `${amountInK}K ${voucher.currency} (${voucher.bonus} Bonus)`;
   };
 
   const handleSave = async () => {
@@ -181,6 +182,16 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
               className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
               placeholder="120"
               disabled={!selectedVoucherId}
+            />
+          </div>
+          
+          <div className="md:col-span-2">
+            <Label className="block text-sm font-medium mb-1">Generated Description</Label>
+            <Input 
+              type="text" 
+              readOnly
+              value={`${selectedGame} card ${price ? (Number(price)/1000).toFixed(0) : '0'}k + ${bonus || '0'} ${selectedGame === 'crossfire' ? 'zp' : selectedGame === 'pubg' ? 'UC' : 'Diamonds'} bonus`}
+              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white font-mono text-sm" 
             />
           </div>
         </div>
