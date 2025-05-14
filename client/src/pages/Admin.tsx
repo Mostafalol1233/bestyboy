@@ -63,14 +63,14 @@ export default function Admin() {
 
   return (
     <div className="container mx-auto py-10 flex justify-center items-center min-h-[80vh]">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md border border-purple-900 shadow-[0_0_25px_rgba(124,58,237,0.15)]">
         <CardHeader>
-          <CardTitle className="font-rajdhani text-3xl text-center">
-            <span className="text-blue-500">Highway</span>
+          <CardTitle className="font-orbitron text-3xl text-center neon-text">
+            <span className="text-purple-500">Highway</span>
             <span className="text-red-500">Gaming</span>
           </CardTitle>
-          <CardDescription className="text-center">
-            Admin Login
+          <CardDescription className="text-center flex items-center justify-center gap-2">
+            <span className="bg-purple-500/20 p-1 rounded">🔒</span> Admin Access
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -102,15 +102,15 @@ export default function Admin() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              <Button type="submit" className="w-full gaming-btn" disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting ? "Logging in..." : "Login"}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
-            Default credentials: admin / admin123
+          <p className="text-sm text-purple-500">
+            Default credentials: <span className="font-mono bg-gray-800 px-2 py-1 rounded">admin / admin123</span>
           </p>
         </CardFooter>
       </Card>

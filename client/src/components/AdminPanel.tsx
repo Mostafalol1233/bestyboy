@@ -178,7 +178,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
               type="number" 
               value={bonus}
               onChange={(e) => setBonus(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded text-white" 
+              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
               placeholder="120"
               disabled={!selectedVoucherId}
             />
@@ -188,7 +188,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
       
       <CardFooter className="flex justify-end">
         <Button 
-          className="bg-blue-500 hover:bg-blue-600 text-white"
+          className="gaming-btn bg-purple-600 hover:bg-purple-700 text-white"
           onClick={handleSave}
           disabled={!selectedVoucherId || !price || !bonus}
         >

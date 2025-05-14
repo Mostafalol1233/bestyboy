@@ -25,7 +25,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
   return (
     <motion.div 
       className="game-card"
-      whileHover={{ y: -8, scale: 1.02 }}
+      whileHover={{ y: -8, scale: 1.02, boxShadow: '0 0 20px rgba(124, 58, 237, 0.3)' }}
       transition={{ duration: 0.3 }}
     >
       <div className="relative h-48 overflow-hidden">
@@ -49,7 +49,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
         </div>
         
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <h3 className="font-orbitron text-2xl font-bold text-white text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+          <h3 className="font-orbitron text-2xl font-bold text-white text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] neon-text">
             {voucher.gameType.charAt(0).toUpperCase() + voucher.gameType.slice(1)}
           </h3>
         </div>
