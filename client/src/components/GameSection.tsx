@@ -4,10 +4,11 @@ import GameCard from "@/components/GameCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Game background images
+const baseUrl = window.location.origin;
 const gameBackgrounds = {
-  crossfire: "https://cdn.akamai.steamstatic.com/steam/apps/1150/header.jpg?t=1624467053",
-  pubg: "https://cdn1.epicgames.com/offer/4f85a887f57a40b88d5d27c36fceb7df/EGS_PUBGBATTLEGROUNDS_KraftonInc_S1_2560x1440-fb7aeacea0277acd08caf4b246773880",
-  freefire: "https://cdn.pocket-lint.com/r/s/970x/assets/images/159604-games-review-garena-free-fire-image1-e2nakk37tw-jpg.webp"
+  crossfire: `${baseUrl}/assets/images(3).jpg`,
+  pubg: `${baseUrl}/assets/images(5).jpg`,
+  freefire: `${baseUrl}/assets/FB_IMG_1747248882099.jpg`
 };
 
 // Game section titles
@@ -58,7 +59,7 @@ export default function GameSection({
   return (
     <section className="game-section mb-10">
       {/* Game Hero Banner */}
-      <div className="game-bg rounded-xl overflow-hidden mb-8 relative h-48 md:h-64 neon-border">
+      <div className="game-bg rounded-xl overflow-hidden mb-8 relative h-48 md:h-64 shadow-[0_0_15px_rgba(124,58,237,0.5)] border border-purple-900">
         <img 
           src={background} 
           alt={`${main} game background`} 

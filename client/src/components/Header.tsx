@@ -61,17 +61,14 @@ export default function Header() {
             </Button>
           </div>
         ) : (
-          showAdminControls && (
-            <Link href="/admin">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                className="text-gray-400 hover:text-purple-400"
-              >
-                Admin
-              </Button>
-            </Link>
-          )
+          <Link href="/admin">
+            <Button 
+              className="gaming-btn bg-purple-600 hover:bg-purple-700"
+              size="sm"
+            >
+              Admin Login
+            </Button>
+          </Link>
         )}
       </div>
     </header>

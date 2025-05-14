@@ -19,7 +19,7 @@ export default function GameNavigation({
   isAdmin
 }: GameNavigationProps) {
   return (
-    <div className="flex flex-wrap justify-center items-center mb-8 border-b border-purple-900/30 pb-4 space-x-2 md:space-x-8 relative">
+    <div className="flex flex-wrap justify-center items-center mb-8 border-b border-purple-900/50 pb-4 space-x-2 md:space-x-8 relative bg-gray-800/30 py-2 rounded-t-lg shadow-lg">
       <button 
         className={`game-tab py-2 px-4 text-lg font-orbitron flex items-center gap-2 transition-all duration-200 ${
           activeGame === 'crossfire' 
