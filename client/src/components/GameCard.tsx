@@ -32,8 +32,8 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
 
   return (
     <motion.div 
-      className="game-card"
-      whileHover={{ y: -8, scale: 1.02, boxShadow: '0 0 20px rgba(124, 58, 237, 0.3)' }}
+      className="game-card border border-purple-900"
+      whileHover={{ y: -8, scale: 1.03, boxShadow: '0 0 25px rgba(124, 58, 237, 0.4)' }}
       transition={{ duration: 0.3 }}
     >
       <div className="relative h-48 overflow-hidden">

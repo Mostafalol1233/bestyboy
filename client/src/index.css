@@ -81,8 +81,8 @@ body {
 
 @layer components {
   .game-card {
-    @apply transition-all duration-300 ease-in-out bg-card rounded-xl overflow-hidden shadow-md hover:shadow-lg border border-gray-800 hover:border-purple-700 hover:-translate-y-1;
-    background: linear-gradient(145deg, rgba(35, 31, 45, 0.8), rgba(18, 15, 25, 0.9));
+    @apply transition-all duration-300 ease-in-out bg-card rounded-xl overflow-hidden shadow-lg border border-purple-900/60 hover:border-purple-700;
+    background: linear-gradient(145deg, rgba(35, 31, 45, 0.9), rgba(18, 15, 25, 1));
     backdrop-filter: blur(10px);
   }
   
