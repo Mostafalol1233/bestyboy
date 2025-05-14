@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // Game background images
 const baseUrl = window.location.origin;
 const gameBackgrounds = {
-  crossfire: `${baseUrl}/attached_assets/Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg`,
+  crossfire: `${baseUrl}/attached_assets/FB_IMG_1747248207377.jpg`,
   pubg: `${baseUrl}/attached_assets/images(5).jpg`,
   freefire: `${baseUrl}/attached_assets/FB_IMG_1747248882099.jpg`
 };
