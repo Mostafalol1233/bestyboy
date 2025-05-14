@@ -8,6 +8,35 @@ interface GameCardProps {
 }
 
 export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
+  // Get the appropriate image for the card based on game type and amount
+  const getCardImage = (voucher: Voucher): string => {
+    const { gameType, amount } = voucher;
+    
+    if (gameType === 'crossfire') {
+      // Different CrossFire images based on card value
+      if (amount === 5000) return 'images(3).jpg';
+      if (amount === 10000) return 'images(2).jpg';
+      if (amount === 50000) return 'images(1).jpg';
+      if (amount === 100000) return 'images.jpg';
+      return 'images(3).jpg'; // Default
+    }
+    
+    if (gameType === 'pubg') {
+      // Different PUBG images based on card value
+      if (amount === 5000) return 'images(4).jpg';
+      if (amount === 10000) return 'images(5).jpg';
+      if (amount === 50000) return 'images(6).jpg';
+      return 'images(5).jpg'; // Default
+    }
+    
+    if (gameType === 'freefire') {
+      // For Free Fire, we'll use the Free Fire specific image
+      return 'FB_IMG_1747248882099.jpg';
+    }
+    
+    // Fallback image
+    return 'FB_IMG_1747248207377.jpg';
+  };
   const formattedAmount = voucher.amount.toLocaleString();
   const formattedK = (voucher.amount / 1000).toFixed(0);
   
@@ -38,7 +67,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     >
       <div className="relative h-48 overflow-hidden">
         <img 
-          src={`${window.location.origin}/attached_assets/images${voucher.gameType === 'pubg' ? '(5)' : voucher.gameType === 'freefire' ? 'FB_IMG_1747248882099' : voucher.gameType === 'crossfire' ? '(3)' : '(3)'}.jpg`}
+          src={`${window.location.origin}/attached_assets/${getCardImage(voucher)}`}
           alt={`${voucher.gameType} game card`} 
           className="w-full h-full object-cover"
         />
