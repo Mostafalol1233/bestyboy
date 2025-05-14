@@ -14,11 +14,11 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     
     if (gameType === 'crossfire') {
       // Different CrossFire images based on card value
-      if (amount === 5000) return 'Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg';
-      if (amount === 10000) return 'images(2).jpg';
-      if (amount === 50000) return 'images(1).jpg';
-      if (amount === 100000) return 'images.jpg';
-      return 'Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg'; // Default
+      if (amount === 5000) return 'images.jpg'; // Assuming images.jpg is image 7
+      if (amount === 10000) return 'images(1).jpg';
+      if (amount === 50000) return 'images(2).jpg';
+      if (amount === 100000) return 'images(3).jpg';
+      return 'images.jpg'; // Default (image 7)
     }
     
     if (gameType === 'pubg') {
@@ -31,10 +31,10 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     
     if (gameType === 'freefire') {
       // Different Free Fire images based on card value
-      if (amount === 5000) return 'FB_IMG_1747248882099.jpg';
-      if (amount === 10000) return 'FB_IMG_1747248207377.jpg';
-      if (amount === 50000) return 'FB_IMG_1747248882099.jpg';
-      return 'FB_IMG_1747248882099.jpg'; // Default
+      if (amount === 5000) return 'images(6).jpg'; // Assuming images(6).jpg is image 8
+      if (amount === 10000) return 'images(5).jpg';
+      if (amount === 50000) return 'FB_IMG_1747248207377.jpg';
+      return 'images(6).jpg'; // Default (image 8)
     }
     
     // Fallback image
