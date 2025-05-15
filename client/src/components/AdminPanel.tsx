@@ -32,16 +32,18 @@ interface AdminPanelProps {
 export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPanelProps) {
   const [selectedGame, setSelectedGame] = useState(activeGame);
   const [selectedVoucherId, setSelectedVoucherId] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
   const [bonus, setBonus] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
   const { vouchers, isLoading, refetch } = useVouchers(selectedGame);
   const { toast } = useToast();
 
   // When game type changes, reset card selection
   useEffect(() => {
     setSelectedVoucherId("");
-    setPrice("");
+    setAmount("");
     setBonus("");
+    setPrice("");
   }, [selectedGame]);
 
   // When card selection changes, populate fields
@@ -49,8 +51,9 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
     if (selectedVoucherId && vouchers) {
       const selectedVoucher = vouchers.find(v => v.id.toString() === selectedVoucherId);
       if (selectedVoucher) {
-        setPrice(selectedVoucher.amount.toString());
+        setAmount(selectedVoucher.amount.toString());
         setBonus(selectedVoucher.bonus.toString());
+        setPrice(selectedVoucher.price ? selectedVoucher.price.toString() : "0");
       }
     }
   }, [selectedVoucherId, vouchers]);
@@ -67,7 +70,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
   };
 
   const handleSave = async () => {
-    if (!selectedVoucherId || !price || !bonus) {
+    if (!selectedVoucherId || !amount || !bonus || !price) {
       toast({
         variant: "destructive",
         title: "Validation Error",
@@ -78,8 +81,9 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
 
     try {
       await apiRequest("PUT", `/api/vouchers/${selectedVoucherId}`, {
-        amount: Number(price),
+        amount: Number(amount),
         bonus: Number(bonus),
+        price: Number(price),
       });
 
       toast({
@@ -160,13 +164,13 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
           
           <div>
             <Label className="block text-sm font-medium mb-1">
-              Price ({selectedGame === 'crossfire' ? 'ZP' : 
+              Amount ({selectedGame === 'crossfire' ? 'ZP' : 
                      selectedGame === 'pubg' ? 'UC' : 'Diamonds'})
             </Label>
             <Input 
               type="number" 
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
               placeholder="5000"
               disabled={!selectedVoucherId}
@@ -181,6 +185,22 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
               onChange={(e) => setBonus(e.target.value)}
               className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
               placeholder="120"
+              disabled={!selectedVoucherId}
+            />
+          </div>
+          
+          <div>
+            <Label className="block text-sm font-medium mb-1">
+              <span className="flex items-center gap-1">
+                Sale Price <span className="text-green-500">(ج.م)</span>
+              </span>
+            </Label>
+            <Input 
+              type="number" 
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
+              placeholder="75"
               disabled={!selectedVoucherId}
             />
           </div>

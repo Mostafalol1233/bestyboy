@@ -30,11 +30,11 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     }
     
     if (gameType === 'freefire') {
-      // Updated Free Fire images with correct images
-      if (amount === 5000) return 'Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg';
-      if (amount === 10000) return 'FB_IMG_1747248207377.jpg';
-      if (amount === 50000) return 'FB_IMG_1747248882099.jpg';
-      return 'Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg'; // Default
+      // Updated Free Fire images with images 7 and 8
+      if (amount === 5000) return 'images(7).jpg'; 
+      if (amount === 10000) return 'images(8).jpg';
+      if (amount === 50000) return 'FB_IMG_1747248207377.jpg';
+      return 'images(7).jpg'; // Default
     }
     
     // Fallback image

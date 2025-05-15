@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useVouchers } from "@/hooks/use-vouchers";
 import { useAuth } from "@/hooks/use-auth";
 import AdminPanel from "@/components/AdminPanel";
+import { X } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -196,13 +197,26 @@ export default function Home() {
       />
       
       {/* Featured Gaming Character - Only visible on desktop */}
-      <div className="fixed bottom-0 right-0 md:right-10 z-10 pointer-events-none hidden md:block">
-        <img 
-          src={`${window.location.origin}/attached_assets/FB_IMG_1747248882099.jpg`}
-          alt="Gaming character" 
-          className="h-72 w-auto object-contain"
-        />
-      </div>
+      {!adminPanelVisible && (
+        <div className="fixed bottom-0 right-0 md:right-10 z-10 hidden md:block relative">
+          <button 
+            onClick={() => {
+              document.getElementById('characterImage')?.classList.add('hidden');
+            }}
+            className="absolute top-0 right-0 bg-red-600 rounded-full w-8 h-8 flex items-center justify-center 
+                      cursor-pointer z-20 shadow-lg transform translate-x-4 -translate-y-4"
+            aria-label="Close character image"
+          >
+            <X size={18} className="text-white" />
+          </button>
+          <img 
+            id="characterImage"
+            src={`${window.location.origin}/attached_assets/FB_IMG_1747248882099.jpg`}
+            alt="Gaming character" 
+            className="h-72 w-auto object-contain pointer-events-none"
+          />
+        </div>
+      )}
     </div>
   );
 }
