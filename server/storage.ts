@@ -200,8 +200,15 @@ export class MemStorage implements IStorage {
 
   async createVoucher(insertVoucher: InsertVoucher): Promise<Voucher> {
     const id = this.voucherCurrentId++;
-    // Ensure price is set to at least 0 if not provided
-    const price = insertVoucher.price ?? 0;
+    // Ensure price is always set with a default if missing
+    // Use game-specific default prices to ensure values are never undefined
+    let defaultPrice = 75; // Default base price
+    if (insertVoucher.gameType === 'pubg') defaultPrice = 80;
+    if (insertVoucher.gameType === 'freefire') defaultPrice = 70;
+    if (insertVoucher.amount >= 10000) defaultPrice *= 2;
+    if (insertVoucher.amount >= 50000) defaultPrice *= 4;
+    
+    const price = insertVoucher.price ?? defaultPrice;
     const voucher: Voucher = { ...insertVoucher, price, id };
     this.vouchers.set(id, voucher);
     return voucher;
