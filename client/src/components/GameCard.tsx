@@ -14,11 +14,12 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     
     if (gameType === 'crossfire') {
       // Different CrossFire images based on card value
-      if (amount === 5000) return 'images.jpg'; // Assuming images.jpg is image 7
-      if (amount === 10000) return 'images(1).jpg';
-      if (amount === 50000) return 'images(2).jpg';
-      if (amount === 100000) return 'images(3).jpg';
-      return 'images.jpg'; // Default (image 7)
+      if (amount === 5000) return 'images(3).jpg';
+      if (amount === 10000) return 'images(2).jpg';
+      if (amount === 20000) return 'images(1).jpg';
+      if (amount === 50000) return 'images(1).jpg';
+      if (amount === 100000) return 'images.jpg';
+      return 'images.jpg'; // Default
     }
     
     if (gameType === 'pubg') {
@@ -47,9 +48,10 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
   const getFormattedDescription = () => {
     let bonus = "";
     if (voucher.bonus) {
-      if (voucher.gameType === 'crossfire') bonus = `+ ${voucher.bonus} zp bonus`;
-      if (voucher.gameType === 'pubg') bonus = `+ ${voucher.bonus} UC bonus`;
-      if (voucher.gameType === 'freefire') bonus = `+ ${voucher.bonus} Diamonds bonus`;
+      const bonusInK = (voucher.bonus/1000).toFixed(1);
+      if (voucher.gameType === 'crossfire') bonus = `+ ${bonusInK}k zp bonus`;
+      if (voucher.gameType === 'pubg') bonus = `+ ${bonusInK}k UC bonus`;
+      if (voucher.gameType === 'freefire') bonus = `+ ${bonusInK}k Diamonds bonus`;
     }
     
     const gameType = voucher.gameType.toLowerCase();
@@ -84,7 +86,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
         
         <div className="absolute bottom-3 left-3">
           <div className="bonus-badge flex items-center justify-center">
-            <span className="gaming-digits">+{voucher.bonus} BONUS</span>
+            <span className="gaming-digits">+{(voucher.bonus/1000).toFixed(1)}K BONUS</span>
           </div>
         </div>
         
@@ -95,12 +97,11 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
               {/* Get price based on amount if voucher.price is undefined */}
               {(() => {
                 // Default prices based on amount
-                let defaultPrice = 75;
-                if (voucher.gameType === 'pubg') defaultPrice = 80;
-                if (voucher.gameType === 'freefire') defaultPrice = 70;
-                if (voucher.amount >= 10000) defaultPrice *= 2;
-                if (voucher.amount >= 50000) defaultPrice *= 4;
-                if (voucher.amount >= 100000) defaultPrice *= 8;
+                let defaultPrice = 120; // 5k
+                if (voucher.amount === 10000) defaultPrice = 240; // 10k
+                if (voucher.amount === 20000) defaultPrice = 455; // 20k
+                if (voucher.amount === 50000) defaultPrice = 1120; // 50k
+                if (voucher.amount === 100000) defaultPrice = 2300; // 100k
                 
                 // Use actual price if available, otherwise use calculated default
                 const actualPrice = voucher.price || defaultPrice;
