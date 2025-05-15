@@ -210,7 +210,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
             <Input 
               type="text" 
               readOnly
-              value={`${selectedGame} card ${price ? (Number(price)/1000).toFixed(0) : '0'}k + ${bonus || '0'} ${selectedGame === 'crossfire' ? 'zp' : selectedGame === 'pubg' ? 'UC' : 'Diamonds'} bonus`}
+              value={`${selectedGame} card ${amount ? (Number(amount)/1000).toFixed(0) : '0'}k + ${bonus || '0'} ${selectedGame === 'crossfire' ? 'zp' : selectedGame === 'pubg' ? 'UC' : 'Diamonds'} bonus`}
               className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white font-mono text-sm" 
             />
           </div>
@@ -221,7 +221,7 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
         <Button 
           className="gaming-btn bg-purple-600 hover:bg-purple-700 text-white"
           onClick={handleSave}
-          disabled={!selectedVoucherId || !price || !bonus}
+          disabled={!selectedVoucherId || !amount || !bonus || !price}
         >
           Save Changes
         </Button>
