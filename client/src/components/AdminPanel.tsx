@@ -120,7 +120,15 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
         <CardTitle className="text-xl font-orbitron font-semibold text-purple-400 neon-text flex items-center gap-2">
           <span className="bg-purple-500/20 p-1 rounded">🔒</span> Admin Panel
         </CardTitle>
+        <CardDescription className="flex items-center gap-2 text-purple-300">
+          <BarChart2 className="h-4 w-4" /> Performance Metrics & Management
+        </CardDescription>
       </CardHeader>
+      
+      {/* Dashboard Metrics Section */}
+      <div className="px-6 py-2 mb-6">
+        <DashboardMetrics vouchers={vouchers || []} />
+      </div>
       
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
