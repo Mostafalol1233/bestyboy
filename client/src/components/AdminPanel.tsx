@@ -4,7 +4,8 @@ import {
   CardContent, 
   CardHeader, 
   CardTitle, 
-  CardFooter 
+  CardFooter,
+  CardDescription 
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +22,8 @@ import { useVouchers } from "@/hooks/use-vouchers";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { queryClient } from "@/lib/queryClient";
-import { X } from "lucide-react";
+import { X, BarChart2 } from "lucide-react";
+import DashboardMetrics from "./DashboardMetrics";
 
 interface AdminPanelProps {
   onClose: () => void;

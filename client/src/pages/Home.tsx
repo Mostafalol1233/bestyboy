@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useVouchers } from "@/hooks/use-vouchers";
 import { useAuth } from "@/hooks/use-auth";
 import AdminPanel from "@/components/AdminPanel";
-import { X } from "lucide-react";
+import { X, Settings } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -134,6 +134,17 @@ export default function Home() {
         />
       )}
       
+      {/* Settings button visible when admin is logged in */}
+      {isAdmin && (
+        <Button 
+          variant="outline" 
+          onClick={toggleAdminPanel}
+          className="fixed top-5 right-5 z-50 gaming-btn bg-purple-700 hover:bg-purple-800 shadow-glow-green flex items-center gap-2"
+        >
+          <Settings size={18} /> Admin Settings
+        </Button>
+      )}
+        
       {/* Redeem Code Dialog */}
       <Dialog>
         <DialogTrigger asChild>

@@ -17,7 +17,7 @@ class MemStorage {
     // Create admin user
     this.createUser({
       username: "admin",
-      password: bcrypt.hashSync("highway123", 10),
+      password: bcrypt.hashSync("highwaygaming123", 10),
       isAdmin: true,
     });
 
@@ -33,6 +33,7 @@ class MemStorage {
         amount: 5000,
         bonus: 120,
         currency: "ZP",
+        price: 75,
         imageUrl: "/assets/images(3).jpg",
         description: "CrossFire card 5k + 120 zp bonus",
       },
@@ -41,6 +42,7 @@ class MemStorage {
         amount: 10000,
         bonus: 240,
         currency: "ZP",
+        price: 150,
         imageUrl: "/assets/images(2).jpg",
         description: "CrossFire card 10k + 240 zp bonus",
       },
