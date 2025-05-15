@@ -104,7 +104,8 @@ class MemStorage {
         amount: 5000,
         bonus: 120,
         currency: "Diamonds",
-        imageUrl: "/assets/FB_IMG_1747248882099.jpg",
+        price: 75,
+        imageUrl: "/attached_assets/freefire1.png",
         description: "Free Fire card 5k + 120 Diamonds bonus",
       },
       {
@@ -112,7 +113,8 @@ class MemStorage {
         amount: 10000,
         bonus: 240,
         currency: "Diamonds",
-        imageUrl: "/assets/FB_IMG_1747248882099.jpg",
+        price: 150,
+        imageUrl: "/attached_assets/freefire2.png",
         description: "Free Fire card 10k + 240 Diamonds bonus",
       },
       {
@@ -120,7 +122,8 @@ class MemStorage {
         amount: 50000,
         bonus: 1120,
         currency: "Diamonds",
-        imageUrl: "/assets/FB_IMG_1747248882099.jpg",
+        price: 650,
+        imageUrl: "/attached_assets/freefire1.png",
         description: "Free Fire card 50k + 1120 Diamonds bonus",
       },
     ];
