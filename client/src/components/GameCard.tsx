@@ -70,7 +70,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     >
       <div className="relative h-48 overflow-hidden">
         <img 
-          src={`${window.location.origin}/attached_assets/${getCardImage(voucher)}`}
+          src={`/assets/${getCardImage(voucher)}`}
           alt={`${voucher.gameType} game card`} 
           className="w-full h-full object-cover"
         />
