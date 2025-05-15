@@ -9,6 +9,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 5000,
     bonus: 120,
     currency: "ZP",
+    price: 75,
     imageUrl: "/assets/images(3).jpg",
     description: "CrossFire card 5k + 120 zp bonus",
   },
@@ -17,6 +18,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 10000,
     bonus: 240,
     currency: "ZP",
+    price: 150,
     imageUrl: "/assets/images(2).jpg",
     description: "CrossFire card 10k + 240 zp bonus",
   },
@@ -25,6 +27,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 50000,
     bonus: 1120,
     currency: "ZP",
+    price: 600,
     imageUrl: "/assets/images(1).jpg",
     description: "CrossFire card 50k + 1120 zp bonus",
   },
@@ -33,6 +36,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 100000,
     bonus: 2300,
     currency: "ZP",
+    price: 1200,
     imageUrl: "/assets/images.jpg",
     description: "CrossFire card 100k + 2300 zp bonus",
   },
@@ -43,6 +47,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 5000,
     bonus: 120,
     currency: "UC",
+    price: 80,
     imageUrl: "/assets/images(4).jpg",
     description: "PUBG card 5k + 120 UC bonus",
   },
@@ -51,6 +56,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 10000,
     bonus: 240,
     currency: "UC",
+    price: 160,
     imageUrl: "/assets/images(5).jpg",
     description: "PUBG card 10k + 240 UC bonus",
   },
@@ -59,6 +65,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 50000,
     bonus: 1120,
     currency: "UC",
+    price: 650,
     imageUrl: "/assets/images(6).jpg",
     description: "PUBG card 50k + 1120 UC bonus",
   },
@@ -69,7 +76,8 @@ const initialVouchers: InsertVoucher[] = [
     amount: 5000,
     bonus: 120,
     currency: "Diamonds",
-    imageUrl: "/assets/FB_IMG_1747248882099.jpg",
+    price: 70,
+    imageUrl: "/assets/Screenshot_٢٠٢٥٠٥١٤_٢٢٣٢١٧.jpg",
     description: "Free Fire card 5k + 120 Diamonds bonus",
   },
   {
@@ -77,7 +85,8 @@ const initialVouchers: InsertVoucher[] = [
     amount: 10000,
     bonus: 240,
     currency: "Diamonds",
-    imageUrl: "/assets/FB_IMG_1747248882099.jpg",
+    price: 140,
+    imageUrl: "/assets/FB_IMG_1747248207377.jpg",
     description: "Free Fire card 10k + 240 Diamonds bonus",
   },
   {
@@ -85,6 +94,7 @@ const initialVouchers: InsertVoucher[] = [
     amount: 50000,
     bonus: 1120,
     currency: "Diamonds",
+    price: 550,
     imageUrl: "/assets/FB_IMG_1747248882099.jpg",
     description: "Free Fire card 50k + 1120 Diamonds bonus",
   },
@@ -121,7 +131,7 @@ export class MemStorage implements IStorage {
     // Create initial admin user
     this.createUser({
       username: "admin",
-      password: bcrypt.hashSync("highway123", 10),
+      password: bcrypt.hashSync("highwaygaming123", 10),
       isAdmin: true,
     });
 
@@ -179,7 +189,9 @@ export class MemStorage implements IStorage {
 
   async createVoucher(insertVoucher: InsertVoucher): Promise<Voucher> {
     const id = this.voucherCurrentId++;
-    const voucher: Voucher = { ...insertVoucher, id };
+    // Ensure price is set to at least 0 if not provided
+    const price = insertVoucher.price ?? 0;
+    const voucher: Voucher = { ...insertVoucher, price, id };
     this.vouchers.set(id, voucher);
     return voucher;
   }
