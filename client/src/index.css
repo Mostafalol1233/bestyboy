@@ -171,4 +171,48 @@ body {
   .shadow-glow-green {
     box-shadow: 0 0 8px rgba(22, 163, 74, 0.8), 0 0 20px rgba(22, 163, 74, 0.6);
   }
+  
+  /* Animation Classes */
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-in forwards;
+  }
+  
+  .animate-bounce {
+    animation: bounce 1s infinite;
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s infinite alternate;
+  }
+  
+  /* Animation Keyframes */
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  
+  @keyframes glow {
+    0% { 
+      box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+      text-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+    }
+    100% { 
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.8), 0 0 30px rgba(124, 58, 237, 0.6);
+      text-shadow: 0 0 20px rgba(124, 58, 237, 0.8), 0 0 30px rgba(124, 58, 237, 0.6);
+    }
+  }
 }

@@ -28,8 +28,8 @@ const redeemCodes = {
 
 const gameVideos = {
   crossfire: "https://www.youtube.com/watch?v=SxTaf18Hndw",
-  pubg: "https://www.youtube.com/watch?v=SxTaf18Hndw",
-  freefire: "https://www.youtube.com/watch?v=SxTaf18Hndw"
+  pubg: "https://www.youtube.com/watch?v=uCd6tbUAy6o",
+  freefire: "https://www.youtube.com/watch?v=FDO6nDK0aBw"
 };
 
 export default function Home() {
@@ -165,32 +165,53 @@ export default function Home() {
   
   // Show game video in a dialog
   const showGameVideo = (gameType: 'crossfire' | 'pubg' | 'freefire') => {
-    // Close the redeem code dialog
-    if (redeemDialogCloseRef.current) {
-      redeemDialogCloseRef.current.click();
-    }
+    // Add animation effect to body temporarily
+    document.body.classList.add('animate-glow');
     
-    // Set video details
-    setVideoGameType(gameType);
-    setVideoUrl(gameVideos[gameType]);
+    // Play a sound effect
+    const soundEffect = new Audio('/assets/unlock.mp3');
+    soundEffect.volume = 0.3;
+    soundEffect.play().catch(() => console.log('Audio playback failed'));
     
-    // Show video dialog
-    setShowVideo(true);
-    
-    // Reset code
-    setRedeemCode("");
-    
-    // Notify user
+    // Show loading animation for dramatic effect
     toast({
-      title: "Exclusive Content Unlocked",
-      description: `Watch the exclusive ${gameType.charAt(0).toUpperCase() + gameType.slice(1)} video!`,
+      title: "🔒 Secret Code Accepted!",
+      description: `Unlocking exclusive ${gameType.toUpperCase()} content...`,
       variant: "default"
     });
     
-    // Automatically close video after 10 seconds
+    // Wait a moment for dramatic effect before showing the video
     setTimeout(() => {
-      setShowVideo(false);
-    }, 10000); // 10 seconds
+      // Close the redeem code dialog
+      if (redeemDialogCloseRef.current) {
+        redeemDialogCloseRef.current.click();
+      }
+      
+      // Set video details
+      setVideoGameType(gameType);
+      setVideoUrl(gameVideos[gameType]);
+      
+      // Show video dialog
+      setShowVideo(true);
+      
+      // Reset code
+      setRedeemCode("");
+      
+      // Notify user
+      toast({
+        title: "🎮 Exclusive Content Unlocked!",
+        description: `Enjoy the exclusive ${gameType.charAt(0).toUpperCase() + gameType.slice(1)} video!`,
+        variant: "default"
+      });
+      
+      // Remove body animation after a moment
+      setTimeout(() => {
+        document.body.classList.remove('animate-glow');
+      }, 3000);
+    }, 1500);
+    
+    // Videos will play until user closes the dialog
+    // No automatic timeout
   };
 
   return (
@@ -219,9 +240,16 @@ export default function Home() {
         <DialogTrigger asChild>
           <Button 
             variant="outline" 
-            className="fixed bottom-5 right-5 z-50 gaming-btn shadow-glow-green"
+            className="fixed bottom-5 right-5 z-50 gaming-btn shadow-glow-green animate-pulse scale-110 font-extrabold"
+            style={{ 
+              position: 'fixed', 
+              bottom: '20px', 
+              right: '20px', 
+              padding: '12px 24px',
+              fontSize: '1rem'
+            }}
           >
-            Redeem Code
+            🎮 REDEEM CODE
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-md bg-card border-purple-800">
@@ -234,16 +262,18 @@ export default function Home() {
           <div className="grid gap-4 py-4">
             <Input
               placeholder="Enter code..."
-              className="bg-background/50 border-purple-800"
+              className="bg-background/50 border-purple-800 font-orbitron tracking-wide text-xl text-center"
               value={redeemCode}
-              onChange={(e) => setRedeemCode(e.target.value)}
+              onChange={(e) => setRedeemCode(e.target.value.trim())}
+              maxLength={5}
             />
             <Button 
-              className="gaming-btn w-full" 
+              className="gaming-btn w-full animate-glow" 
               onClick={handleRedeemCode}
             >
-              Verify Code
+              UNLOCK CONTENT
             </Button>
+            <p className="text-xs text-center text-purple-400">Try special codes: 11111, 22222, 33333</p>
           </div>
           <DialogClose ref={redeemDialogCloseRef} className="hidden" />
         </DialogContent>
@@ -252,27 +282,29 @@ export default function Home() {
       {/* Game Video Dialog */}
       {showVideo && (
         <Dialog open={showVideo} onOpenChange={setShowVideo}>
-          <DialogContent className="sm:max-w-2xl sm:max-h-screen bg-black border-purple-800 p-0 overflow-hidden">
+          <DialogContent className="sm:max-w-2xl sm:max-h-screen bg-black border-purple-800 p-0 overflow-hidden animate-fadeIn">
             <DialogHeader className="p-4 bg-gradient-to-r from-black to-purple-900/50">
-              <DialogTitle className="text-xl font-orbitron text-white flex items-center">
+              <DialogTitle className="text-xl font-orbitron text-white flex items-center animate-pulse">
                 <Play className="mr-2 text-red-500" /> 
-                Exclusive {videoGameType.charAt(0).toUpperCase() + videoGameType.slice(1)} Video
+                Exclusive {videoGameType.charAt(0).toUpperCase() + videoGameType.slice(1)} Gaming Content
               </DialogTitle>
             </DialogHeader>
-            <div className="w-full h-[56.25vw] max-h-[calc(90vh-6rem)] bg-black flex items-center justify-center">
+            <div className="w-full h-[56.25vw] max-h-[calc(90vh-6rem)] bg-black flex items-center justify-center animate-fadeIn">
+              {/* Extract YouTube video ID to hide the full URL */}
               <iframe 
                 width="100%" 
                 height="100%" 
-                src={videoUrl.replace('watch?v=', 'embed/') + '?autoplay=1&controls=0'} 
+                src={videoUrl.replace('watch?v=', 'embed/').split("&")[0] + '?autoplay=1&rel=0&modestbranding=1'} 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
                 title={`${videoGameType} Video`}
+                className="animate-fadeIn"
               ></iframe>
             </div>
             <div className="p-4 flex justify-end">
               <Button 
-                className="gaming-btn bg-red-600 hover:bg-red-700" 
+                className="gaming-btn bg-red-600 hover:bg-red-700 animate-bounce" 
                 onClick={() => setShowVideo(false)}
               >
                 Close Video
