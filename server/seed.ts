@@ -2,6 +2,7 @@ import { db } from "./db";
 import { users, vouchers } from "@shared/schema";
 import bcrypt from "bcryptjs";
 import { adminCredentials } from "../config.js";
+import { eq } from "drizzle-orm";
 
 // Initial voucher data
 const initialVouchers = [
@@ -107,7 +108,7 @@ async function seed() {
 
   // Create admin user
   try {
-    const existingAdmin = await db.select().from(users).where(eq => eq.username === adminCredentials.username);
+    const existingAdmin = await db.select().from(users).where(eq(users.username, adminCredentials.username));
     
     if (existingAdmin.length === 0) {
       console.log("Creating admin user...");
