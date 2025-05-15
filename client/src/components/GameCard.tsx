@@ -48,7 +48,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
   const getFormattedDescription = () => {
     let bonus = "";
     if (voucher.bonus) {
-      const bonusInK = (voucher.bonus/1000).toFixed(1);
+      const bonusInK = (voucher.bonus/1000).toFixed(0);
       if (voucher.gameType === 'crossfire') bonus = `+ ${bonusInK}k zp bonus`;
       if (voucher.gameType === 'pubg') bonus = `+ ${bonusInK}k UC bonus`;
       if (voucher.gameType === 'freefire') bonus = `+ ${bonusInK}k Diamonds bonus`;
@@ -86,7 +86,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
         
         <div className="absolute bottom-3 left-3">
           <div className="bonus-badge flex items-center justify-center">
-            <span className="gaming-digits">+{(voucher.bonus/1000).toFixed(1)}K BONUS</span>
+            <span className="gaming-digits">+{(voucher.bonus/1000).toFixed(0)}K BONUS</span>
           </div>
         </div>
         
