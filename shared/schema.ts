@@ -15,6 +15,7 @@ export const vouchers = pgTable("vouchers", {
   amount: integer("amount").notNull(), // e.g. 5000, 10000
   bonus: integer("bonus").notNull(), // e.g. 120, 240
   currency: text("currency").notNull(), // e.g. ZP, UC, Diamonds
+  price: integer("price").notNull().default(0), // the price in local currency
   imageUrl: text("image_url").notNull(),
   description: text("description").notNull(),
 });
