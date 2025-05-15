@@ -128,11 +128,22 @@ export class MemStorage implements IStorage {
     this.userCurrentId = 1;
     this.voucherCurrentId = 1;
 
-    // Create initial admin user
-    this.createUser({
-      username: "admin",
-      password: bcrypt.hashSync("highwaygaming123", 10),
-      isAdmin: true,
+    // Import admin credentials from config file
+    import('../config.js').then(config => {
+      // Create initial admin user with credentials from config
+      this.createUser({
+        username: config.adminCredentials.username,
+        password: bcrypt.hashSync(config.adminCredentials.password, 10),
+        isAdmin: true,
+      });
+    }).catch(error => {
+      console.error("Failed to load config file, using default admin credentials", error);
+      // Fallback to default admin credentials
+      this.createUser({
+        username: "admin",
+        password: bcrypt.hashSync("highwaygaming123", 10),
+        isAdmin: true,
+      });
     });
 
     // Create initial vouchers

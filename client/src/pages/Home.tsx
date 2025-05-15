@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useVouchers } from "@/hooks/use-vouchers";
 import { useAuth } from "@/hooks/use-auth";
 import AdminPanel from "@/components/AdminPanel";
-import { X, Settings } from "lucide-react";
+import { X, Settings, Play } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -18,13 +18,30 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+// Import config values - will be populated with hardcoded values for now
+const redeemCodes = {
+  admin: "00001",
+  crossfireVideo: "11111",
+  pubgVideo: "22222", 
+  freefireVideo: "33333"
+};
+
+const gameVideos = {
+  crossfire: "https://www.youtube.com/watch?v=SxTaf18Hndw",
+  pubg: "https://www.youtube.com/watch?v=SxTaf18Hndw",
+  freefire: "https://www.youtube.com/watch?v=SxTaf18Hndw"
+};
 
 export default function Home() {
   const [activeGame, setActiveGame] = useState<string>("crossfire");
   const [adminPanelVisible, setAdminPanelVisible] = useState(false);
   const [redeemCode, setRedeemCode] = useState("");
   const [showNavigation, setShowNavigation] = useState(true);
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoGameType, setVideoGameType] = useState("");
   const redeemDialogCloseRef = useRef<HTMLButtonElement>(null);
+  const videoDialogCloseRef = useRef<HTMLButtonElement>(null);
   const [, navigate] = useLocation();
   const { isAdmin } = useAuth();
   const { 
@@ -100,7 +117,8 @@ export default function Home() {
   
   // Handle redeem code verification
   const handleRedeemCode = () => {
-    if (redeemCode === "00001") {
+    // Admin access code
+    if (redeemCode === redeemCodes.admin) {
       // Close the dialog
       if (redeemDialogCloseRef.current) {
         redeemDialogCloseRef.current.click();
@@ -115,13 +133,64 @@ export default function Home() {
         description: "Redirecting to admin login page...",
         variant: "default"
       });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Invalid Code",
-        description: "The code you entered is not valid.",
-      });
+      
+      // Reset code
+      setRedeemCode("");
+      return;
     }
+    
+    // Game video codes
+    if (redeemCode === redeemCodes.crossfireVideo) {
+      showGameVideo('crossfire');
+      return;
+    }
+    
+    if (redeemCode === redeemCodes.pubgVideo) {
+      showGameVideo('pubg');
+      return;
+    }
+    
+    if (redeemCode === redeemCodes.freefireVideo) {
+      showGameVideo('freefire');
+      return;
+    }
+    
+    // Invalid code
+    toast({
+      variant: "destructive",
+      title: "Invalid Code",
+      description: "The code you entered is not valid.",
+    });
+  };
+  
+  // Show game video in a dialog
+  const showGameVideo = (gameType: 'crossfire' | 'pubg' | 'freefire') => {
+    // Close the redeem code dialog
+    if (redeemDialogCloseRef.current) {
+      redeemDialogCloseRef.current.click();
+    }
+    
+    // Set video details
+    setVideoGameType(gameType);
+    setVideoUrl(gameVideos[gameType]);
+    
+    // Show video dialog
+    setShowVideo(true);
+    
+    // Reset code
+    setRedeemCode("");
+    
+    // Notify user
+    toast({
+      title: "Exclusive Content Unlocked",
+      description: `Watch the exclusive ${gameType.charAt(0).toUpperCase() + gameType.slice(1)} video!`,
+      variant: "default"
+    });
+    
+    // Automatically close video after 10 seconds
+    setTimeout(() => {
+      setShowVideo(false);
+    }, 10000); // 10 seconds
   };
 
   return (
@@ -159,7 +228,7 @@ export default function Home() {
           <DialogHeader>
             <DialogTitle className="text-xl font-orbitron text-white">Enter Redeem Code</DialogTitle>
             <DialogDescription>
-              Enter your code to access exclusive admin features.
+              Enter your code to access exclusive features & videos.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -179,6 +248,39 @@ export default function Home() {
           <DialogClose ref={redeemDialogCloseRef} className="hidden" />
         </DialogContent>
       </Dialog>
+      
+      {/* Game Video Dialog */}
+      {showVideo && (
+        <Dialog open={showVideo} onOpenChange={setShowVideo}>
+          <DialogContent className="sm:max-w-2xl sm:max-h-screen bg-black border-purple-800 p-0 overflow-hidden">
+            <DialogHeader className="p-4 bg-gradient-to-r from-black to-purple-900/50">
+              <DialogTitle className="text-xl font-orbitron text-white flex items-center">
+                <Play className="mr-2 text-red-500" /> 
+                Exclusive {videoGameType.charAt(0).toUpperCase() + videoGameType.slice(1)} Video
+              </DialogTitle>
+            </DialogHeader>
+            <div className="w-full h-[56.25vw] max-h-[calc(90vh-6rem)] bg-black flex items-center justify-center">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src={videoUrl.replace('watch?v=', 'embed/') + '?autoplay=1&controls=0'} 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                title={`${videoGameType} Video`}
+              ></iframe>
+            </div>
+            <div className="p-4 flex justify-end">
+              <Button 
+                className="gaming-btn bg-red-600 hover:bg-red-700" 
+                onClick={() => setShowVideo(false)}
+              >
+                Close Video
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
       
       {showNavigation && (
         <GameNavigation 
