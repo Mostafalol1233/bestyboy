@@ -1,5 +1,17 @@
 import fs from 'fs-extra';
 import path from 'path';
+// Import database seeding functionality for Vercel deployment
+import('./server/seed.js').then(module => {
+  const seed = module.default;
+  console.log('Running database seed for Vercel deployment...');
+  seed().then(() => {
+    console.log('Database seed completed for Vercel.');
+  }).catch(error => {
+    console.error('Error running database seed:', error);
+  });
+}).catch(error => {
+  console.error('Failed to import seed module:', error);
+});
 
 // This script prepares files for Vercel deployment
 async function prepareForVercel() {
