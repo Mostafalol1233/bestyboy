@@ -167,4 +167,8 @@ body {
       -1px 1px 0 #000,
       1px 1px 0 #000;
   }
+  
+  .shadow-glow-green {
+    box-shadow: 0 0 8px rgba(22, 163, 74, 0.8), 0 0 20px rgba(22, 163, 74, 0.6);
+  }
 }

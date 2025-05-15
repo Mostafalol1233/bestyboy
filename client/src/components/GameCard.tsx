@@ -88,6 +88,15 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
           </div>
         </div>
         
+        {/* Price badge */}
+        <div className="absolute top-3 left-3">
+          <div className="real-price-badge flex items-center justify-center bg-green-600 rounded-md px-2 py-1 shadow-glow-green">
+            <span className="gaming-digits text-white text-sm font-bold">
+              {voucher.price ? `${voucher.price} ج.م` : 'اتصل بنا'}
+            </span>
+          </div>
+        </div>
+        
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <h3 className="font-orbitron text-2xl font-bold text-white text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] neon-text">
             {voucher.gameType.charAt(0).toUpperCase() + voucher.gameType.slice(1)}

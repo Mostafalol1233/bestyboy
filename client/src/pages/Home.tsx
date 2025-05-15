@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import GameNavigation from "@/components/GameNavigation";
 import GameSection from "@/components/GameSection";
@@ -6,10 +6,24 @@ import { useToast } from "@/hooks/use-toast";
 import { useVouchers } from "@/hooks/use-vouchers";
 import { useAuth } from "@/hooks/use-auth";
 import AdminPanel from "@/components/AdminPanel";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [activeGame, setActiveGame] = useState<string>("crossfire");
   const [adminPanelVisible, setAdminPanelVisible] = useState(false);
+  const [redeemCode, setRedeemCode] = useState("");
+  const [showNavigation, setShowNavigation] = useState(true);
+  const redeemDialogCloseRef = useRef<HTMLButtonElement>(null);
   const [, navigate] = useLocation();
   const { isAdmin } = useAuth();
   const { 
@@ -82,6 +96,32 @@ export default function Home() {
       });
     }
   };
+  
+  // Handle redeem code verification
+  const handleRedeemCode = () => {
+    if (redeemCode === "00001") {
+      // Close the dialog
+      if (redeemDialogCloseRef.current) {
+        redeemDialogCloseRef.current.click();
+      }
+      
+      // Navigate to admin page for login
+      navigate('/admin');
+      
+      // Notify user
+      toast({
+        title: "Code Accepted",
+        description: "Redirecting to admin login page...",
+        variant: "default"
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Invalid Code",
+        description: "The code you entered is not valid.",
+      });
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
@@ -93,12 +133,61 @@ export default function Home() {
         />
       )}
       
-      <GameNavigation 
-        activeGame={activeGame} 
-        setActiveGame={setActiveGame}
-        toggleAdminPanel={toggleAdminPanel}
-        isAdmin={isAdmin}
-      />
+      {/* Redeem Code Dialog */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button 
+            variant="outline" 
+            className="fixed bottom-5 right-5 z-50 gaming-btn shadow-glow-green"
+          >
+            Redeem Code
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md bg-card border-purple-800">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-orbitron text-white">Enter Redeem Code</DialogTitle>
+            <DialogDescription>
+              Enter your code to access exclusive admin features.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Input
+              placeholder="Enter code..."
+              className="bg-background/50 border-purple-800"
+              value={redeemCode}
+              onChange={(e) => setRedeemCode(e.target.value)}
+            />
+            <Button 
+              className="gaming-btn w-full" 
+              onClick={handleRedeemCode}
+            >
+              Verify Code
+            </Button>
+          </div>
+          <DialogClose ref={redeemDialogCloseRef} className="hidden" />
+        </DialogContent>
+      </Dialog>
+      
+      {showNavigation && (
+        <GameNavigation 
+          activeGame={activeGame}
+          setActiveGame={setActiveGame}
+          toggleAdminPanel={toggleAdminPanel}
+          isAdmin={isAdmin}
+          isOpen={showNavigation}
+          setIsOpen={setShowNavigation}
+        />
+      )}
+      
+      {!showNavigation && (
+        <Button 
+          variant="ghost" 
+          className="mb-4 text-purple-400 hover:text-purple-300 hover:bg-purple-900/20"
+          onClick={() => setShowNavigation(true)}
+        >
+          Show Game Navigation
+        </Button>
+      )}
 
       <GameSection 
         gameType={activeGame}
