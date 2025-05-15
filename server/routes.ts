@@ -99,7 +99,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(vouchers);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch vouchers" });
+      console.error("Error fetching vouchers:", error);
+      res.status(500).json({ message: "Failed to fetch vouchers", error: error.message });
     }
   });
 
