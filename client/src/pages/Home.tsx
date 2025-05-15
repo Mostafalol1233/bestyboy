@@ -240,14 +240,7 @@ export default function Home() {
         <DialogTrigger asChild>
           <Button 
             variant="outline" 
-            className="fixed bottom-5 right-5 z-50 gaming-btn shadow-glow-green animate-pulse scale-110 font-extrabold"
-            style={{ 
-              position: 'fixed', 
-              bottom: '20px', 
-              right: '20px', 
-              padding: '12px 24px',
-              fontSize: '1rem'
-            }}
+            className="redeem-button animate-pulse shadow-glow-green"
           >
             🎮 REDEEM CODE
           </Button>
@@ -290,16 +283,17 @@ export default function Home() {
               </DialogTitle>
             </DialogHeader>
             <div className="w-full h-[56.25vw] max-h-[calc(90vh-6rem)] bg-black flex items-center justify-center animate-fadeIn">
-              {/* Extract YouTube video ID to hide the full URL */}
+              {/* Extract YouTube video ID only to completely hide the URL */}
               <iframe 
                 width="100%" 
                 height="100%" 
-                src={videoUrl.replace('watch?v=', 'embed/').split("&")[0] + '?autoplay=1&rel=0&modestbranding=1'} 
+                src={`https://www.youtube.com/embed/${videoUrl.split('v=')[1].split('&')[0]}?autoplay=1&rel=0&modestbranding=1&controls=1&showinfo=0&mute=0`} 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
                 title={`${videoGameType} Video`}
                 className="animate-fadeIn"
+                style={{ pointerEvents: 'auto' }}
               ></iframe>
             </div>
             <div className="p-4 flex justify-end">

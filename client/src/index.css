@@ -169,7 +169,30 @@ body {
   }
   
   .shadow-glow-green {
-    box-shadow: 0 0 8px rgba(22, 163, 74, 0.8), 0 0 20px rgba(22, 163, 74, 0.6);
+    box-shadow: 0 0 15px rgba(22, 163, 74, 0.8), 0 0 25px rgba(22, 163, 74, 0.6);
+  }
+  
+  /* Redeem button styles */
+  .redeem-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    padding: 15px 24px !important;
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    border-radius: 8px !important;
+    border: 2px solid rgba(22, 163, 74, 0.6) !important;
+    background: linear-gradient(135deg, #4f46e5, #9333ea) !important;
+    transform: scale(1.1) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .redeem-button:hover {
+    transform: scale(1.15) translateY(-5px) !important;
+    box-shadow: 0 0 20px rgba(22, 163, 74, 0.9), 0 0 30px rgba(22, 163, 74, 0.7) !important;
   }
   
   /* Animation Classes */
