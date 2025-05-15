@@ -91,8 +91,8 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
         {/* Price badge */}
         <div className="absolute top-3 left-3">
           <div className="real-price-badge flex items-center justify-center bg-green-600 rounded-md px-2 py-1 shadow-glow-green">
-            <span className="gaming-digits text-white text-sm font-bold">
-              {voucher.price ? `${voucher.price} ج.م` : "75 ج.م"}
+            <span className="gaming-digits text-white text-sm font-bold" lang="en">
+              {voucher.price ? `${voucher.price.toString()} ج.م` : "75 ج.م"}
             </span>
           </div>
         </div>
