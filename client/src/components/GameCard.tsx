@@ -31,9 +31,9 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
     
     if (gameType === 'freefire') {
       // Updated Free Fire images with new assets
-      if (amount === 5000) return 'freefire1.png'; 
+      if (amount === 5000) return 'freefire.png'; 
       if (amount === 10000) return 'freefire2.png';
-      if (amount === 50000) return 'freefire1.png';
+      if (amount === 50000) return 'freefire.png';
       return 'freefire2.png'; // Default
     }
     
