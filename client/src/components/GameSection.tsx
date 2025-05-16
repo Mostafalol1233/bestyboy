@@ -64,6 +64,7 @@ export default function GameSection({
           src="/attached_assets/image_1747413124482.png" 
           alt={`${main} game background`} 
           className="w-full h-full object-contain bg-gradient-to-r from-pink-500 to-blue-500"
+          style={{ imageRendering: 'high-quality', maxWidth: '100%' }}
         />
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <h2 className="text-3xl md:text-6xl font-orbitron font-bold text-white text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">

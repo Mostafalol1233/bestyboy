@@ -75,6 +75,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
           src={`/assets/${getCardImage(voucher)}`}
           alt={`${voucher.gameType} game card`} 
           className="w-full h-full object-cover"
+          style={{ imageRendering: 'high-quality', maxWidth: '100%' }}
         />
         
         <div className="absolute top-3 right-3">
