@@ -1,10 +1,10 @@
-// Main configuration file for Highway Gaming
+// Main configuration file for Besty Boy Gaming
 // This file contains important settings that will be used across the application
 
 // Admin credentials (used for authentication)
 export const adminCredentials = {
   username: "admin",
-  password: "highwaygaming123", // This will be hashed in storage.ts
+  password: "bestyboy123", // This will be hashed in storage.ts
 };
 
 // Redeem codes for special features
@@ -17,29 +17,29 @@ export const redeemCodes = {
 
 // Video URLs for each game type
 export const gameVideos = {
-  crossfire: "https://www.youtube.com/watch?v=SxTaf18Hndw", // CrossFire video
-  pubg: "https://www.youtube.com/watch?v=SxTaf18Hndw", // PUBG video 
-  freefire: "https://www.youtube.com/watch?v=SxTaf18Hndw", // Free Fire video
+  crossfire: "https://www.youtube.com/@Besty_Boy", // CrossFire video
+  pubg: "https://www.youtube.com/@Besty_Boy", // PUBG video 
+  freefire: "https://www.youtube.com/@Besty_Boy", // Free Fire video
 };
 
 // Default game assets and settings
 export const gameDefaults = {
   crossfire: {
     currency: "ZP",
-    imageUrl: "/assets/images.jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
   },
   pubg: {
     currency: "UC",
-    imageUrl: "/assets/images(5).jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
   },
   freefire: {
     currency: "Diamonds",
-    imageUrl: "/assets/image_1747322313057.png", // Updated Free Fire image
+    imageUrl: "/attached_assets/image_1747412665992.png", // Updated with Besty Boy image
   }
 };
 
 // Session settings
 export const sessionConfig = {
-  secret: process.env.SESSION_SECRET || "highway-gaming-secret",
+  secret: process.env.SESSION_SECRET || "bestyboy-gaming-secret",
   cookieMaxAge: 1000 * 60 * 60 * 24, // 1 day
 };

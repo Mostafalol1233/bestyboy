@@ -11,8 +11,8 @@ export default function Footer() {
             <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
               <FaGamepad className="text-xl text-purple-500" />
               <h2 className="text-xl font-orbitron font-bold text-white neon-text">
-                <span className="text-purple-500">Highway</span>
-                <span className="text-red-500">Gaming</span>
+                <span className="text-purple-500">Besty</span>
+                <span className="text-red-500">Boy</span>
               </h2>
             </div>
             <div className="flex items-center justify-center md:justify-start gap-3">
@@ -25,7 +25,7 @@ export default function Footer() {
           
           <div className="flex space-x-6 mb-4 md:mb-0">
             <a 
-              href="https://www.facebook.com/share/1A6xtu99yR/" 
+              href="https://www.facebook.com/BestyBoyy/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-blue-500 transition-transform hover:scale-110"
@@ -34,7 +34,7 @@ export default function Footer() {
               <FaFacebook className="text-2xl" />
             </a>
             <a 
-              href="https://m.youtube.com/c/HighWayGaming" 
+              href="https://www.youtube.com/@Besty_Boy" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-red-500 transition-transform hover:scale-110"
@@ -43,7 +43,7 @@ export default function Footer() {
               <FaYoutube className="text-2xl" />
             </a>
             <a 
-              href="https://wa.me/201271916093" 
+              href="https://wa.me/201096065772" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-green-500 transition-transform hover:scale-110"
@@ -54,17 +54,7 @@ export default function Footer() {
           </div>
           
           <div className="text-center md:text-right">
-            <p className="text-gray-400 text-sm">
-              Developed by <a 
-                href="https://www.linkedin.com/in/mostafa-mohamed-409540336/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-purple-400 hover:text-purple-300 transition-colors hover:underline"
-              >
-                Mostafa
-              </a>
-            </p>
-            <p className="text-gray-500 text-xs mt-1">© {new Date().getFullYear()} Highway Gaming. All rights reserved.</p>
+            <p className="text-gray-500 text-xs mt-1">© {new Date().getFullYear()} Besty Boy Gaming. All rights reserved.</p>
           </div>
         </div>
       </div>
