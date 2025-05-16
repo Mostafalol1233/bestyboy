@@ -1,106 +1,139 @@
-// Initial voucher data with correct prices and bonus values
-// This file is used by both Replit and Vercel to ensure consistent data
-export const initialVouchers = [
-  // CrossFire vouchers
+// ====================================================================
+// INITIAL VOUCHER DATA FOR BESTY BOY
+// ====================================================================
+// IMPORTANT: Modify these values directly to change what appears on the site
+// After making changes, you need to redeploy to Vercel for changes to take effect
+// No need to use the admin panel - just edit this file!
+// ====================================================================
+
+// Helper function to automatically create description based on values
+const createDescription = (gameType, amount, bonus) => {
+  const amountK = (amount/1000).toFixed(0);
+  const bonusK = (bonus/1000).toFixed(0);
+  
+  const currencyMap = {
+    "crossfire": "zp",
+    "pubg": "UC",
+    "freefire": "Diamonds"
+  };
+  
+  const currency = currencyMap[gameType] || "";
+  return `${gameType} card ${amountK}k + ${bonusK}k ${currency} bonus`;
+};
+
+// ====================================================================
+// CROSSFIRE VOUCHERS - EDIT VALUES HERE
+// ====================================================================
+const crossfireVouchers = [
   {
-    gameType: "crossfire",
-    amount: 5000,
-    bonus: 2500,
-    currency: "ZP",
-    price: 120,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "CrossFire card 5k + 2.5k zp bonus",
+    amount: 5000,     // Amount in points
+    bonus: 2500,      // Bonus points
+    price: 120,       // Price in EGP
   },
   {
-    gameType: "crossfire",
     amount: 10000,
     bonus: 5000,
-    currency: "ZP",
     price: 240,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "CrossFire card 10k + 5k zp bonus",
   },
   {
-    gameType: "crossfire",
     amount: 20000,
     bonus: 10000,
-    currency: "ZP",
     price: 455,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "CrossFire card 20k + 10k zp bonus",
   },
   {
-    gameType: "crossfire",
     amount: 50000,
     bonus: 25000,
-    currency: "ZP",
     price: 1120,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "CrossFire card 50k + 25k zp bonus",
   },
   {
-    gameType: "crossfire",
     amount: 100000,
     bonus: 50000,
-    currency: "ZP",
     price: 2300,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "CrossFire card 100k + 50k zp bonus",
   },
-  // PUBG vouchers
+];
+
+// ====================================================================
+// PUBG VOUCHERS - EDIT VALUES HERE
+// ====================================================================
+const pubgVouchers = [
   {
-    gameType: "pubg",
-    amount: 5000,
-    bonus: 2500,
-    currency: "UC",
-    price: 120,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "PUBG card 5k + 2.5k UC bonus",
+    amount: 5000,     // Amount in UC
+    bonus: 2500,      // Bonus UC
+    price: 120,       // Price in EGP
   },
   {
-    gameType: "pubg",
     amount: 10000,
     bonus: 5000,
-    currency: "UC",
     price: 240,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "PUBG card 10k + 5k UC bonus",
   },
   {
-    gameType: "pubg",
     amount: 50000,
     bonus: 25000,
-    currency: "UC",
     price: 1120,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "PUBG card 50k + 25k UC bonus",
   },
-  // Free Fire vouchers
+];
+
+// ====================================================================
+// FREE FIRE VOUCHERS - EDIT VALUES HERE
+// ====================================================================
+const freeFireVouchers = [
   {
-    gameType: "freefire",
-    amount: 5000,
-    bonus: 2500,
-    currency: "Diamonds",
-    price: 120,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "Free Fire card 5k + 2.5k Diamonds bonus",
+    amount: 5000,     // Amount in Diamonds
+    bonus: 2500,      // Bonus Diamonds
+    price: 120,       // Price in EGP
   },
   {
-    gameType: "freefire",
     amount: 10000,
     bonus: 5000,
-    currency: "Diamonds",
     price: 240,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "Free Fire card 10k + 5k Diamonds bonus",
   },
   {
-    gameType: "freefire",
     amount: 50000,
     bonus: 25000,
-    currency: "Diamonds",
     price: 1120,
-    imageUrl: "/attached_assets/image_1747412665992.png",
-    description: "Free Fire card 50k + 25k Diamonds bonus",
-  }
+  },
+];
+
+// ====================================================================
+// DON'T EDIT BELOW THIS LINE UNLESS YOU KNOW WHAT YOU'RE DOING
+// ====================================================================
+
+// Process CrossFire vouchers
+const processedCrossfireVouchers = crossfireVouchers.map(voucher => ({
+  gameType: "crossfire",
+  amount: voucher.amount,
+  bonus: voucher.bonus,
+  currency: "ZP",
+  price: voucher.price,
+  imageUrl: "/attached_assets/image_1747412665992.png",
+  description: createDescription("crossfire", voucher.amount, voucher.bonus),
+}));
+
+// Process PUBG vouchers
+const processedPubgVouchers = pubgVouchers.map(voucher => ({
+  gameType: "pubg",
+  amount: voucher.amount,
+  bonus: voucher.bonus,
+  currency: "UC",
+  price: voucher.price,
+  imageUrl: "/attached_assets/image_1747412665992.png",
+  description: createDescription("pubg", voucher.amount, voucher.bonus),
+}));
+
+// Process Free Fire vouchers
+const processedFreeFireVouchers = freeFireVouchers.map(voucher => ({
+  gameType: "freefire",
+  amount: voucher.amount,
+  bonus: voucher.bonus,
+  currency: "Diamonds",
+  price: voucher.price,
+  imageUrl: "/attached_assets/image_1747412665992.png",
+  description: createDescription("freefire", voucher.amount, voucher.bonus),
+}));
+
+// Export all vouchers
+export const initialVouchers = [
+  ...processedCrossfireVouchers,
+  ...processedPubgVouchers,
+  ...processedFreeFireVouchers
 ];

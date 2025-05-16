@@ -1,0 +1,287 @@
+Skip to contentbestyboy – Logs – Vercel
+mostafalol1233's projects
+mostafalol1233's projects
+
+Hobby
+
+bestyboy
+
+
+Changelog
+Help
+Docs
+
+Filters
+
+
+Timeline
+
+
+Past 30 minutes
+
+Contains Level
+
+​
+Warning
+0
+
+​
+Error
+0
+
+
+Environment
+
+
+
+
+Route
+
+
+
+Request Path
+
+
+
+Status Code
+
+
+
+Resource
+
+
+
+
+
+
+Request Type
+
+
+
+
+
+
+
+
+Host
+
+
+
+Request Method
+
+
+
+Cache
+
+
+
+
+
+
+
+
+
+Branch
+
+
+
+Deployment
+
+
+Search Logs
+32 total logs found...
+19:46:00
+19:55:20
+20:04:20
+20:17:00
+Time
+Status
+Host
+Request
+Messages
+May 16 20:15:23.67
+PUT
+401
+bestyboy-gamma.vercel.app
+/api/vouchers/3
+May 16 20:15:23.55
+PUT
+401
+bestyboy-gamma.vercel.app
+/api/vouchers/3
+May 16 20:15:12.83
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 20:15:12.42
+POST
+200
+bestyboy-gamma.vercel.app
+/api/auth/login
+May 16 20:10:50.23
+POST
+200
+bestyboy-gamma.vercel.app
+/api/auth/logout
+May 16 20:09:45.85
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 20:09:45.20
+POST
+200
+bestyboy-gamma.vercel.app
+/api/auth/login
+May 16 20:08:38.94
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 20:08:37.94
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 20:06:04.53
+GET
+401
+bestyboy-gamma.vercel.app
+/api/auth/me
+May 16 20:06:04.48
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 20:03:57.40
+GET
+401
+bestyboy-8psj2ph56-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 20:03:57.40
+GET
+200
+bestyboy-8psj2ph56-mostafalol1233s-projects.vercel.app
+/api/vouchers
+May 16 20:03:57.38
+GET
+401
+bestyboy-8psj2ph56-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 20:03:57.38
+GET
+200
+bestyboy-8psj2ph56-mostafalol1233s-projects.vercel.app
+/api/vouchers
+May 16 19:57:22.18
+GET
+401
+bestyboy-gamma.vercel.app
+/api/auth/me
+May 16 19:57:22.18
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 19:56:52.35
+GET
+401
+bestyboy-9vmduue2w-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 19:56:52.35
+GET
+200
+bestyboy-9vmduue2w-mostafalol1233s-projects.vercel.app
+/api/vouchers
+May 16 19:55:26.89
+GET
+401
+bestyboy-9vmduue2w-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 19:55:26.88
+GET
+200
+bestyboy-9vmduue2w-mostafalol1233s-projects.vercel.app
+/api/vouchers
+May 16 19:55:26.86
+GET
+401
+bestyboy-9vmduue2w-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 19:55:26.86
+GET
+200
+bestyboy-9vmduue2w-mostafalol1233s-projects.vercel.app
+/api/vouchers
+May 16 19:50:59.48
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 19:50:57.80
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 19:50:56.30
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 19:50:40.15
+GET
+401
+bestyboy-gamma.vercel.app
+/api/auth/me
+May 16 19:50:40.15
+GET
+200
+bestyboy-gamma.vercel.app
+/api/vouchers
+May 16 19:50:27.12
+GET
+200
+bestyboy-2y65fusnb-mostafalol1233s-projects.vercel.app
+/api/vouchers
+May 16 19:50:27.12
+GET
+401
+bestyboy-2y65fusnb-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 19:50:27.07
+GET
+401
+bestyboy-2y65fusnb-mostafalol1233s-projects.vercel.app
+/api/auth/me
+May 16 19:50:27.06
+GET
+200
+bestyboy-2y65fusnb-mostafalol1233s-projects.vercel.app
+/api/vouchers
+No more logs to show within selected timeline
+
+Logs
+GET
+
+/api/auth/me
+
+401
+Request started
+May 16 20:06:04.53GMT+3
+
+
+
+Function Invocation
+
+401
+Unauthorized
+
+
+
+
+Response finished
+Deployment Information
+
+40
+20:04:20
