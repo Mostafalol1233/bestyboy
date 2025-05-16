@@ -16,13 +16,13 @@ export default function Header() {
       <Link href="/">
         <div className="flex items-center gap-2 cursor-pointer">
           <img 
-            src={`${window.location.origin}/attached_assets/FB_IMG_1747248882099.jpg`} 
-            alt="Highway Gaming" 
+            src={`${window.location.origin}/attached_assets/image_1747412665992.png`} 
+            alt="Besty Boy" 
             className="w-10 h-10 rounded-full border-2 border-purple-600"
           />
           <span className="text-2xl md:text-3xl font-orbitron font-bold text-white neon-text">
-            <span className="text-purple-500">Highway</span>
-            <span className="text-red-500">Gaming</span>
+            <span className="text-purple-500">Besty</span>
+            <span className="text-red-500">Boy</span>
           </span>
         </div>
       </Link>
@@ -30,7 +30,7 @@ export default function Header() {
       {/* Social Media and Admin Links */}
       <div className="flex items-center space-x-4">
         <a 
-          href="https://www.facebook.com/share/1A6xtu99yR/" 
+          href="https://www.facebook.com/BestyBoyy/" 
           target="_blank" 
           rel="noopener noreferrer"
           className="text-gray-400 hover:text-blue-500 transition-colors"
@@ -39,7 +39,7 @@ export default function Header() {
           <FaFacebook className="text-xl" />
         </a>
         <a 
-          href="https://m.youtube.com/c/HighWayGaming" 
+          href="https://www.youtube.com/@Besty_Boy" 
           target="_blank" 
           rel="noopener noreferrer"
           className="text-gray-400 hover:text-red-500 transition-colors"

@@ -1,14 +1,14 @@
 // Initial voucher data with correct prices and bonus values
 // This file is used by both Replit and Vercel to ensure consistent data
 export const initialVouchers = [
-  // CrossFire vouchers - only showing CrossFire cards as requested
+  // CrossFire vouchers
   {
     gameType: "crossfire",
     amount: 5000,
     bonus: 2500,
     currency: "ZP",
     price: 120,
-    imageUrl: "/assets/images(3).jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
     description: "CrossFire card 5k + 2.5k zp bonus",
   },
   {
@@ -17,7 +17,7 @@ export const initialVouchers = [
     bonus: 5000,
     currency: "ZP",
     price: 240,
-    imageUrl: "/assets/images(2).jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
     description: "CrossFire card 10k + 5k zp bonus",
   },
   {
@@ -26,7 +26,7 @@ export const initialVouchers = [
     bonus: 10000,
     currency: "ZP",
     price: 455,
-    imageUrl: "/assets/images(1).jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
     description: "CrossFire card 20k + 10k zp bonus",
   },
   {
@@ -35,7 +35,7 @@ export const initialVouchers = [
     bonus: 25000,
     currency: "ZP",
     price: 1120,
-    imageUrl: "/assets/images(1).jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
     description: "CrossFire card 50k + 25k zp bonus",
   },
   {
@@ -44,7 +44,63 @@ export const initialVouchers = [
     bonus: 50000,
     currency: "ZP",
     price: 2300,
-    imageUrl: "/assets/images.jpg",
+    imageUrl: "/attached_assets/image_1747412665992.png",
     description: "CrossFire card 100k + 50k zp bonus",
+  },
+  // PUBG vouchers
+  {
+    gameType: "pubg",
+    amount: 5000,
+    bonus: 2500,
+    currency: "UC",
+    price: 120,
+    imageUrl: "/attached_assets/image_1747412665992.png",
+    description: "PUBG card 5k + 2.5k UC bonus",
+  },
+  {
+    gameType: "pubg",
+    amount: 10000,
+    bonus: 5000,
+    currency: "UC",
+    price: 240,
+    imageUrl: "/attached_assets/image_1747412665992.png",
+    description: "PUBG card 10k + 5k UC bonus",
+  },
+  {
+    gameType: "pubg",
+    amount: 50000,
+    bonus: 25000,
+    currency: "UC",
+    price: 1120,
+    imageUrl: "/attached_assets/image_1747412665992.png",
+    description: "PUBG card 50k + 25k UC bonus",
+  },
+  // Free Fire vouchers
+  {
+    gameType: "freefire",
+    amount: 5000,
+    bonus: 2500,
+    currency: "Diamonds",
+    price: 120,
+    imageUrl: "/attached_assets/image_1747412665992.png",
+    description: "Free Fire card 5k + 2.5k Diamonds bonus",
+  },
+  {
+    gameType: "freefire",
+    amount: 10000,
+    bonus: 5000,
+    currency: "Diamonds",
+    price: 240,
+    imageUrl: "/attached_assets/image_1747412665992.png",
+    description: "Free Fire card 10k + 5k Diamonds bonus",
+  },
+  {
+    gameType: "freefire",
+    amount: 50000,
+    bonus: 25000,
+    currency: "Diamonds",
+    price: 1120,
+    imageUrl: "/attached_assets/image_1747412665992.png",
+    description: "Free Fire card 50k + 25k Diamonds bonus",
   }
 ];
