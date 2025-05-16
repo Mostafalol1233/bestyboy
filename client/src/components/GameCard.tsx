@@ -10,8 +10,36 @@ interface GameCardProps {
 export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
   // Get the appropriate image for the card based on game type and amount
   const getCardImage = (voucher: Voucher): string => {
-    // Use the Besty Boy image for all game types
-    return 'image_1747412665992.png';
+    const { gameType, amount } = voucher;
+    
+    if (gameType === 'crossfire') {
+      // Different CrossFire images based on card value
+      if (amount === 5000) return 'images(3).jpg';
+      if (amount === 10000) return 'images(2).jpg';
+      if (amount === 20000) return 'images(1).jpg';
+      if (amount === 50000) return 'images(1).jpg';
+      if (amount === 100000) return 'images.jpg';
+      return 'images.jpg'; // Default
+    }
+    
+    if (gameType === 'pubg') {
+      // Different PUBG images based on card value
+      if (amount === 5000) return 'images(4).jpg';
+      if (amount === 10000) return 'images(5).jpg';
+      if (amount === 50000) return 'images(6).jpg';
+      return 'images(5).jpg'; // Default
+    }
+    
+    if (gameType === 'freefire') {
+      // Updated Free Fire images with new assets
+      if (amount === 5000) return 'freefire.png'; 
+      if (amount === 10000) return 'freefire2.png';
+      if (amount === 50000) return 'freefire.png';
+      return 'freefire2.png'; // Default
+    }
+    
+    // Fallback image 
+    return 'image_1747413124482.png';
   };
   const formattedAmount = voucher.amount.toLocaleString();
   const formattedK = (voucher.amount / 1000).toFixed(0);
@@ -48,7 +76,6 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
           alt={`${voucher.gameType} game card`} 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
         
         <div className="absolute top-3 right-3">
           <div className="price-badge flex items-center justify-center">
