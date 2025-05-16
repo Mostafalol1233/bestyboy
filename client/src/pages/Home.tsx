@@ -350,8 +350,8 @@ export default function Home() {
           </button>
           <img 
             id="characterImage"
-            src={`${window.location.origin}/attached_assets/FB_IMG_1747248882099.jpg`}
-            alt="Gaming character" 
+            src={`${window.location.origin}/attached_assets/image_1747412665992.png`}
+            alt="Besty Boy Logo" 
             className="h-72 w-auto object-contain pointer-events-none"
           />
         </div>
