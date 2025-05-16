@@ -54,6 +54,16 @@ export default function Footer() {
           </div>
           
           <div className="text-center md:text-right">
+            <p className="text-gray-400 text-sm">
+              Developed by <a 
+                href="https://www.linkedin.com/in/mostafa-mohamed-409540336/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-purple-400 hover:text-purple-300 transition-colors hover:underline"
+              >
+                Mostafa
+              </a>
+            </p>
             <p className="text-gray-500 text-xs mt-1">© {new Date().getFullYear()} Besty Boy Gaming. All rights reserved.</p>
           </div>
         </div>
