@@ -1,15 +1,12 @@
+
 // ====================================================================
 // INITIAL VOUCHER DATA FOR BESTY BOY
-// ====================================================================
-// IMPORTANT: Modify these values directly to change what appears on the site
-// After making changes, you need to redeploy to Vercel for changes to take effect
-// No need to use the admin panel - just edit this file!
 // ====================================================================
 
 // Helper function to automatically create description based on values
 const createDescription = (gameType, amount, bonus) => {
   const amountK = (amount/1000).toFixed(0);
-  const bonusK = bonus;
+  const bonusK = (bonus/1000).toFixed(0);
   
   const currencyMap = {
     "crossfire": "zp",
@@ -27,7 +24,7 @@ const createDescription = (gameType, amount, bonus) => {
 const crossfireVouchers = [
   {
     amount: 5000,     // Amount in points
-    bonus: 2500,      // Bonus points
+    bonus: 2500,      // Bonus points (half of amount)
     price: 120,       // Price in EGP
   },
   {
@@ -58,7 +55,7 @@ const crossfireVouchers = [
 const pubgVouchers = [
   {
     amount: 5000,     // Amount in UC
-    bonus: 2500,      // Bonus UC
+    bonus: 2500,      // Bonus UC (half of amount)
     price: 120,       // Price in EGP
   },
   {
@@ -79,7 +76,7 @@ const pubgVouchers = [
 const freeFireVouchers = [
   {
     amount: 5000,     // Amount in Diamonds
-    bonus: 2500,      // Bonus Diamonds
+    bonus: 2500,      // Bonus Diamonds (half of amount)
     price: 120,       // Price in EGP
   },
   {
