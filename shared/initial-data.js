@@ -24,7 +24,7 @@ const createDescription = (gameType, amount, bonus) => {
 const crossfireVouchers = [
   {
     amount: 5000,     // Amount in points
-    bonus: 2.5k,      // Bonus points (half of amount)
+    bonus: 2.5,      // Bonus points (half of amount)
     price: 120,       // Price in EGP
   },
   {
@@ -86,7 +86,7 @@ const freeFireVouchers = [
   },
   {
     amount: 50000,
-    bonus: 25k,
+    bonus: 25,
     price: 1120,
   },
 ];
