@@ -17,5 +17,5 @@ export function getVoucher(id) {
   return initialVouchers.find(voucher => voucher.id === numId);
 }
 
-// This ensures that Vercel will use the same data as Replit
+// Export data functions
 export default { getVouchers, getVouchersByGameType, getVoucher };
