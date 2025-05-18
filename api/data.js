@@ -1,3 +1,4 @@
+
 // Special file for Vercel to ensure consistent data across environments
 import { initialVouchers } from '../shared/initial-data.js';
 
