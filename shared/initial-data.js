@@ -9,7 +9,7 @@
 // Helper function to automatically create description based on values
 const createDescription = (gameType, amount, bonus) => {
   const amountK = (amount/1000).toFixed(0);
-  const bonusK = (bonus/1000).toFixed(0);
+  const bonusK = bonus;
   
   const currencyMap = {
     "crossfire": "zp",

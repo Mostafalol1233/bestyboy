@@ -86,7 +86,7 @@ export default function GameCard({ voucher, buttonStyle }: GameCardProps) {
         
         <div className="absolute bottom-3 left-3">
           <div className="bonus-badge flex items-center justify-center">
-            <span className="gaming-digits">+{(voucher.bonus/1000).toFixed(0)}K BONUS</span>
+            <span className="gaming-digits">+{voucher.bonus} BONUS</span>
           </div>
         </div>
         
