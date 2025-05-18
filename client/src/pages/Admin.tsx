@@ -66,8 +66,8 @@ export default function Admin() {
       <Card className="w-full max-w-md border border-purple-900 shadow-[0_0_25px_rgba(124,58,237,0.15)]">
         <CardHeader>
           <CardTitle className="font-orbitron text-3xl text-center neon-text">
-            <span className="text-purple-500">Highway</span>
-            <span className="text-red-500">Gaming</span>
+            <span className="text-purple-500">Besty</span>
+            <span className="text-red-500">Boy</span>
           </CardTitle>
           <CardDescription className="text-center flex items-center justify-center gap-2">
             <span className="bg-purple-500/20 p-1 rounded">🔒</span> Admin Access
