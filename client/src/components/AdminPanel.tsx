@@ -11,11 +11,10 @@ import {
   SelectTrigger, 
   SelectValue 
 } from "@/components/ui/select";
-import { useVouchers } from "@/hooks/use-vouchers";
+import { useVouchers } from "@/contexts/VoucherContext";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import { queryClient } from "@/lib/queryClient";
-import { X, Save } from "lucide-react";
+import { X, Save, Plus, Trash } from "lucide-react";
+import { Voucher } from "@shared/schema";
 
 interface AdminPanelProps {
   onClose: () => void;
@@ -29,7 +28,10 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
   const [amount, setAmount] = useState<string>("");
   const [bonus, setBonus] = useState<string>("");
   const [price, setPrice] = useState<string>("");
-  const { vouchers, isLoading, refetch } = useVouchers(selectedGame);
+  const [isAdding, setIsAdding] = useState(false);
+  
+  const { vouchers, getVouchersByGameType, updateVoucher, addVoucher, deleteVoucher } = useVouchers();
+  const gameVouchers = getVouchersByGameType(selectedGame);
   const { toast } = useToast();
 
   // When game type changes, reset card selection
@@ -38,19 +40,20 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
     setAmount("");
     setBonus("");
     setPrice("");
+    setIsAdding(false);
   }, [selectedGame]);
 
   // When card selection changes, populate fields
   useEffect(() => {
-    if (selectedVoucherId && vouchers) {
-      const selectedVoucher = vouchers.find(v => v.id.toString() === selectedVoucherId);
+    if (selectedVoucherId && gameVouchers) {
+      const selectedVoucher = gameVouchers.find(v => v.id.toString() === selectedVoucherId);
       if (selectedVoucher) {
         setAmount(selectedVoucher.amount.toString());
         setBonus(selectedVoucher.bonus.toString());
-        setPrice(selectedVoucher.price ? selectedVoucher.price.toString() : "0");
+        setPrice(selectedVoucher.price.toString());
       }
     }
-  }, [selectedVoucherId, vouchers]);
+  }, [selectedVoucherId, gameVouchers]);
 
   // Format game type for display
   const formatGameType = (type: string): string => {
@@ -58,14 +61,15 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
   };
 
   // Format voucher label
-  const formatVoucherLabel = (voucher: any): string => {
+  const formatVoucherLabel = (voucher: Voucher): string => {
     const amountInK = (voucher.amount / 1000).toFixed(0);
-    return `${amountInK}K ${voucher.currency} (${voucher.bonus} Bonus)`;
+    const bonusInK = (voucher.bonus / 1000).toFixed(0);
+    return `${amountInK}K ${voucher.currency} (${bonusInK}K Bonus)`;
   };
 
   // Update existing voucher
-  const handleSave = async () => {
-    if (!selectedVoucherId || !amount || !bonus || !price) {
+  const handleSave = () => {
+    if (!amount || !bonus || !price) {
       toast({
         variant: "destructive",
         title: "خطأ في التحقق",
@@ -75,27 +79,96 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
     }
 
     try {
-      await apiRequest("PUT", `/api/vouchers/${selectedVoucherId}`, {
-        amount: Number(amount),
-        bonus: Number(bonus),
-        price: Number(price),
-      });
-
-      toast({
-        title: "تم بنجاح",
-        description: "تم تحديث القسيمة بنجاح",
-      });
-
-      // Invalidate and refetch queries to update UI
-      queryClient.invalidateQueries({ queryKey: ["/api/vouchers"] });
-      refetch();
+      if (isAdding) {
+        // Add new voucher
+        const newVoucher = {
+          gameType: selectedGame,
+          amount: Number(amount),
+          bonus: Number(bonus),
+          price: Number(price),
+          currency: selectedGame === 'crossfire' ? 'ZP' : 
+                   selectedGame === 'pubg' ? 'UC' : 'Diamonds',
+          imageUrl: "/attached_assets/image_1747412665992.png",
+        };
+        
+        addVoucher(newVoucher);
+        
+        toast({
+          title: "تم بنجاح",
+          description: "تمت إضافة القسيمة الجديدة بنجاح",
+        });
+        
+        // Reset form for next entry
+        setAmount("");
+        setBonus("");
+        setPrice("");
+        
+      } else if (selectedVoucherId) {
+        // Update existing voucher
+        updateVoucher(Number(selectedVoucherId), {
+          amount: Number(amount),
+          bonus: Number(bonus),
+          price: Number(price),
+        });
+        
+        toast({
+          title: "تم بنجاح",
+          description: "تم تحديث القسيمة بنجاح",
+        });
+      }
     } catch (error) {
       toast({
         variant: "destructive",
         title: "فشل التحديث",
         description: "حدث خطأ أثناء تحديث القسيمة.",
       });
+      console.error(error);
     }
+  };
+  
+  // Delete a voucher
+  const handleDelete = () => {
+    if (!selectedVoucherId) return;
+    
+    try {
+      deleteVoucher(Number(selectedVoucherId));
+      
+      toast({
+        title: "تم بنجاح",
+        description: "تم حذف القسيمة بنجاح",
+      });
+      
+      // Reset form
+      setSelectedVoucherId("");
+      setAmount("");
+      setBonus("");
+      setPrice("");
+      
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "فشل الحذف",
+        description: "حدث خطأ أثناء حذف القسيمة.",
+      });
+      console.error(error);
+    }
+  };
+  
+  // Switch to add mode
+  const startAddingVoucher = () => {
+    setIsAdding(true);
+    setSelectedVoucherId("");
+    setAmount("");
+    setBonus("");
+    setPrice("");
+  };
+  
+  // Cancel adding new voucher
+  const cancelAddingVoucher = () => {
+    setIsAdding(false);
+    setAmount("");
+    setBonus("");
+    setPrice("");
   };
 
   return (
@@ -134,82 +207,124 @@ export default function AdminPanel({ onClose, gameTypes, activeGame }: AdminPane
           </Select>
         </div>
         
-        <div className="mb-4">
-          <Label className="block text-sm font-medium mb-1">اختر القسيمة</Label>
-          <Select 
-            value={selectedVoucherId} 
-            onValueChange={setSelectedVoucherId}
-            disabled={isLoading || !vouchers || vouchers.length === 0}
-          >
-            <SelectTrigger className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded">
-              <SelectValue placeholder="اختر القسيمة" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {vouchers && vouchers.map((voucher) => (
-                  <SelectItem key={voucher.id} value={voucher.id.toString()}>
-                    {formatVoucherLabel(voucher)}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        {!isAdding && (
+          <div className="mb-4">
+            <div className="flex justify-between items-center">
+              <Label className="block text-sm font-medium mb-1">اختر القسيمة</Label>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-green-400 hover:text-green-300 -mt-1"
+                onClick={startAddingVoucher}
+              >
+                <Plus className="h-4 w-4 mr-1" /> إضافة جديدة
+              </Button>
+            </div>
+            <Select 
+              value={selectedVoucherId} 
+              onValueChange={setSelectedVoucherId}
+              disabled={!gameVouchers || gameVouchers.length === 0}
+            >
+              <SelectTrigger className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded">
+                <SelectValue placeholder="اختر القسيمة" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {gameVouchers && gameVouchers.map((voucher) => (
+                    <SelectItem key={voucher.id} value={voucher.id.toString()}>
+                      {formatVoucherLabel(voucher)}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <Label className="block text-sm font-medium mb-1">
-              القيمة ({selectedGame === 'crossfire' ? 'ZP' : 
-                    selectedGame === 'pubg' ? 'UC' : 'Diamonds'})
-            </Label>
-            <Input 
-              type="number" 
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
-              placeholder="5000"
-              disabled={!selectedVoucherId}
-            />
-          </div>
-          
-          <div>
-            <Label className="block text-sm font-medium mb-1">المكافأة</Label>
-            <Input 
-              type="number" 
-              value={bonus}
-              onChange={(e) => setBonus(e.target.value)}
-              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
-              placeholder="120"
-              disabled={!selectedVoucherId}
-            />
-          </div>
-          
-          <div className="md:col-span-2">
-            <Label className="block text-sm font-medium mb-1">
-              <span className="flex items-center gap-1">
-                سعر البيع <span className="text-green-500">(ج.م)</span>
-              </span>
-            </Label>
-            <Input 
-              type="number" 
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
-              placeholder="75"
-              disabled={!selectedVoucherId}
-            />
-          </div>
-        </div>
-        
-        <div className="mt-4 flex justify-end">
-          <Button 
-            className="gaming-btn bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2"
-            onClick={handleSave}
-            disabled={!selectedVoucherId || !amount || !bonus || !price}
-          >
-            <Save size={16} /> حفظ التغييرات
-          </Button>
-        </div>
+        {(isAdding || selectedVoucherId) && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <Label className="block text-sm font-medium mb-1">
+                  القيمة ({selectedGame === 'crossfire' ? 'ZP' : 
+                        selectedGame === 'pubg' ? 'UC' : 'Diamonds'})
+                </Label>
+                <Input 
+                  type="number" 
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
+                  placeholder="5000"
+                />
+              </div>
+              
+              <div>
+                <Label className="block text-sm font-medium mb-1">المكافأة</Label>
+                <Input 
+                  type="number" 
+                  value={bonus}
+                  onChange={(e) => setBonus(e.target.value)}
+                  className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
+                  placeholder="2500"
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <Label className="block text-sm font-medium mb-1">
+                  <span className="flex items-center gap-1">
+                    سعر البيع <span className="text-green-500">(ج.م)</span>
+                  </span>
+                </Label>
+                <Input 
+                  type="number" 
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="w-full bg-gray-800 border border-purple-900 hover:border-purple-700 rounded text-white" 
+                  placeholder="120"
+                />
+              </div>
+            </div>
+            
+            <div className="mt-4 flex justify-between">
+              {isAdding ? (
+                <>
+                  <Button 
+                    variant="outline"
+                    className="border-gray-600 text-gray-400 hover:text-gray-300"
+                    onClick={cancelAddingVoucher}
+                  >
+                    إلغاء
+                  </Button>
+                  <Button 
+                    className="gaming-btn bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+                    onClick={handleSave}
+                    disabled={!amount || !bonus || !price}
+                  >
+                    <Plus size={16} /> إضافة قسيمة
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button 
+                    variant="outline"
+                    className="border-red-600 text-red-400 hover:text-red-300 flex items-center gap-2"
+                    onClick={handleDelete}
+                    disabled={!selectedVoucherId}
+                  >
+                    <Trash size={16} /> حذف
+                  </Button>
+                  <Button 
+                    className="gaming-btn bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2"
+                    onClick={handleSave}
+                    disabled={!selectedVoucherId || !amount || !bonus || !price}
+                  >
+                    <Save size={16} /> حفظ التغييرات
+                  </Button>
+                </>
+              )}
+            </div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

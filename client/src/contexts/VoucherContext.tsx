@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Voucher } from '@shared/schema';
 
 // ====================================================================
@@ -21,9 +21,9 @@ const createDescription = (gameType: string, amount: number, bonus: number): str
 };
 
 // ====================================================================
-// CROSSFIRE VOUCHERS - EDIT VALUES HERE
+// DEFAULT VOUCHERS - USED IF NO SAVED DATA EXISTS
 // ====================================================================
-const crossfireVouchers = [
+const defaultCrossfireVouchers = [
   {
     id: 1,
     gameType: "crossfire",
@@ -71,10 +71,7 @@ const crossfireVouchers = [
   },
 ];
 
-// ====================================================================
-// PUBG VOUCHERS - EDIT VALUES HERE
-// ====================================================================
-const pubgVouchers = [
+const defaultPubgVouchers = [
   {
     id: 6,
     gameType: "pubg",
@@ -104,10 +101,7 @@ const pubgVouchers = [
   },
 ];
 
-// ====================================================================
-// FREE FIRE VOUCHERS - EDIT VALUES HERE
-// ====================================================================
-const freeFireVouchers = [
+const defaultFreeFireVouchers = [
   {
     id: 9,
     gameType: "freefire",
@@ -137,54 +131,126 @@ const freeFireVouchers = [
   },
 ];
 
-// Add descriptions to all vouchers
-const processedCrossfireVouchers = crossfireVouchers.map(voucher => ({
-  ...voucher,
-  description: createDescription("crossfire", voucher.amount, voucher.bonus),
-}));
+// Process vouchers to add descriptions
+const processVouchers = (vouchers: any[]) => {
+  return vouchers.map(voucher => ({
+    ...voucher,
+    description: createDescription(voucher.gameType, voucher.amount, voucher.bonus),
+  }));
+};
 
-const processedPubgVouchers = pubgVouchers.map(voucher => ({
-  ...voucher,
-  description: createDescription("pubg", voucher.amount, voucher.bonus),
-}));
-
-const processedFreeFireVouchers = freeFireVouchers.map(voucher => ({
-  ...voucher,
-  description: createDescription("freefire", voucher.amount, voucher.bonus),
-}));
-
-// Combine all vouchers into a single array
-const allVouchers = [
-  ...processedCrossfireVouchers,
-  ...processedPubgVouchers,
-  ...processedFreeFireVouchers
-];
+// Combine all default vouchers into a single array
+const getDefaultVouchers = () => {
+  const processedCrossfireVouchers = processVouchers(defaultCrossfireVouchers);
+  const processedPubgVouchers = processVouchers(defaultPubgVouchers);
+  const processedFreeFireVouchers = processVouchers(defaultFreeFireVouchers);
+  
+  return [
+    ...processedCrossfireVouchers,
+    ...processedPubgVouchers,
+    ...processedFreeFireVouchers
+  ];
+};
 
 // ====================================================================
-// React Context Setup - Do not edit below this line
+// React Context Setup with Edit Functionality
 // ====================================================================
 
 interface VoucherContextType {
   vouchers: Voucher[];
   getVouchersByGameType: (gameType: string) => Voucher[];
+  updateVoucher: (id: number, updates: Partial<Voucher>) => void;
+  addVoucher: (voucher: Omit<Voucher, 'id' | 'description'>) => void;
+  deleteVoucher: (id: number) => void;
 }
 
-export const VoucherContext = createContext<VoucherContextType | null>(null);
+// Create the context
+const VoucherContext = createContext<VoucherContextType | null>(null);
 
 interface VoucherProviderProps {
   children: ReactNode;
 }
 
-export function VoucherProvider({ children }: VoucherProviderProps) {
-  const [vouchers] = useState<Voucher[]>(allVouchers as Voucher[]);
+function VoucherProvider({ children }: VoucherProviderProps) {
+  // Try to load vouchers from localStorage, or use defaults
+  const getSavedVouchers = (): Voucher[] => {
+    const saved = localStorage.getItem('bestyboy_vouchers');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse saved vouchers', e);
+      }
+    }
+    return getDefaultVouchers() as Voucher[];
+  };
 
-  const getVouchersByGameType = (gameType: string) => {
+  const [vouchers, setVouchers] = useState<Voucher[]>(getSavedVouchers());
+
+  // Save vouchers to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('bestyboy_vouchers', JSON.stringify(vouchers));
+  }, [vouchers]);
+
+  // Get vouchers by game type
+  const getVouchersByGameType = (gameType: string): Voucher[] => {
     return vouchers.filter(v => v.gameType === gameType);
   };
 
+  // Update a voucher
+  const updateVoucher = (id: number, updates: Partial<Voucher>): void => {
+    setVouchers(prevVouchers => {
+      const newVouchers = prevVouchers.map(voucher => {
+        if (voucher.id === id) {
+          // Create updated voucher
+          const updatedVoucher = { ...voucher, ...updates };
+          // Regenerate description if amount or bonus changed
+          if (updates.amount !== undefined || updates.bonus !== undefined) {
+            updatedVoucher.description = createDescription(
+              updatedVoucher.gameType,
+              updatedVoucher.amount,
+              updatedVoucher.bonus
+            );
+          }
+          return updatedVoucher;
+        }
+        return voucher;
+      });
+      return newVouchers;
+    });
+  };
+
+  // Add a new voucher
+  const addVoucher = (voucher: Omit<Voucher, 'id' | 'description'>): void => {
+    setVouchers(prevVouchers => {
+      // Find the highest ID to generate a new unique ID
+      const highestId = Math.max(0, ...prevVouchers.map(v => v.id));
+      const newId = highestId + 1;
+      
+      // Create the description
+      const description = createDescription(
+        voucher.gameType,
+        voucher.amount,
+        voucher.bonus
+      );
+      
+      // Add the new voucher
+      return [...prevVouchers, { ...voucher, id: newId, description }];
+    });
+  };
+
+  // Delete a voucher
+  const deleteVoucher = (id: number): void => {
+    setVouchers(prevVouchers => prevVouchers.filter(voucher => voucher.id !== id));
+  };
+
+  // Context value
   const value = {
     vouchers,
     getVouchersByGameType,
+    updateVoucher,
+    addVoucher,
+    deleteVoucher
   };
 
   return (
@@ -194,10 +260,13 @@ export function VoucherProvider({ children }: VoucherProviderProps) {
   );
 }
 
-export const useVouchers = () => {
+// Custom hook to use the voucher context
+const useVouchers = () => {
   const context = useContext(VoucherContext);
   if (!context) {
     throw new Error('useVouchers must be used within a VoucherProvider');
   }
   return context;
 };
+
+export { VoucherProvider, useVouchers, VoucherContext };

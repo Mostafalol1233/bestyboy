@@ -1,19 +1,18 @@
-
 // ====================================================================
 // INITIAL VOUCHER DATA FOR BESTY BOY
 // ====================================================================
 
 // Helper function to automatically create description based on values
 const createDescription = (gameType, amount, bonus) => {
-  const amountK = (amount/1000).toFixed(0);
-  const bonusK = (bonus/1000).toFixed(0);
-  
+  const amountK = (amount / 1000).toFixed(0);
+  const bonusK = (bonus / 1000).toFixed(0);
+
   const currencyMap = {
-    "crossfire": "zp",
-    "pubg": "UC",
-    "freefire": "Diamonds"
+    crossfire: "zp",
+    pubg: "UC",
+    freefire: "Diamonds",
   };
-  
+
   const currency = currencyMap[gameType] || "";
   return `${gameType} card ${amountK}k + ${bonusK}k ${currency} bonus`;
 };
@@ -23,9 +22,9 @@ const createDescription = (gameType, amount, bonus) => {
 // ====================================================================
 const crossfireVouchers = [
   {
-    amount: 5000,     // Amount in points
-    bonus: 2.5,      // Bonus points (half of amount)
-    price: 120,       // Price in EGP
+    amount: 5000, // Amount in points
+    bonus: 2.5, // Bonus points (half of amount)
+    price: 120, // Price in EGP
   },
   {
     amount: 10000,
@@ -54,18 +53,18 @@ const crossfireVouchers = [
 // ====================================================================
 const pubgVouchers = [
   {
-    amount: 5000,     // Amount in UC
-    bonus: 2500,      // Bonus UC (half of amount)
-    price: 120,       // Price in EGP
+    amount: 5000, // Amount in UC
+    bonus: 250, // Bonus UC (half of amount)
+    price: 120, // Price in EGP
   },
   {
     amount: 10000,
-    bonus: 5000,
+    bonus: 500,
     price: 240,
   },
   {
-    amount: 50000,
-    bonus: 25000,
+    amount: 5000,
+    bonus: 2500,
     price: 1120,
   },
 ];
@@ -75,17 +74,17 @@ const pubgVouchers = [
 // ====================================================================
 const freeFireVouchers = [
   {
-    amount: 5000,     // Amount in Diamonds
-    bonus: 2500,      // Bonus Diamonds (half of amount)
-    price: 120,       // Price in EGP
+    amount: 500, // Amount in Diamonds
+    bonus: 2500, // Bonus Diamonds (half of amount)
+    price: 120, // Price in EGP
   },
   {
-    amount: 10000,
-    bonus: 5000,
+    amount: 1000,
+    bonus: 500,
     price: 240,
   },
   {
-    amount: 50000,
+    amount: 500,
     bonus: 25,
     price: 1120,
   },
@@ -96,7 +95,7 @@ const freeFireVouchers = [
 // ====================================================================
 
 // Process CrossFire vouchers
-const processedCrossfireVouchers = crossfireVouchers.map(voucher => ({
+const processedCrossfireVouchers = crossfireVouchers.map((voucher) => ({
   gameType: "crossfire",
   amount: voucher.amount,
   bonus: voucher.bonus,
@@ -107,7 +106,7 @@ const processedCrossfireVouchers = crossfireVouchers.map(voucher => ({
 }));
 
 // Process PUBG vouchers
-const processedPubgVouchers = pubgVouchers.map(voucher => ({
+const processedPubgVouchers = pubgVouchers.map((voucher) => ({
   gameType: "pubg",
   amount: voucher.amount,
   bonus: voucher.bonus,
@@ -118,7 +117,7 @@ const processedPubgVouchers = pubgVouchers.map(voucher => ({
 }));
 
 // Process Free Fire vouchers
-const processedFreeFireVouchers = freeFireVouchers.map(voucher => ({
+const processedFreeFireVouchers = freeFireVouchers.map((voucher) => ({
   gameType: "freefire",
   amount: voucher.amount,
   bonus: voucher.bonus,
@@ -132,5 +131,5 @@ const processedFreeFireVouchers = freeFireVouchers.map(voucher => ({
 export const initialVouchers = [
   ...processedCrossfireVouchers,
   ...processedPubgVouchers,
-  ...processedFreeFireVouchers
+  ...processedFreeFireVouchers,
 ];
