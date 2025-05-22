@@ -3,8 +3,8 @@ import { useLocation } from "wouter";
 import GameNavigation from "@/components/GameNavigation";
 import GameSection from "@/components/GameSection";
 import { useToast } from "@/hooks/use-toast";
-import { useVouchers } from "@/hooks/use-vouchers";
 import { useAuth } from "@/hooks/use-auth";
+import { useVouchers } from "@/contexts/VoucherContext";
 import AdminPanel from "@/components/AdminPanel";
 import { X, Settings, Play } from "lucide-react";
 import { 
@@ -27,9 +27,9 @@ const redeemCodes = {
 };
 
 const gameVideos = {
-  crossfire: "https://www.youtube.com/watch?v=SxTaf18Hndw",
-  pubg: "https://www.youtube.com/watch?v=uCd6tbUAy6o",
-  freefire: "https://www.youtube.com/watch?v=FDO6nDK0aBw"
+  crossfire: "https://www.youtube.com/@Besty_Boy", 
+  pubg: "https://www.youtube.com/@Besty_Boy",
+  freefire: "https://www.youtube.com/@Besty_Boy"
 };
 
 export default function Home() {
@@ -44,27 +44,11 @@ export default function Home() {
   const videoDialogCloseRef = useRef<HTMLButtonElement>(null);
   const [, navigate] = useLocation();
   const { isAdmin } = useAuth();
-  const { 
-    vouchers,
-    isLoading,
-    isError,
-    refetch
-  } = useVouchers(activeGame);
+  const { getVouchersByGameType } = useVouchers();
+  const vouchers = getVouchersByGameType(activeGame);
+  const isLoading = false;
+  const isError = false;
   const { toast } = useToast();
-  
-  useEffect(() => {
-    refetch();
-  }, [activeGame, refetch]);
-
-  useEffect(() => {
-    if (isError) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to load vouchers. Please try again later.",
-      });
-    }
-  }, [isError, toast]);
   
   // Add keyboard shortcuts for admin access
   useEffect(() => {
