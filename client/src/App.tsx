@@ -1,37 +1,17 @@
-import { Switch, Route } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
-import Admin from "@/pages/Admin";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/react";
+import { GameSection } from "./components/GameSection";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { Toaster } from "./components/ui/toaster";
 
-function Router() {
+export default function App() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/admin" component={Admin} />
-      <Route component={NotFound} />
-    </Switch>
-  );
-}
-
-function App() {
-  return (
-    <TooltipProvider>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <Router />
-        </main>
-        <Footer />
-      </div>
+    <div className="min-h-screen bg-background font-sans antialiased">
+      <Header />
+      <main className="flex-1">
+        <GameSection />
+      </main>
+      <Footer />
       <Toaster />
-      <Analytics />
-    </TooltipProvider>
+    </div>
   );
 }
-
-export default App;
