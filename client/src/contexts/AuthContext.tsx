@@ -1,9 +1,20 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
-import { apiRequest } from "@/lib/queryClient";
-import { LoginCredentials, User } from "@shared/schema";
+
+// Simplified LoginCredentials type for local authentication
+interface LoginCredentials {
+  username: string;
+  password: string;
+}
+
+// Simplified User type for local authentication
+interface User {
+  id: string;
+  username: string;
+  isAdmin: boolean;
+}
 
 interface AuthContextType {
-  user: Partial<User> | null;
+  user: User | null;
   isAuthenticated: boolean;
   isAdmin: boolean;
   isLoading: boolean;
@@ -11,11 +22,17 @@ interface AuthContextType {
   logout: () => Promise<void>;
 }
 
+// Default admin credentials - matches what we set in config.js
+const ADMIN_CREDENTIALS = {
+  username: "admin",
+  password: "bestyboy123"
+};
+
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
   isAdmin: false,
-  isLoading: true,
+  isLoading: false,
   login: async () => {},
   logout: async () => {},
 });
@@ -25,43 +42,54 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<Partial<User> | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Check localStorage for saved authentication
+  const savedAuth = localStorage.getItem('bestyboy_auth');
+  const initialUser = savedAuth ? JSON.parse(savedAuth) : null;
+  
+  const [user, setUser] = useState<User | null>(initialUser);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Check if user is already authenticated
+  // Save authentication to localStorage when it changes
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("/api/auth/me", { credentials: "include" });
-        if (res.ok) {
-          const userData = await res.json();
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (user) {
+      localStorage.setItem('bestyboy_auth', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('bestyboy_auth');
+    }
+  }, [user]);
 
-    checkAuth();
-  }, []);
-
-  const login = async (credentials: LoginCredentials) => {
+  const login = async (credentials: LoginCredentials): Promise<void> => {
     setIsLoading(true);
+    
     try {
-      const res = await apiRequest("POST", "/api/auth/login", credentials);
-      const userData = await res.json();
-      setUser(userData);
+      // Simple local authentication - check against hard-coded admin credentials
+      if (credentials.username === ADMIN_CREDENTIALS.username && 
+          credentials.password === ADMIN_CREDENTIALS.password) {
+        
+        // Create a local user object
+        const userData: User = {
+          id: '1',
+          username: credentials.username,
+          isAdmin: true
+        };
+        
+        setUser(userData);
+        return;
+      }
+      
+      // If credentials don't match, throw error
+      throw new Error("Invalid credentials");
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     setIsLoading(true);
     try {
-      await apiRequest("POST", "/api/auth/logout", {});
       setUser(null);
     } finally {
       setIsLoading(false);
