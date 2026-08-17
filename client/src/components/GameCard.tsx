@@ -20,14 +20,8 @@ const gameNames: Record<string, { en: string; ar: string }> = {
 };
 
 const gameAccent: Record<string, string> = {
-  crossfire: "#38bdf8",
-  pubg: "#fbbf24",
-  freefire: "#fb7185",
-  codm: "#a3e635",
-  mobilelegends: "#60a5fa",
-  valorant: "#fb7185",
-  roblox: "#e2e8f0",
-  fcmobile: "#34d399",
+  crossfire: "#38bdf8", pubg: "#fbbf24", freefire: "#fb7185", codm: "#a3e635",
+  mobilelegends: "#60a5fa", valorant: "#fb7185", roblox: "#e2e8f0", fcmobile: "#34d399",
 };
 
 function getCardImage(voucher: Voucher) {
@@ -41,13 +35,12 @@ export default function GameCard({ voucher }: GameCardProps) {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const gameName = gameNames[voucher.gameType]?.[language === "ar" ? "ar" : "en"] || voucher.gameType;
-  const price = voucher.price || 0;
-  const amount = voucher.amount.toLocaleString(language === "ar" ? "ar-EG" : "en-EG");
-  const bonus = voucher.bonus.toLocaleString(language === "ar" ? "ar-EG" : "en-EG");
-  const accent = gameAccent[voucher.gameType] || "#22d3ee";
-  const description = language === "ar"
-    ? `${amount} ${voucher.currency} مع ${bonus} هدية إضافية`
-    : `${amount} ${voucher.currency} with ${bonus} bonus`;
+  const numberLocale = language === "ar" ? "ar-EG" : "en-EG";
+  const amount = voucher.amount.toLocaleString(numberLocale);
+  const price = (voucher.price || 0).toLocaleString(numberLocale);
+  const bonus = voucher.bonus.toLocaleString(numberLocale);
+  const accent = gameAccent[voucher.gameType] || "#ef4059";
+  const description = language === "ar" ? `${amount} ${voucher.currency} + ${bonus} هدية` : `${amount} ${voucher.currency} + ${bonus} bonus`;
 
   const handleAdd = () => {
     addItem(voucher);
@@ -55,25 +48,22 @@ export default function GameCard({ voucher }: GameCardProps) {
   };
 
   return (
-    <article className="package-card group">
-      <Link href={`/game/${voucher.gameType}`} className="package-card-media" aria-label={`${gameName} ${amount} ${voucher.currency}`}>
-        <img src={getCardImage(voucher)} alt={`${gameName} ${amount} ${voucher.currency}`} loading="lazy" />
-        <div className="package-card-shade" />
-        {voucher.bonus > 0 && <span className="package-badge"><Flame size={13} fill="currentColor" />+{bonus} {t("bonus")}</span>}
-        <span className="package-game-label" style={{ borderColor: `${accent}66`, color: accent }}>{gameName}</span>
+    <article className="package-card package-card-compact group">
+      <div className="package-card-topline">
+        {voucher.bonus > 0 && <span className="package-hot-badge"><Flame size={12} fill="currentColor" />{language === "ar" ? "عرض" : "HOT"}</span>}
+        <span className="package-card-icon" style={{ color: accent }} aria-hidden="true">{voucher.currency.slice(0, 2)}</span>
+      </div>
+      <Link href={`/game/${voucher.gameType}`} className="package-card-media package-card-media-compact" aria-label={`${gameName} ${amount} ${voucher.currency}`}>
+        <img src={getCardImage(voucher)} alt="" loading="lazy" />
       </Link>
-      <div className="package-card-body">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="package-kicker">{gameName}</p>
-            <h3 className="package-title">{amount} {voucher.currency}</h3>
-          </div>
-          <span className="package-price">{price.toLocaleString(language === "ar" ? "ar-EG" : "en-EG")} <small>{t("currency")}</small></span>
-        </div>
-        <p className="package-description">{description}</p>
-        <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
-          <button onClick={handleAdd} className="gaming-btn package-buy-button"><FaShoppingCart size={14} />{t("addToCart")}</button>
-          <Link href={`/game/${voucher.gameType}`} className="package-view-button" aria-label={t("viewAll")}><ArrowUpRight size={17} /></Link>
+      <div className="package-card-body package-card-body-compact">
+        <p className="package-kicker">{gameName}</p>
+        <h3 className="package-title">{gameName} <span>({amount} {voucher.currency})</span></h3>
+        {voucher.bonus > 0 && <p className="package-bonus-line">+{bonus} {t("bonus")}</p>}
+        <div className="package-price-row"><span className="package-price package-price-large">{price} <small>{t("currency")}</small></span><span className="package-delivery-dot" /></div>
+        <div className="package-actions">
+          <button onClick={handleAdd} className="package-buy-button package-buy-button-compact"><FaShoppingCart size={12} />{t("addToCart")}</button>
+          <Link href={`/game/${voucher.gameType}`} className="package-view-button package-view-button-compact" aria-label={t("viewAll")}><ArrowUpRight size={15} /></Link>
         </div>
       </div>
     </article>

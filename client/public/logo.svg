@@ -1,27 +1,18 @@
-<svg width="296" height="72" viewBox="0 0 296 72" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="360" height="82" viewBox="0 0 360 82" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Besty Boy</title>
-  <desc id="desc">Besty Boy gaming marketplace logo</desc>
+  <desc id="desc">Besty Boy gaming marketplace wordmark</desc>
   <defs>
-    <linearGradient id="mark" x1="8" y1="8" x2="58" y2="62" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F43F8F"/>
-      <stop offset="0.52" stop-color="#B45CFF"/>
-      <stop offset="1" stop-color="#38BDF8"/>
-    </linearGradient>
-    <linearGradient id="word" x1="82" y1="12" x2="286" y2="60" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFFFFF"/>
-      <stop offset="0.55" stop-color="#D9E9FF"/>
-      <stop offset="1" stop-color="#F1A2FF"/>
-    </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF5568"/><stop offset="1" stop-color="#D61F3D"/></linearGradient>
+    <linearGradient id="white" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#BFC4CE"/></linearGradient>
+    <filter id="soft" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="2.4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-  <g filter="url(#glow)">
-    <path d="M17 16.5C17 12.91 19.91 10 23.5 10h20C47.09 10 50 12.91 50 16.5v23.1c0 2.65-1.44 5.09-3.75 6.36l-9.76 5.37a6 6 0 0 1-5.78 0l-9.96-5.48A7 7 0 0 1 17 39.73V16.5Z" stroke="url(#mark)" stroke-width="4"/>
-    <path d="M24 28h9m-4.5-4.5V32" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
-    <circle cx="40.5" cy="26" r="2.1" fill="#fff"/>
-    <circle cx="44.5" cy="30" r="2.1" fill="#fff"/>
+  <g filter="url(#soft)">
+    <path d="M11 18L31 8L51 18V49L31 63L11 49V18Z" stroke="url(#red)" stroke-width="4"/>
+    <path d="M18 29H42M30 18V42" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <path d="M52 40L65 33L58 48L52 40Z" fill="url(#red)"/>
+    <text x="75" y="55" fill="url(#white)" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="900" letter-spacing="-2.5">BESTY</text>
+    <text x="226" y="55" fill="url(#red)" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="900" letter-spacing="-2.5">BOY</text>
+    <path d="M77 67H319" stroke="#343944" stroke-width="2"/>
+    <path d="M77 67H143" stroke="url(#red)" stroke-width="2"/>
   </g>
-  <text x="69" y="45" fill="url(#word)" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="800" letter-spacing="-1.5">Besty Boy</text>
 </svg>
