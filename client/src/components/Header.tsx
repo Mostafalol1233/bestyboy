@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { FaFacebook, FaYoutube } from "react-icons/fa";
-import { Gamepad2, Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCart } from "@/contexts/CartContext";
@@ -24,13 +24,16 @@ export default function Header({ onCartOpen }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#090b12]/85 backdrop-blur-xl">
-      <div className="container flex min-h-20 items-center justify-between gap-4">
-        <Link href="/" onClick={() => setMobileOpen(false)}>
-          <div className="flex cursor-pointer items-center gap-3">
-            <span className="brand-mark"><Gamepad2 size={22} /></span>
-            <span className="font-orbitron text-xl font-bold tracking-tight text-white sm:text-2xl"><span className="text-cyan-300">Besty</span><span className="text-fuchsia-400"> Boy</span></span>
-          </div>
+    <header className="site-header sticky top-0 z-50">
+      <div className="top-strip hidden md:block">
+        <div className="container flex items-center justify-between text-[11px] text-slate-500">
+          <span>{language === "ar" ? "شحن رقمي سريع ودعم حقيقي عبر واتساب" : "Fast digital delivery with real WhatsApp support"}</span>
+          <span>{language === "ar" ? "آمن • سريع • موثوق" : "Secure • Fast • Trusted"}</span>
+        </div>
+      </div>
+      <div className="container flex min-h-[78px] items-center justify-between gap-4">
+        <Link href="/" onClick={() => setMobileOpen(false)} className="shrink-0" aria-label="Besty Boy home">
+          <img src="/logo.svg" alt="Besty Boy" className="brand-logo" />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
@@ -42,8 +45,9 @@ export default function Header({ onCartOpen }: HeaderProps) {
             <button onClick={() => setLanguage("ar")} className={`lang-pill ${language === "ar" ? "lang-pill-active" : ""}`}>ع</button>
             <button onClick={() => setLanguage("en")} className={`lang-pill ${language === "en" ? "lang-pill-active" : ""}`}>EN</button>
           </div>
-          <button onClick={onCartOpen} className="relative rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-slate-200 transition hover:border-cyan-300/40 hover:text-cyan-300" aria-label={t("cart")}>
-            <ShoppingBag size={20} />
+          <Link href="/profile" className="header-icon hidden sm:inline-flex" aria-label={t("profile")}><UserRound size={18} /></Link>
+          <button onClick={onCartOpen} className="header-icon relative" aria-label={t("cart")}>
+            <ShoppingBag size={19} />
             {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
           </button>
           <div className="hidden items-center gap-2 md:flex">
@@ -52,10 +56,10 @@ export default function Header({ onCartOpen }: HeaderProps) {
             {isAuthenticated && <Button size="sm" variant="outline" onClick={logout} className="border-white/15 text-slate-200">{t("logout")}</Button>}
             {isAdmin && <Link href="/admin" className="text-xs text-cyan-300">{t("admin")}</Link>}
           </div>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="rounded-xl border border-white/10 p-2 text-slate-200 lg:hidden" aria-label={mobileOpen ? "Close" : "Menu"}>{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="header-icon lg:hidden" aria-label={mobileOpen ? "Close" : "Menu"}>{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
-      {mobileOpen && <div className="border-t border-white/10 bg-[#0d1019] p-4 lg:hidden"><nav className="container grid gap-2">{links.map((link) => <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className={`rounded-xl px-4 py-3 text-sm ${location === link.href ? "bg-cyan-300/10 text-cyan-300" : "text-slate-300"}`}>{link.label}</Link>)}<div className="flex items-center gap-2 pt-2"><button onClick={() => setLanguage("ar")} className={`lang-pill ${language === "ar" ? "lang-pill-active" : ""}`}>العربية</button><button onClick={() => setLanguage("en")} className={`lang-pill ${language === "en" ? "lang-pill-active" : ""}`}>English</button></div></nav></div>}
+      {mobileOpen && <div className="mobile-menu lg:hidden"><nav className="container grid gap-1 py-3">{links.map((link) => <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className={`mobile-nav-link ${location === link.href ? "mobile-nav-link-active" : ""}`}>{link.label}</Link>)}<Link href="/profile" onClick={() => setMobileOpen(false)} className="mobile-nav-link">{t("profile")}</Link><div className="flex items-center gap-2 border-t border-white/10 pt-3"><button onClick={() => setLanguage("ar")} className={`lang-pill ${language === "ar" ? "lang-pill-active" : ""}`}>العربية</button><button onClick={() => setLanguage("en")} className={`lang-pill ${language === "en" ? "lang-pill-active" : ""}`}>English</button></div></nav></div>}
     </header>
   );
 }

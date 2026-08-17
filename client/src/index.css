@@ -288,3 +288,84 @@ body {
   .admin-panel-card { @apply rounded-2xl border border-white/10 bg-white/[0.03] p-6; }
   .admin-heading { @apply mt-3 font-rajdhani text-2xl font-bold text-white; }
 }
+
+
+/* Gamzio-inspired storefront refresh */
+:root {
+  --background: 240 9% 6%;
+  --card: 240 8% 10%;
+  --primary: 349 88% 59%;
+  --accent: 280 82% 67%;
+}
+
+body {
+  background-color: #0d0d0f;
+  background-image: radial-gradient(circle at 50% -10%, rgba(244, 63, 143, .10), transparent 32%), radial-gradient(circle at 0% 35%, rgba(92, 55, 150, .08), transparent 28%);
+}
+
+.site-header { background: rgba(10, 10, 12, .88); border-bottom: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(18px); }
+.top-strip { border-bottom: 1px solid rgba(255,255,255,.055); }
+.brand-logo { display: block; width: 166px; height: auto; filter: drop-shadow(0 6px 20px rgba(244,63,143,.16)); }
+.brand-logo-footer { width: 184px; }
+.header-icon { @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.035] text-slate-300 transition hover:border-rose-400/45 hover:bg-rose-400/10 hover:text-white; }
+.nav-link { @apply rounded-xl px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-white/[0.05] hover:text-white; }
+.nav-link-active { @apply bg-white/[0.07] text-white; }
+.lang-pill-active { @apply bg-rose-400/15 text-rose-300; }
+.mobile-menu { border-top: 1px solid rgba(255,255,255,.08); background: rgba(13,13,15,.98); }
+.mobile-nav-link { @apply rounded-xl px-4 py-3 text-sm text-slate-300 transition hover:bg-white/[0.05] hover:text-white; }
+.mobile-nav-link-active { @apply bg-white/[0.07] text-white; }
+
+.gamzio-hero { background: linear-gradient(180deg, #121214 0%, #0d0d0f 100%); }
+.gamzio-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(to bottom, black, transparent 82%); }
+.hero-orbit { position: absolute; border-radius: 999px; filter: blur(80px); pointer-events: none; }
+.hero-orbit-one { width: 420px; height: 420px; top: 10%; left: -190px; background: rgba(243, 63, 143, .12); }
+.hero-orbit-two { width: 460px; height: 460px; top: 4%; right: -230px; background: rgba(124, 58, 237, .12); }
+.hero-accent { display: block; color: #ed3e58; }
+.hero-search { border: 1px solid rgba(255,255,255,.14); background: rgba(17,17,20,.86); box-shadow: 0 18px 50px rgba(0,0,0,.28); }
+.hero-search:focus-within { border-color: rgba(244,63,143,.55); box-shadow: 0 0 0 4px rgba(244,63,143,.08), 0 18px 50px rgba(0,0,0,.3); }
+.search-submit { @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition; background: #ec3e58; }
+.search-submit:hover { background: #f2566c; transform: translateY(-1px); }
+.trending-chip { @apply rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs text-slate-400 transition hover:border-rose-400/35 hover:text-white; }
+.hero-secondary { @apply inline-flex items-center rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:border-rose-400/45 hover:bg-rose-400/10; }
+.hero-showcase { position: relative; }
+.hero-showcase::before { content: ''; position: absolute; inset: 18% 8% -8%; border-radius: 999px; background: rgba(180, 92, 255, .10); filter: blur(60px); }
+.hero-tile { position: relative; height: 176px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 22px; background: #17171a; transition: transform .3s ease, border-color .3s ease; }
+.hero-tile:hover { transform: translateY(-5px); border-color: rgba(244,63,143,.55); }
+.hero-tile img { width: 100%; height: 100%; object-fit: cover; opacity: .76; transition: transform .4s ease, opacity .3s ease; }
+.hero-tile:hover img { transform: scale(1.06); opacity: .95; }
+.hero-tile::after { content: ''; position: absolute; inset: 42% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.85)); }
+.hero-tile span { position: absolute; z-index: 1; right: 14px; bottom: 13px; left: 14px; font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: 700; color: white; }
+
+.section-link { @apply text-sm font-semibold text-rose-300 transition hover:text-white; }
+.game-category-card { @apply overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] transition; }
+.game-category-card:hover { transform: translateY(-5px); border-color: rgba(244,63,143,.38); background: rgba(255,255,255,.055); }
+.game-category-image { position: relative; height: 190px; overflow: hidden; background: #17171a; }
+.game-category-image::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(13,13,15,.9)); }
+.game-category-image img { width: 100%; height: 100%; object-fit: cover; opacity: .82; transition: transform .45s ease; }
+.game-category-card:hover .game-category-image img { transform: scale(1.06); }
+.game-category-arrow { @apply absolute bottom-4 end-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white backdrop-blur transition; }
+.game-category-card:hover .game-category-arrow { background: #ec3e58; border-color: #ec3e58; }
+.catalog-toolbar { border: 1px solid rgba(255,255,255,.09); border-radius: 18px; background: rgba(255,255,255,.025); }
+.catalog-dot { width: 8px; height: 8px; border-radius: 999px; background: #ec3e58; box-shadow: 0 0 14px rgba(236,62,88,.7); }
+.filter-chip-active { @apply border-rose-400/45 bg-rose-400/10 text-rose-300; }
+.trust-strip { border: 1px solid rgba(255,255,255,.08); background: linear-gradient(100deg, rgba(255,255,255,.045), rgba(255,255,255,.018)); }
+.trust-icon { @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-rose-400/25 bg-rose-400/10 text-rose-300; }
+.trust-strip strong { display: block; color: white; font-size: .9rem; }
+.trust-strip p { margin-top: .2rem; color: #64748b; font-size: .75rem; }
+.site-footer { border-top: 1px solid rgba(255,255,255,.08); background: #09090b; }
+.footer-title { @apply mb-4 font-rajdhani text-lg font-bold text-white; }
+.footer-link { @apply transition hover:text-rose-300; }
+
+.game-card { border-color: rgba(255,255,255,.09) !important; background: rgba(255,255,255,.035) !important; box-shadow: none !important; }
+.game-card:hover { border-color: rgba(244,63,143,.42) !important; box-shadow: 0 18px 45px rgba(0,0,0,.25) !important; }
+.gaming-btn { @apply rounded-xl border-0 text-white shadow-none; background: #ec3e58 !important; }
+.gaming-btn:hover { background: #f2566c !important; box-shadow: 0 12px 28px rgba(236,62,88,.22) !important; }
+.price-badge { background: #ec3e58 !important; box-shadow: none !important; }
+.bonus-badge { background: rgba(236,62,88,.15) !important; border: 1px solid rgba(236,62,88,.25); box-shadow: none !important; color: #fda4af !important; }
+
+@media (max-width: 640px) {
+  .brand-logo { width: 142px; }
+  .hero-tile { height: 132px; border-radius: 17px; }
+  .hero-tile span { font-size: .95rem; right: 10px; bottom: 10px; left: 10px; }
+  .gamzio-hero .container { padding-top: 4rem; padding-bottom: 4rem; }
+}
