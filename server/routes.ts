@@ -53,13 +53,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       req.session.user = {
         id: user.id,
         username: user.username,
-        isAdmin: user.isAdmin,
+        isAdmin: user.isAdmin ?? false,
       };
       
       res.json({
         id: user.id,
         username: user.username,
-        isAdmin: user.isAdmin,
+        isAdmin: user.isAdmin ?? false,
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -100,7 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(vouchers);
     } catch (error) {
       console.error("Error fetching vouchers:", error);
-      res.status(500).json({ message: "Failed to fetch vouchers", error: error.message });
+      res.status(500).json({ message: "Failed to fetch vouchers", error: error instanceof Error ? error.message : String(error) });
     }
   });
 

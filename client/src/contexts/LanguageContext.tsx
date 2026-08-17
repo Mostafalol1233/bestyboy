@@ -216,7 +216,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("bestyboy_language", next);
   };
 
-  const direction = language === "ar" ? "rtl" : "ltr";
+  const direction: "rtl" | "ltr" = language === "ar" ? "rtl" : "ltr";
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -224,7 +224,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.body.dataset.language = language;
   }, [language, direction]);
 
-  const value = useMemo(() => ({
+  const value: LanguageContextValue = useMemo(() => ({
     language,
     direction,
     setLanguage,

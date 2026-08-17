@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { BarChart3, ClipboardList, Database, Download, LogIn, Package, Percent, Save, Settings, ShoppingBag, Users, X } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,7 +22,7 @@ export default function Admin() {
   const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [coupon, setCoupon] = useState("");
 
-  if (!isAuthenticated || !isAdmin) return <LoginView loginData={loginData} setLoginData={setLoginData} onLogin={async (event) => { event.preventDefault(); try { await login(loginData); } catch (error: any) { toast({ variant: "destructive", title: t("adminLogin"), description: error.message || t("loginHint") }); } }} isLoading={isLoading} t={t} />;
+  if (!isAuthenticated || !isAdmin) return <LoginView loginData={loginData} setLoginData={setLoginData} onLogin={async (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); try { await login(loginData); } catch (error: any) { toast({ variant: "destructive", title: t("adminLogin"), description: error.message || t("loginHint") }); } }} isLoading={isLoading} t={t} />;
 
   const revenue = orders.filter((order) => order.status !== "cancelled").reduce((sum, order) => sum + order.total, 0);
   const updateStatus = (id: string, status: Order["status"]) => { const next = orders.map((order) => order.id === id ? { ...order, status } : order); setOrders(next); saveOrders(next); toast({ title: t("save") }); };
