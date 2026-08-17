@@ -369,3 +369,40 @@ body {
   .hero-tile span { font-size: .95rem; right: 10px; bottom: 10px; left: 10px; }
   .gamzio-hero .container { padding-top: 4rem; padding-bottom: 4rem; }
 }
+
+
+/* Gamzio-style centered hero and popular game wall */
+.gamzio-hero { min-height: 650px; background: #0b0b0d; }
+.hero-art-wall { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; padding: 18px; opacity: .6; transform: translateY(-5%); }
+.hero-art-wall img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; filter: saturate(.8) contrast(1.04); }
+.hero-art-shade { position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, rgba(13,13,15,.42), rgba(13,13,15,.9) 58%, #0d0d0f 100%), linear-gradient(180deg, rgba(13,13,15,.42) 0%, #0d0d0f 88%); }
+.hero-title { font-size: clamp(3.35rem, 7.4vw, 7.1rem); letter-spacing: -.045em; text-wrap: balance; }
+.hero-title .hero-accent { color: #ef4059; text-shadow: 0 8px 30px rgba(239,64,89,.22); }
+.hero-quick-grid { position: relative; }
+.hero-quick-grid .hero-tile { height: 146px; border-radius: 20px; }
+.popular-game-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.popular-game-card { position: relative; min-height: 190px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 22px; background: #17171a; transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.popular-game-card::after { content: ''; position: absolute; inset: 42% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.88)); }
+.popular-game-card img { width: 100%; height: 100%; min-height: 190px; object-fit: cover; opacity: .88; transition: transform .35s ease, opacity .35s ease; }
+.popular-game-card span { position: absolute; z-index: 1; inset-inline: 16px; bottom: 14px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; }
+.popular-game-card:hover { transform: translateY(-5px); border-color: rgba(239,64,89,.55); box-shadow: 0 18px 44px rgba(0,0,0,.28); }
+.popular-game-card:hover img { transform: scale(1.06); opacity: 1; }
+
+@media (max-width: 900px) {
+  .hero-art-wall { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; padding: 12px; }
+  .hero-art-wall img:nth-child(n+16) { display: none; }
+  .popular-game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .gamzio-hero { min-height: 640px; }
+  .hero-art-wall { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; opacity: .42; }
+  .hero-art-wall img:nth-child(n+13) { display: none; }
+  .hero-title { font-size: clamp(3rem, 14vw, 4.8rem); }
+  .hero-quick-grid { margin-top: 2.25rem; }
+  .hero-quick-grid .hero-tile { height: 112px; border-radius: 16px; }
+  .hero-quick-grid .hero-tile span { font-size: .95rem; }
+  .popular-game-grid { gap: 10px; }
+  .popular-game-card, .popular-game-card img { min-height: 145px; }
+  .popular-game-card span { inset-inline: 11px; bottom: 10px; font-size: 1rem; }
+}
