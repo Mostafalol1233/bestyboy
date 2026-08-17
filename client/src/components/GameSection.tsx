@@ -10,6 +10,11 @@ const gameMeta: Record<string, { title: string; titleAr: string; description: st
   crossfire: { title: "CrossFire vouchers", titleAr: "بطاقات كروس فاير", description: "ZP vouchers with bonus points for every loadout.", descriptionAr: "بطاقات زد بي مع نقاط إضافية لكل عملية شحن.", color: "#22d3ee", image: "/attached_assets/image_1747413124482.png" },
   pubg: { title: "PUBG Mobile UC", titleAr: "شدات ببجي موبايل", description: "Get UC quickly and keep your squad ready for the next match.", descriptionAr: "اشحن شداتك بسرعة واستعد للمباراة القادمة.", color: "#fbbf24", image: "/attached_assets/image_1747413124482.png" },
   freefire: { title: "Free Fire diamonds", titleAr: "جواهر فري فاير", description: "Diamonds for skins, bundles and your next victory.", descriptionAr: "جواهر للسكنات والباقات وانتصارك القادم.", color: "#fb7185", image: "/attached_assets/image_1747413124482.png" },
+  codm: { title: "Call of Duty Mobile CP", titleAr: "نقاط كول أوف ديوتي موبايل", description: "CP bundles for your next loadout, battle pass and legendary drop.", descriptionAr: "باقات نقاط للعتاد والبطاقة الموسمية وأحدث العناصر.", color: "#a3e635", image: "/assets/freefire.png" },
+  mobilelegends: { title: "Mobile Legends diamonds", titleAr: "جواهر موبايل ليجندز", description: "Diamond packs for heroes, skins and fast ranked upgrades.", descriptionAr: "جواهر للأبطال والسكنات وترقية حسابك بسرعة.", color: "#60a5fa", image: "/assets/images(1).jpg" },
+  valorant: { title: "Valorant Points", titleAr: "نقاط فالورانت", description: "VP packs with bonus value for skins and your next collection.", descriptionAr: "نقاط فالورانت للسكنات ومجموعتك القادمة بقيمة أفضل.", color: "#f472b6", image: "/assets/images(3).jpg" },
+  roblox: { title: "Roblox Robux", titleAr: "روبوكس روبلوكس", description: "Robux packs for outfits, game passes and your Roblox world.", descriptionAr: "روبوكس للأزياء واشتراكات الألعاب وعالمك الخاص.", color: "#f8fafc", image: "/assets/images.jpg" },
+  fcmobile: { title: "FC Mobile Points", titleAr: "نقاط إف سي موبايل", description: "FC Points for packs, players and your next squad upgrade.", descriptionAr: "نقاط لتطوير التشكيلة وفتح الحزم واللاعبين.", color: "#34d399", image: "/assets/images(4).jpg" },
 };
 
 export default function GameSection({ gameType, vouchers, isLoading, compact }: GameSectionProps) {

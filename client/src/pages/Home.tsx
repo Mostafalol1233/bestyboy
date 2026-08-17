@@ -5,19 +5,29 @@ import GameSection from "@/components/GameSection";
 import { useVouchers } from "@/contexts/VoucherContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const gameTypes = ["crossfire", "pubg", "freefire"];
-const popularSearches = ["PUBG Mobile", "Free Fire", "CrossFire", "بطاقات ألعاب", "شحن سريع"];
+const gameTypes = ["crossfire", "pubg", "freefire", "codm", "mobilelegends", "valorant", "roblox", "fcmobile"];
+const popularSearches = ["PUBG Mobile", "Free Fire", "Call of Duty", "Valorant", "Roblox", "Mobile Legends"];
 
 const gameLabels: Record<string, string> = {
   crossfire: "CrossFire",
   pubg: "PUBG Mobile",
   freefire: "Free Fire",
+  codm: "Call of Duty Mobile",
+  mobilelegends: "Mobile Legends",
+  valorant: "Valorant",
+  roblox: "Roblox",
+  fcmobile: "FC Mobile",
 };
 
 const gameImages: Record<string, string> = {
   crossfire: "/assets/images(2).jpg",
   pubg: "/assets/images(4).jpg",
   freefire: "/assets/freefire2.png",
+  codm: "/assets/freefire.png",
+  mobilelegends: "/assets/images(1).jpg",
+  valorant: "/assets/images(3).jpg",
+  roblox: "/assets/images.jpg",
+  fcmobile: "/assets/images(4).jpg",
 };
 
 export default function Home() {
@@ -39,14 +49,14 @@ export default function Home() {
   }));
 
   const heroTiles = [
-    { title: "CrossFire", image: "/assets/images(2).jpg", href: "/game/crossfire" },
-    { title: "PUBG Mobile", image: "/assets/images(4).jpg", href: "/game/pubg" },
-    { title: "Free Fire", image: "/assets/freefire2.png", href: "/game/freefire" },
-    { title: language === "ar" ? "عروض يومية" : "Daily offers", image: "/attached_assets/image_1747413124482.png", href: "/offers" },
-    { title: language === "ar" ? "بطاقات رقمية" : "Digital cards", image: "/assets/images.jpg", href: "/games" },
-    { title: language === "ar" ? "شحن سريع" : "Fast top-ups", image: "/assets/freefire.png", href: "/games" },
-    { title: language === "ar" ? "اختيارات اللاعبين" : "Players' picks", image: "/assets/images(1).jpg", href: "/offers" },
-    { title: language === "ar" ? "هدايا إضافية" : "Extra bonuses", image: "/assets/images(3).jpg", href: "/offers" },
+    { title: "CrossFire", image: gameImages.crossfire, href: "/game/crossfire" },
+    { title: "PUBG Mobile", image: gameImages.pubg, href: "/game/pubg" },
+    { title: "Free Fire", image: gameImages.freefire, href: "/game/freefire" },
+    { title: "Call of Duty Mobile", image: gameImages.codm, href: "/game/codm" },
+    { title: "Mobile Legends", image: gameImages.mobilelegends, href: "/game/mobilelegends" },
+    { title: "Valorant", image: gameImages.valorant, href: "/game/valorant" },
+    { title: "Roblox", image: gameImages.roblox, href: "/game/roblox" },
+    { title: "FC Mobile", image: gameImages.fcmobile, href: "/game/fcmobile" },
   ];
 
   return (
@@ -71,7 +81,7 @@ export default function Home() {
             </div>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
               <span>{language === "ar" ? "الأكثر بحثًا" : "Trending searches"}</span>
-              {popularSearches.map((term) => <button key={term} onClick={() => setQuery(term === "بطاقات ألعاب" || term === "شحن سريع" ? "" : term.toLowerCase())} className="trending-chip">{term}</button>)}
+              {popularSearches.map((term) => <button key={term} onClick={() => setQuery(term.toLowerCase())} className="trending-chip">{term}</button>)}
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link href="/games" className="gaming-btn inline-flex items-center gap-2">{t("shopNow")} <DirectionIcon size={16} /></Link>
