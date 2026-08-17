@@ -24,11 +24,16 @@ const gameAccent: Record<string, string> = {
   mobilelegends: "#60a5fa", valorant: "#fb7185", roblox: "#e2e8f0", fcmobile: "#34d399",
 };
 
-function getCardImage(voucher: Voucher) {
-  return voucher.id >= 1 && voucher.id <= 34
-    ? `/assets/packages/bundle-${voucher.id}.svg`
-    : voucher.imageUrl || "/assets/packages/bundle-1.svg";
-}
+const gameWallpapers: Record<string, string> = {
+  crossfire: "/assets/games/crossfire.webp",
+  pubg: "/assets/games/pubg.webp",
+  freefire: "/assets/games/freefire.webp",
+  codm: "/assets/games/codm.webp",
+  mobilelegends: "/assets/games/mobilelegends.webp",
+  valorant: "/assets/games/valorant.jpg",
+  roblox: "/assets/games/roblox.jpg",
+  fcmobile: "/assets/games/fcmobile.webp",
+};
 
 export default function GameCard({ voucher }: GameCardProps) {
   const { addItem } = useCart();
@@ -40,6 +45,7 @@ export default function GameCard({ voucher }: GameCardProps) {
   const price = (voucher.price || 0).toLocaleString(numberLocale);
   const bonus = voucher.bonus.toLocaleString(numberLocale);
   const accent = gameAccent[voucher.gameType] || "#ef4059";
+  const wallpaper = gameWallpapers[voucher.gameType] || "/assets/games/pubg.webp";
   const description = language === "ar" ? `${amount} ${voucher.currency} + ${bonus} هدية` : `${amount} ${voucher.currency} + ${bonus} bonus`;
 
   const handleAdd = () => {
@@ -49,25 +55,32 @@ export default function GameCard({ voucher }: GameCardProps) {
 
   return (
     <article className="package-card package-card-compact group">
-      <div className="package-card-topline">
+      <Link
+        href={`/game/${voucher.gameType}`}
+        className="package-card-media package-card-media-compact"
+        aria-label={`${gameName} ${amount} ${voucher.currency}`}
+      >
+        <img src={wallpaper} alt="" loading="lazy" />
+        <span className="package-card-media-shade" />
         {voucher.bonus > 0 && <span className="package-hot-badge"><Flame size={12} fill="currentColor" />{language === "ar" ? "عرض" : "HOT"}</span>}
-        <span className="package-card-icon" style={{ color: accent }} aria-hidden="true">{voucher.currency.slice(0, 2)}</span>
-      </div>
-      <Link href={`/game/${voucher.gameType}`} className="package-card-media package-card-media-compact" aria-label={`${gameName} ${amount} ${voucher.currency}`}>
-        <img src={getCardImage(voucher)} alt="" loading="lazy" />
+        <span className="package-card-game-name">{gameName}</span>
+        <span className="package-card-amount">{amount} <small>{voucher.currency}</small></span>
       </Link>
       <div className="package-card-body package-card-body-compact">
-        <p className="package-kicker">{gameName}</p>
-        <h3 className="package-title">{gameName} <span>({amount} {voucher.currency})</span></h3>
+        <div className="package-card-meta-row">
+          <span className="package-kicker">{language === "ar" ? "شحن فوري" : "Instant top-up"}</span>
+          <span className="package-delivery-dot" />
+        </div>
         {voucher.bonus > 0 && <p className="package-bonus-line">+{bonus} {t("bonus")}</p>}
-        <div className="package-price-row"><span className="package-price package-price-large">{price} <small>{t("currency")}</small></span><span className="package-delivery-dot" /></div>
+        <div className="package-price-row"><span className="package-price package-price-large">{price} <small>{t("currency")}</small></span></div>
         <div className="package-actions">
           <button onClick={handleAdd} className="package-buy-button package-buy-button-compact"><FaShoppingCart size={12} />{t("addToCart")}</button>
           <Link href={`/game/${voucher.gameType}`} className="package-view-button package-view-button-compact" aria-label={t("viewAll")}><ArrowUpRight size={15} /></Link>
         </div>
       </div>
+      <span className="package-card-accent" style={{ background: accent }} aria-hidden="true" />
     </article>
   );
 }
 
-export { gameNames, gameAccent };
+export { gameNames, gameAccent, gameWallpapers };

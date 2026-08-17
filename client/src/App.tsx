@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CartDrawer from "./components/CartDrawer";
 import Home from "./pages/Home";
+import Games from "./pages/Games";
 import Admin from "./pages/Admin";
 import Checkout from "./pages/Checkout";
 import GamePage from "./pages/GamePage";
@@ -22,7 +23,7 @@ export default function App() {
       <main className="min-h-[calc(100vh-10rem)]">
         <Switch>
           <Route path="/" component={Home} />
-          <Route path="/games" component={Home} />
+          <Route path="/games" component={Games} />
           <Route path="/game/:gameType" component={GamePage} />
           <Route path="/offers" component={Offers} />
           <Route path="/blog" component={Blog} />

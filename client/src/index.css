@@ -538,3 +538,40 @@ body {
 @media (max-width: 1050px) { .popular-game-grid-gamzio, .package-grid-clean { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .popular-game-grid-gamzio, .package-grid-clean { grid-template-columns: repeat(2, minmax(0, 1fr)); } .game-section-head-clean { align-items: flex-start; flex-direction: column; } .game-section-trust { margin-inline-start: 0; } }
 @media (max-width: 460px) { .popular-game-grid-gamzio { gap: .7rem; } .popular-game-grid-gamzio .popular-game-card, .popular-game-grid-gamzio .popular-game-card img { min-height: 220px; } .package-grid-clean { gap: .65rem; } .package-card-body-compact { padding-inline: .65rem; } .package-card-body-compact .package-title { font-size: .94rem; } .package-card-body-compact .package-title span { font-size: .82rem; } .package-price-large { font-size: .95rem; } }
+
+/* All-games catalogue and wallpaper package cards */
+.games-catalog-page { min-height: 70vh; background: #0d0d0f; }
+.games-catalog-hero { display: flex; align-items: end; justify-content: space-between; gap: 2rem; padding-top: clamp(3.5rem, 8vw, 7rem); padding-bottom: 2.25rem; }
+.games-catalog-title { margin-top: .45rem; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: clamp(3rem, 7vw, 6.6rem); font-weight: 800; letter-spacing: -.045em; line-height: .88; }
+.games-catalog-description { max-width: 38rem; margin-top: 1rem; color: #94a3b8; font-size: .95rem; line-height: 1.7; }
+.games-catalog-count { display: flex; flex-direction: column; align-items: flex-end; color: #94a3b8; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
+.games-catalog-count strong { color: #ef4059; font-family: 'Orbitron', sans-serif; font-size: 2.2rem; line-height: 1; }
+.games-catalog-toolbar { background: rgba(255,255,255,.025); }
+.games-catalog-search { border: 1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.18); }
+.all-games-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.all-games-card { display: block; overflow: hidden; border-radius: 18px; }
+.all-games-image { height: 245px; }
+.all-games-card-copy { padding: 1rem 1rem 1.1rem; background: #17171a; }
+.all-games-card-copy h2 { color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.35rem; font-weight: 800; line-height: 1; }
+.all-games-card-copy p { margin-top: .45rem; color: #fda4af; font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.all-games-card-copy span { display: block; margin-top: .55rem; color: #64748b; font-size: .7rem; }
+.package-card-compact { position: relative; background: #17181d !important; }
+.package-card-media-compact { height: 168px; margin: 0; border-radius: 0; }
+.package-card-media-compact img { object-fit: cover !important; mix-blend-mode: normal !important; opacity: .82 !important; filter: saturate(.95) contrast(1.05); }
+.package-card-media-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,6,9,.08) 12%, rgba(5,6,9,.28) 42%, rgba(5,6,9,.94) 100%); }
+.package-card-media-compact .package-hot-badge { z-index: 2; position: absolute; top: .7rem; inset-inline-start: .7rem; }
+.package-card-game-name { position: absolute; z-index: 2; inset-inline: .8rem; bottom: 2.3rem; color: #dbeafe; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.package-card-amount { position: absolute; z-index: 2; inset-inline: .75rem; bottom: .72rem; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.45rem; font-weight: 800; line-height: 1; }
+.package-card-amount small { color: #cbd5e1; font-family: inherit; font-size: .74rem; }
+.package-card-body-compact { padding: .78rem .85rem .85rem; }
+.package-card-meta-row { display: flex; align-items: center; justify-content: space-between; }
+.package-card-body-compact .package-kicker { display: block; color: #64748b; font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; }
+.package-card-body-compact .package-bonus-line { margin-top: .35rem; font-size: .72rem; }
+.package-card-body-compact .package-price-row { margin-top: .55rem; }
+.package-card-body-compact .package-price-large { color: #fff; font-size: 1.12rem; }
+.package-card-body-compact .package-price-large small { color: #94a3b8; }
+.package-card-accent { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; opacity: .9; }
+
+@media (max-width: 1050px) { .all-games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .games-catalog-hero { align-items: flex-start; flex-direction: column; } .games-catalog-count { align-items: flex-start; } .all-games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .all-games-image { height: 210px; } }
+@media (max-width: 460px) { .all-games-grid { gap: .65rem; } .all-games-image { height: 175px; } .all-games-card-copy { padding: .75rem; } .all-games-card-copy h2 { font-size: 1.1rem; } .package-card-media-compact { height: 142px; } .package-card-amount { font-size: 1.2rem; } }
