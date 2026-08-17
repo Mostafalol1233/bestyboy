@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowRight, Check, Search, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Search, ShieldCheck, Zap } from "lucide-react";
 import GameSection from "@/components/GameSection";
 import { useVouchers } from "@/contexts/VoucherContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -20,14 +20,14 @@ const gameLabels: Record<string, string> = {
 };
 
 const gameImages: Record<string, string> = {
-  crossfire: "/assets/images(2).jpg",
-  pubg: "/assets/images(4).jpg",
-  freefire: "/assets/freefire2.png",
-  codm: "/assets/freefire.png",
-  mobilelegends: "/assets/images(1).jpg",
-  valorant: "/assets/images(3).jpg",
-  roblox: "/assets/images.jpg",
-  fcmobile: "/assets/images(4).jpg",
+  crossfire: "/assets/games/crossfire.webp",
+  pubg: "/assets/games/pubg.webp",
+  freefire: "/assets/games/freefire.webp",
+  codm: "/assets/games/codm.webp",
+  mobilelegends: "/assets/games/mobilelegends.webp",
+  valorant: "/assets/games/valorant.jpg",
+  roblox: "/assets/games/roblox.jpg",
+  fcmobile: "/assets/games/fcmobile.webp",
 };
 
 export default function Home() {
@@ -69,9 +69,9 @@ export default function Home() {
         <div className="hero-orbit hero-orbit-one" /><div className="hero-orbit hero-orbit-two" />
         <div className="container relative py-20 sm:py-28 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
-            <span className="eyebrow justify-center"><Sparkles size={14} />{t("heroEyebrow")}</span>
-            <h1 className="hero-title mt-5 font-rajdhani font-bold leading-[.94] text-white">
-              {t("heroTitle")}<span dir="ltr" className="hero-accent">Besty Boy</span>
+            <h1 key={language} className="hero-title hero-heading-reveal mt-5 font-rajdhani font-bold leading-[.94] text-white">
+              <span className="hero-title-line">{t("heroHeadingTop")}</span>
+              <span dir="ltr" className="hero-title-line hero-accent">{t("heroHeadingAccent")}</span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{t("heroText")}</p>
             <div className="hero-search mx-auto mt-9 flex max-w-3xl items-center gap-3 rounded-2xl p-2">

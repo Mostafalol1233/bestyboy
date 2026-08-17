@@ -406,3 +406,89 @@ body {
   .popular-game-card, .popular-game-card img { min-height: 145px; }
   .popular-game-card span { inset-inline: 11px; bottom: 10px; font-size: 1rem; }
 }
+
+/* Besty Boy storefront product system */
+.hero-title-line { display: block; }
+.hero-title .hero-accent { display: block; color: #ef4059; text-shadow: 0 8px 30px rgba(239,64,89,.22); }
+
+.game-store-section { border: 1px solid rgba(255,255,255,.08); background: #151518; box-shadow: 0 22px 70px rgba(0,0,0,.18); }
+.game-store-section-compact { background: #121215; }
+.game-section-backdrop { position: absolute; inset: 0; background-position: center; background-size: cover; opacity: .09; filter: saturate(.8) blur(1px); }
+.game-section-backdrop::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, #121215 12%, rgba(18,18,21,.75) 54%, #121215 100%); }
+.game-section-content { position: relative; padding: 1.25rem; }
+.game-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.25rem; margin-bottom: 1.5rem; }
+.game-section-cover { width: 76px; height: 76px; flex: 0 0 auto; overflow: hidden; border: 1px solid; border-radius: 18px; background: #202025; box-shadow: 0 14px 35px rgba(0,0,0,.24); }
+.game-section-cover img { width: 100%; height: 100%; object-fit: cover; }
+.game-section-overline { margin-bottom: .4rem; font-size: .69rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.game-section-title { color: #fff; font-family: 'Rajdhani', sans-serif; font-size: clamp(1.75rem, 3.2vw, 2.55rem); font-weight: 800; line-height: 1; }
+.game-section-description { max-width: 42rem; margin-top: .5rem; color: #94a3b8; font-size: .88rem; line-height: 1.6; }
+.game-section-link { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .5rem; color: #fda4af; font-size: .82rem; font-weight: 700; transition: color .2s ease; }
+.game-section-link:hover { color: #fff; }
+.package-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.package-card { overflow: hidden; border: 1px solid rgba(255,255,255,.09); border-radius: 20px; background: rgba(255,255,255,.035); box-shadow: 0 12px 35px rgba(0,0,0,.16); transition: border-color .2s ease, box-shadow .2s ease; }
+.package-card:hover { border-color: rgba(239,64,89,.48); box-shadow: 0 20px 50px rgba(0,0,0,.3); }
+.package-card-media { position: relative; display: block; height: 164px; overflow: hidden; background: #202025; }
+.package-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.package-card:hover .package-card-media img { transform: scale(1.045); }
+.package-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,8,10,.05), rgba(8,8,10,.78)); pointer-events: none; }
+.package-badge { position: absolute; top: .7rem; inset-inline-start: .7rem; display: inline-flex; align-items: center; gap: .3rem; border-radius: 999px; padding: .34rem .6rem; background: #ec3e58; color: #fff; font-size: .67rem; font-weight: 800; box-shadow: 0 8px 18px rgba(236,62,88,.26); }
+.package-game-label { position: absolute; right: .7rem; bottom: .7rem; max-width: 70%; overflow: hidden; border: 1px solid; border-radius: 999px; padding: .3rem .55rem; background: rgba(7,7,9,.65); backdrop-filter: blur(9px); color: #fff; font-size: .65rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.package-card-body { padding: 1rem; }
+.package-kicker { color: #64748b; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.package-title { margin-top: .22rem; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.35rem; font-weight: 800; line-height: 1; }
+.package-price { flex: 0 0 auto; color: #fda4af; font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 800; }
+.package-price small { color: #94a3b8; font-family: 'Rajdhani', sans-serif; font-size: .68rem; font-weight: 700; }
+.package-description { min-height: 2.7rem; margin-top: .65rem; color: #94a3b8; font-size: .76rem; line-height: 1.5; }
+.package-buy-button { min-height: 2.7rem; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .65rem .8rem; font-size: .75rem; }
+.package-view-button { display: inline-flex; min-height: 2.7rem; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.1); border-radius: .75rem; color: #cbd5e1; transition: .2s ease; }
+.package-view-button:hover { border-color: rgba(236,62,88,.5); background: rgba(236,62,88,.12); color: #fff; }
+
+.game-product-hero { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding: clamp(1.15rem, 3vw, 2rem); border: 1px solid rgba(255,255,255,.08); border-radius: 28px; background: linear-gradient(120deg, rgba(255,255,255,.05), rgba(255,255,255,.018)); }
+.game-product-art { position: relative; min-height: 330px; overflow: hidden; border-radius: 22px; background: #202025; }
+.game-product-art img { width: 100%; height: 100%; min-height: 330px; object-fit: cover; }
+.game-product-art-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.62)); }
+.game-product-delivery { position: absolute; top: 1rem; inset-inline-start: 1rem; display: inline-flex; align-items: center; gap: .4rem; border: 1px solid rgba(255,255,255,.15); border-radius: 999px; padding: .45rem .7rem; background: rgba(0,0,0,.48); color: #fff; font-size: .7rem; font-weight: 800; backdrop-filter: blur(10px); }
+.game-product-copy { padding: .5rem 0; }
+.game-product-title { max-width: 720px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: clamp(2.7rem, 6vw, 5.7rem); font-weight: 800; letter-spacing: -.04em; line-height: .92; }
+.game-product-description { max-width: 38rem; margin-top: 1rem; color: #94a3b8; font-size: 1rem; line-height: 1.75; }
+.game-product-trust { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; color: #cbd5e1; font-size: .78rem; }
+.game-product-trust span { display: inline-flex; align-items: center; gap: .4rem; }
+.game-product-trust svg { color: #34d399; }
+.game-product-stat { display: flex; align-items: baseline; gap: .55rem; margin-top: 1.75rem; }
+.game-product-stat strong { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 1.8rem; }
+.game-product-stat span { color: #64748b; font-size: .78rem; }
+
+.checkout-panel, .checkout-summary { border: 1px solid rgba(255,255,255,.09); border-radius: 28px; background: rgba(255,255,255,.035); padding: clamp(1.25rem, 3vw, 2rem); }
+.checkout-summary { height: fit-content; }
+.payment-option { min-height: 78px; flex-direction: column; justify-content: center; gap: .45rem; text-align: center; }
+.payment-option img { width: 76px; height: 30px; object-fit: contain; }
+.payment-vodafone img { background: #fff; border-radius: 7px; padding: .25rem .4rem; }
+.payment-instapay img { border-radius: 7px; }
+.payment-whatsapp img { width: 32px; height: 32px; }
+.payment-security-note { display: flex; align-items: center; gap: .5rem; margin-top: 1.25rem; color: #64748b; font-size: .72rem; line-height: 1.45; }
+.payment-security-note svg { flex: 0 0 auto; color: #34d399; }
+.accepted-payments { margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); padding-top: 1.2rem; color: #64748b; font-size: .68rem; }
+.accepted-payments > div { display: flex; align-items: center; gap: .45rem; margin-top: .7rem; }
+.accepted-payments img { width: 44px; height: 25px; border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: .32rem; background: #18181b; object-fit: contain; }
+
+@media (max-width: 980px) {
+  .package-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .game-product-hero { grid-template-columns: 1fr; }
+  .game-product-art, .game-product-art img { min-height: 300px; max-height: 420px; }
+}
+@media (max-width: 640px) {
+  .game-section-content { padding: 1rem; }
+  .game-section-head { align-items: flex-start; flex-direction: column; }
+  .game-section-cover { width: 62px; height: 62px; border-radius: 15px; }
+  .game-section-title { font-size: 1.7rem; }
+  .package-grid { grid-template-columns: 1fr; }
+  .package-card-media { height: 180px; }
+  .game-product-hero { padding: 1rem; border-radius: 22px; }
+  .game-product-art, .game-product-art img { min-height: 250px; }
+  .game-product-title { font-size: 3.2rem; }
+  .checkout-panel, .checkout-summary { border-radius: 22px; padding: 1rem; }
+}
+
+.hero-heading-reveal { animation: hero-heading-reveal .62s cubic-bezier(.22,1,.36,1) both; }
+@keyframes hero-heading-reveal { from { opacity: 0; transform: translateY(18px); filter: blur(8px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) { .hero-heading-reveal { animation: none; } }

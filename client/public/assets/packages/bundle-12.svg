@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title-12 desc-12">
+  <title id="title-12">COD Mobile 80 CP</title>
+  <desc id="desc-12">80 CP plus 5 bonus</desc>
+  <defs>
+    <linearGradient id="bg-12" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#18200b"/><stop offset="1" stop-color="#84cc16"/></linearGradient>
+    <linearGradient id="coin-12" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5c4"/><stop offset=".45" stop-color="#f5cf62"/><stop offset="1" stop-color="#aa6a19"/></linearGradient>
+    <filter id="shadow-12" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#000" flood-opacity=".35"/></filter>
+  </defs>
+  <rect width="640" height="420" rx="36" fill="url(#bg-12)"/>
+  <circle cx="560" cy="74" r="110" fill="#fff" opacity=".08"/><circle cx="84" cy="360" r="150" fill="#000" opacity=".12"/>
+  <path d="M0 330 C130 260 240 400 370 318 S560 264 640 300 V420 H0Z" fill="#000" opacity=".16"/>
+  <g filter="url(#shadow-12)" transform="translate(55 62)">
+    <ellipse cx="115" cy="232" rx="96" ry="28" fill="#8b5a17"/>
+    <path d="M19 205h192v28c0 18-43 32-96 32s-96-14-96-32z" fill="#c98a27"/>
+    <ellipse cx="115" cy="205" rx="96" ry="28" fill="url(#coin-12)" stroke="#fff2ae" stroke-width="5"/>
+    <ellipse cx="115" cy="205" rx="65" ry="17" fill="none" stroke="#b47b22" stroke-width="6" opacity=".7"/>
+    <path d="M42 145h146v58c0 17-33 30-73 30s-73-13-73-30z" fill="#d99a2f"/>
+    <ellipse cx="115" cy="145" rx="73" ry="22" fill="url(#coin-12)" stroke="#fff2ae" stroke-width="5"/>
+    <ellipse cx="115" cy="145" rx="46" ry="11" fill="none" stroke="#b47b22" stroke-width="5" opacity=".7"/>
+    <path d="M67 93h96v52c0 14-22 25-48 25s-48-11-48-25z" fill="#e4b349"/>
+    <ellipse cx="115" cy="93" rx="48" ry="17" fill="url(#coin-12)" stroke="#fff2ae" stroke-width="5"/>
+    <text x="115" y="101" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="800" fill="#75440d">CP</text>
+  </g>
+  <g fill="#fff" font-family="Arial,sans-serif">
+    <text x="286" y="126" font-size="24" font-weight="700" opacity=".76">COD Mobile</text>
+    <text x="286" y="204" font-size="58" font-weight="900" letter-spacing="-2">80</text>
+    <text x="286" y="244" font-size="26" font-weight="800" opacity=".9">CP</text>
+    <rect x="286" y="276" width="245" height="50" rx="25" fill="#fff" opacity=".17"/>
+    <text x="408" y="309" text-anchor="middle" font-size="22" font-weight="800">+5 BONUS</text>
+  </g>
+</svg>
