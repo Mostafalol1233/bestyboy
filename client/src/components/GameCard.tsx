@@ -5,6 +5,7 @@ import { Voucher } from "@shared/schema";
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
+import { getOriginalPrice, formatGameNumber } from "@/lib/pricing";
 
 interface GameCardProps { voucher: Voucher; }
 
@@ -40,10 +41,12 @@ export default function GameCard({ voucher }: GameCardProps) {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const gameName = gameNames[voucher.gameType]?.[language === "ar" ? "ar" : "en"] || voucher.gameType;
-  const numberLocale = language === "ar" ? "ar-EG" : "en-EG";
-  const amount = voucher.amount.toLocaleString(numberLocale);
-  const price = (voucher.price || 0).toLocaleString(numberLocale);
-  const bonus = voucher.bonus.toLocaleString(numberLocale);
+  const amount = formatGameNumber(voucher.amount, language);
+  const currentPriceValue = voucher.price || 0;
+  const originalPrice = getOriginalPrice(currentPriceValue);
+  const price = formatGameNumber(currentPriceValue, language);
+  const originalPriceLabel = formatGameNumber(originalPrice, language);
+  const bonus = formatGameNumber(voucher.bonus, language);
   const accent = gameAccent[voucher.gameType] || "#ef4059";
   const wallpaper = gameWallpapers[voucher.gameType] || "/assets/games/pubg.webp";
   const description = language === "ar" ? `${amount} ${voucher.currency} + ${bonus} هدية` : `${amount} ${voucher.currency} + ${bonus} bonus`;
@@ -72,7 +75,10 @@ export default function GameCard({ voucher }: GameCardProps) {
           <span className="package-delivery-dot" />
         </div>
         {voucher.bonus > 0 && <p className="package-bonus-line">+{bonus} {t("bonus")}</p>}
-        <div className="package-price-row"><span className="package-price package-price-large">{price} <small>{t("currency")}</small></span></div>
+        <div className="package-price-row package-price-row-discount">
+          <span className="package-price-old gaming-digits">{originalPriceLabel} <small>{t("currency")}</small></span>
+          <span className="package-price package-price-large gaming-digits">{price} <small>{t("currency")}</small></span>
+        </div>
         <div className="package-actions">
           <button onClick={handleAdd} className="package-buy-button package-buy-button-compact"><FaShoppingCart size={12} />{t("addToCart")}</button>
           <Link href={`/game/${voucher.gameType}`} className="package-view-button package-view-button-compact" aria-label={t("viewAll")}><ArrowUpRight size={15} /></Link>

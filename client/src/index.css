@@ -575,3 +575,94 @@ body {
 @media (max-width: 1050px) { .all-games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .games-catalog-hero { align-items: flex-start; flex-direction: column; } .games-catalog-count { align-items: flex-start; } .all-games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .all-games-image { height: 210px; } }
 @media (max-width: 460px) { .all-games-grid { gap: .65rem; } .all-games-image { height: 175px; } .all-games-card-copy { padding: .75rem; } .all-games-card-copy h2 { font-size: 1.1rem; } .package-card-media-compact { height: 142px; } .package-card-amount { font-size: 1.2rem; } }
+
+
+/* Unified pricing and numeric motion */
+.gaming-digits,
+.package-price,
+.package-price-old,
+.admin-price-old,
+.admin-price-current,
+.admin-stat strong {
+  font-family: 'Rajdhani', 'Arial', sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+.package-price-row-discount {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: .55rem;
+}
+
+.package-price-old,
+.admin-price-old {
+  color: #ef4444;
+  font-size: clamp(1.02rem, 2.4vw, 1.28rem);
+  font-weight: 800;
+  line-height: 1;
+  text-decoration-line: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #f87171;
+  opacity: .94;
+  animation: old-price-in .45s ease-out both;
+}
+
+.package-price-old small,
+.admin-price-old small,
+.package-price-large small {
+  font-family: 'Poppins', sans-serif;
+  font-size: .58em;
+  letter-spacing: .02em;
+}
+
+.package-price-large,
+.admin-price-current {
+  color: #fff;
+  font-size: clamp(1.45rem, 3.8vw, 2rem);
+  font-weight: 900;
+  letter-spacing: .02em;
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(244, 63, 94, .18);
+  animation: current-price-in .5s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.package-price-large small {
+  color: #fda4af;
+}
+
+.admin-price-preview {
+  display: flex;
+  align-items: baseline;
+  gap: .65rem;
+  min-height: 2rem;
+}
+
+.admin-price-current {
+  color: #fda4af;
+  font-size: 1.45rem;
+}
+
+.admin-number-motion {
+  animation: current-price-in .55s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes old-price-in {
+  from { opacity: 0; transform: translateY(4px) scale(.97); }
+  to { opacity: .94; transform: translateY(0) scale(1); }
+}
+
+@keyframes current-price-in {
+  from { opacity: 0; transform: translateY(7px) scale(.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .package-price-old,
+  .package-price-large,
+  .admin-price-old,
+  .admin-price-current,
+  .admin-number-motion { animation: none; }
+}
