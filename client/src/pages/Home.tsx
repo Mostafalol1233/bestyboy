@@ -1,345 +1,50 @@
-import { useState, useEffect, useRef } from "react";
-import { useLocation } from "wouter";
-import GameNavigation from "@/components/GameNavigation";
+import { useMemo, useState } from "react";
+import { Link } from "wouter";
+import { ArrowLeft, ArrowRight, Check, Search, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import GameSection from "@/components/GameSection";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/use-auth";
 import { useVouchers } from "@/contexts/VoucherContext";
-import AdminPanel from "@/components/AdminPanel";
-import { X, Settings, Play } from "lucide-react";
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-// Import config values - will be populated with hardcoded values for now
-const redeemCodes = {
-  admin: "00001",
-  crossfireVideo: "11111",
-  pubgVideo: "22222", 
-  freefireVideo: "33333"
-};
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const gameVideos = {
-  crossfire: "https://www.youtube.com/@Besty_Boy", 
-  pubg: "https://www.youtube.com/@Besty_Boy",
-  freefire: "https://www.youtube.com/@Besty_Boy"
-};
+const gameTypes = ["crossfire", "pubg", "freefire"];
 
 export default function Home() {
-  const [activeGame, setActiveGame] = useState<string>("crossfire");
-  const [adminPanelVisible, setAdminPanelVisible] = useState(false);
-  const [redeemCode, setRedeemCode] = useState("");
-  const [showNavigation, setShowNavigation] = useState(true);
-  const [showVideo, setShowVideo] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [videoGameType, setVideoGameType] = useState("");
-  const redeemDialogCloseRef = useRef<HTMLButtonElement>(null);
-  const videoDialogCloseRef = useRef<HTMLButtonElement>(null);
-  const [, navigate] = useLocation();
-  const { isAdmin } = useAuth();
-  const { getVouchersByGameType } = useVouchers();
-  const vouchers = getVouchersByGameType(activeGame);
-  const isLoading = false;
-  const isError = false;
-  const { toast } = useToast();
-  
-  // Add keyboard shortcuts for admin access
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // Ctrl+Shift+A to navigate to admin login page
-      if (event.ctrlKey && event.shiftKey && event.key === 'A') {
-        navigate('/admin');
-      }
-      
-      // Ctrl+Shift+P to toggle admin panel for authenticated admins
-      if (event.ctrlKey && event.shiftKey && event.key === 'P') {
-        if (isAdmin) {
-          setAdminPanelVisible(!adminPanelVisible);
-          toast({
-            title: adminPanelVisible ? "Admin Panel Closed" : "Admin Panel Opened",
-            description: adminPanelVisible 
-              ? "Admin panel has been hidden" 
-              : "Welcome to the admin panel. You can manage vouchers here.",
-            variant: "default"
-          });
-        }
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [navigate, isAdmin, adminPanelVisible]);
-
-  const toggleAdminPanel = () => {
-    if (isAdmin) {
-      setAdminPanelVisible(!adminPanelVisible);
-      toast({
-        title: adminPanelVisible ? "Admin Panel Closed" : "Admin Panel Opened",
-        description: adminPanelVisible 
-          ? "Admin panel has been hidden" 
-          : "Welcome to the admin panel. You can manage vouchers here.",
-        variant: "default"
-      });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Access Denied",
-        description: "You need admin privileges to access this panel.",
-      });
-    }
-  };
-  
-  // Handle redeem code verification
-  const handleRedeemCode = () => {
-    // Admin access code
-    if (redeemCode === redeemCodes.admin) {
-      // Close the dialog
-      if (redeemDialogCloseRef.current) {
-        redeemDialogCloseRef.current.click();
-      }
-      
-      // Navigate to admin page for login
-      navigate('/admin');
-      
-      // Notify user
-      toast({
-        title: "Code Accepted",
-        description: "Redirecting to admin login page...",
-        variant: "default"
-      });
-      
-      // Reset code
-      setRedeemCode("");
-      return;
-    }
-    
-    // Game video codes
-    if (redeemCode === redeemCodes.crossfireVideo) {
-      showGameVideo('crossfire');
-      return;
-    }
-    
-    if (redeemCode === redeemCodes.pubgVideo) {
-      showGameVideo('pubg');
-      return;
-    }
-    
-    if (redeemCode === redeemCodes.freefireVideo) {
-      showGameVideo('freefire');
-      return;
-    }
-    
-    // Invalid code
-    toast({
-      variant: "destructive",
-      title: "Invalid Code",
-      description: "The code you entered is not valid.",
-    });
-  };
-  
-  // Show game video in a dialog
-  const showGameVideo = (gameType: 'crossfire' | 'pubg' | 'freefire') => {
-    // Add animation effect to body temporarily
-    document.body.classList.add('animate-glow');
-    
-    // Play a sound effect
-    const soundEffect = new Audio('/assets/unlock.mp3');
-    soundEffect.volume = 0.3;
-    soundEffect.play().catch(() => console.log('Audio playback failed'));
-    
-    // Show loading animation for dramatic effect
-    toast({
-      title: "🔒 Secret Code Accepted!",
-      description: `Unlocking exclusive ${gameType.toUpperCase()} content...`,
-      variant: "default"
-    });
-    
-    // Wait a moment for dramatic effect before showing the video
-    setTimeout(() => {
-      // Close the redeem code dialog
-      if (redeemDialogCloseRef.current) {
-        redeemDialogCloseRef.current.click();
-      }
-      
-      // Set video details
-      setVideoGameType(gameType);
-      setVideoUrl(gameVideos[gameType]);
-      
-      // Show video dialog
-      setShowVideo(true);
-      
-      // Reset code
-      setRedeemCode("");
-      
-      // Notify user
-      toast({
-        title: "🎮 Exclusive Content Unlocked!",
-        description: `Enjoy the exclusive ${gameType.charAt(0).toUpperCase() + gameType.slice(1)} video!`,
-        variant: "default"
-      });
-      
-      // Remove body animation after a moment
-      setTimeout(() => {
-        document.body.classList.remove('animate-glow');
-      }, 3000);
-    }, 1500);
-    
-    // Videos will play until user closes the dialog
-    // No automatic timeout
-  };
+  const { vouchers } = useVouchers();
+  const { language, t } = useLanguage();
+  const [query, setQuery] = useState("");
+  const [activeGame, setActiveGame] = useState("all");
+  const DirectionIcon = language === "ar" ? ArrowLeft : ArrowRight;
+  const filtered = useMemo(() => vouchers.filter((voucher) => {
+    const matchesGame = activeGame === "all" || voucher.gameType === activeGame;
+    const haystack = `${voucher.gameType} ${voucher.currency} ${voucher.amount}`.toLowerCase();
+    return matchesGame && haystack.includes(query.toLowerCase());
+  }), [vouchers, activeGame, query]);
+  const grouped = gameTypes.map((gameType) => ({ gameType, vouchers: filtered.filter((voucher) => voucher.gameType === gameType) }));
 
   return (
-    <div className="container mx-auto px-4 py-8 relative">
-      {isAdmin && adminPanelVisible && (
-        <AdminPanel 
-          onClose={() => setAdminPanelVisible(false)}
-          gameTypes={["crossfire", "pubg", "freefire"]}
-          activeGame={activeGame}
-        />
-      )}
-      
-      {/* Settings button visible when admin is logged in */}
-      {isAdmin && (
-        <Button 
-          variant="outline" 
-          onClick={toggleAdminPanel}
-          className="fixed top-5 right-5 z-50 gaming-btn bg-purple-700 hover:bg-purple-800 shadow-glow-green flex items-center gap-2"
-        >
-          <Settings size={18} /> Admin Settings
-        </Button>
-      )}
-        
-      {/* Redeem Code Dialog */}
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button 
-            variant="outline" 
-            className="redeem-button animate-pulse shadow-glow-green"
-          >
-            🎮 REDEEM CODE
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md bg-card border-purple-800">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-orbitron text-white">Enter Redeem Code</DialogTitle>
-            <DialogDescription>
-              Enter your code to access exclusive features & videos.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <Input
-              placeholder="Enter code..."
-              className="bg-background/50 border-purple-800 font-orbitron tracking-wide text-xl text-center"
-              value={redeemCode}
-              onChange={(e) => setRedeemCode(e.target.value.trim())}
-              maxLength={5}
-            />
-            <Button 
-              className="gaming-btn w-full animate-glow" 
-              onClick={handleRedeemCode}
-            >
-              UNLOCK CONTENT
-            </Button>
-            <p className="text-xs text-center text-purple-400">Try special codes: 11111, 22222, 33333</p>
+    <div>
+      <section className="relative overflow-hidden border-b border-white/10 bg-[#090b12]">
+        <div className="hero-grid absolute inset-0 opacity-70" />
+        <div className="absolute -start-24 top-10 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" /><div className="absolute -end-24 bottom-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl" />
+        <div className="container relative grid items-center gap-10 py-20 lg:grid-cols-[1.1fr_.9fr] lg:py-28">
+          <div>
+            <span className="eyebrow"><Sparkles size={15} />{t("heroEyebrow")}</span>
+            <h1 className="mt-5 max-w-3xl font-rajdhani text-5xl font-bold leading-[.95] text-white sm:text-7xl">{t("heroTitle")}<span className="block bg-gradient-to-r from-cyan-300 via-blue-400 to-fuchsia-400 bg-clip-text text-transparent">Besty Boy</span></h1>
+            <p className="mt-6 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">{t("heroText")}</p>
+            <div className="mt-8 flex flex-wrap gap-3"><Link href="/games" className="gaming-btn inline-flex items-center gap-2">{t("shopNow")} <DirectionIcon size={17} /></Link><Link href="/offers" className="rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:text-cyan-300">{t("bestOffers")}</Link></div>
+            <div className="mt-10 flex flex-wrap gap-5 text-sm text-slate-400"><span className="flex items-center gap-2"><Zap size={16} className="text-cyan-300" />{t("instantDelivery")}</span><span className="flex items-center gap-2"><ShieldCheck size={16} className="text-fuchsia-300" />{t("securePayment")}</span><span className="flex items-center gap-2"><Check size={16} className="text-emerald-300" />{t("realSupport")}</span></div>
           </div>
-          <DialogClose ref={redeemDialogCloseRef} className="hidden" />
-        </DialogContent>
-      </Dialog>
-      
-      {/* Game Video Dialog */}
-      {showVideo && (
-        <Dialog open={showVideo} onOpenChange={setShowVideo}>
-          <DialogContent className="sm:max-w-2xl sm:max-h-screen bg-black border-purple-800 p-0 overflow-hidden animate-fadeIn">
-            <DialogHeader className="p-4 bg-gradient-to-r from-black to-purple-900/50">
-              <DialogTitle className="text-xl font-orbitron text-white flex items-center animate-pulse">
-                <Play className="mr-2 text-red-500" /> 
-                Exclusive {videoGameType.charAt(0).toUpperCase() + videoGameType.slice(1)} Gaming Content
-              </DialogTitle>
-            </DialogHeader>
-            <div className="w-full h-[56.25vw] max-h-[calc(90vh-6rem)] bg-black flex items-center justify-center animate-fadeIn">
-              {/* Extract YouTube video ID only to completely hide the URL */}
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src={`https://www.youtube.com/embed/${videoUrl.split('v=')[1].split('&')[0]}?autoplay=1&rel=0&modestbranding=1&controls=1&showinfo=0&mute=0`} 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                title={`${videoGameType} Video`}
-                className="animate-fadeIn"
-                style={{ pointerEvents: 'auto' }}
-              ></iframe>
-            </div>
-            <div className="p-4 flex justify-end">
-              <Button 
-                className="gaming-btn bg-red-600 hover:bg-red-700 animate-bounce" 
-                onClick={() => setShowVideo(false)}
-              >
-                Close Video
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
-      
-      {showNavigation && (
-        <GameNavigation 
-          activeGame={activeGame}
-          setActiveGame={setActiveGame}
-          toggleAdminPanel={toggleAdminPanel}
-          isAdmin={isAdmin}
-          isOpen={showNavigation}
-          setIsOpen={setShowNavigation}
-        />
-      )}
-      
-      {!showNavigation && (
-        <Button 
-          variant="ghost" 
-          className="mb-4 text-purple-400 hover:text-purple-300 hover:bg-purple-900/20"
-          onClick={() => setShowNavigation(true)}
-        >
-          Show Game Navigation
-        </Button>
-      )}
-
-      <GameSection 
-        gameType={activeGame}
-        vouchers={vouchers || []}
-        isLoading={isLoading}
-      />
-      
-      {/* Featured Gaming Character - Only visible on desktop */}
-      {!adminPanelVisible && (
-        <div className="fixed bottom-0 right-0 md:right-10 z-10 hidden md:block relative">
-          <button 
-            onClick={() => {
-              document.getElementById('characterImage')?.classList.add('hidden');
-            }}
-            className="absolute top-0 right-0 bg-red-600 rounded-full w-8 h-8 flex items-center justify-center 
-                      cursor-pointer z-20 shadow-lg transform translate-x-4 -translate-y-4"
-            aria-label="Close character image"
-          >
-            <X size={18} className="text-white" />
-          </button>
-          <img 
-            id="characterImage"
-            src={`${window.location.origin}/attached_assets/image_1747412665992.png`}
-            alt="Besty Boy Logo" 
-            className="h-72 w-auto object-contain pointer-events-none"
-          />
+          <div className="relative mx-auto w-full max-w-md"><div className="absolute inset-5 rounded-[2.5rem] bg-gradient-to-br from-cyan-400/20 to-fuchsia-500/20 blur-2xl" /><div className="relative overflow-hidden rounded-[2.5rem] border border-cyan-300/20 bg-white/[0.04] p-4 shadow-2xl shadow-cyan-500/10"><img src="/attached_assets/image_1747413124482.png" alt="Besty Boy gaming" className="h-80 w-full rounded-[2rem] object-cover opacity-90" /><div className="absolute inset-x-8 bottom-8 rounded-2xl border border-white/10 bg-[#0b0e17]/85 p-4 backdrop-blur"><div className="flex items-center justify-between"><div><span className="text-xs text-cyan-300">BESTY BOY MARKET</span><p className="mt-1 font-rajdhani text-2xl font-bold text-white">Ready for your next match?</p></div><span className="brand-mark"><Zap size={18} /></span></div></div></div></div>
         </div>
-      )}
+      </section>
+
+      <section className="container py-12">
+        <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><span className="eyebrow">{t("games")}</span><h2 className="mt-2 font-rajdhani text-4xl font-bold text-white">{t("popularGames")}</h2></div><Link href="/games" className="text-sm font-semibold text-cyan-300">{t("viewAll")} <DirectionIcon className="inline" size={15} /></Link></div>
+        <div className="grid gap-4 md:grid-cols-3">{gameTypes.map((gameType) => <Link key={gameType} href={`/game/${gameType}`} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-cyan-300/[0.05]"><div className="mb-5 flex items-center justify-between"><span className="rounded-xl bg-cyan-300/10 p-3 text-cyan-300"><Sparkles size={22} /></span><DirectionIcon size={18} className="text-slate-500 transition group-hover:text-cyan-300" /></div><h3 className="font-rajdhani text-2xl font-bold text-white">{gameType === "crossfire" ? "CrossFire" : gameType === "pubg" ? "PUBG Mobile" : "Free Fire"}</h3><p className="mt-1 text-sm text-slate-400">{vouchers.filter((voucher) => voucher.gameType === gameType).length} {t("card")}</p></Link>)}</div>
+      </section>
+
+      <section className="container pb-8"><div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 md:flex-row md:items-center"><div className="relative flex-1"><Search className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("searchPlaceholder")} className="w-full rounded-xl border border-white/10 bg-[#0d1019] py-3 ps-11 pe-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300/40" /></div><div className="flex gap-2 overflow-auto"><button onClick={() => setActiveGame("all")} className={`filter-chip ${activeGame === "all" ? "filter-chip-active" : ""}`}>{t("allGames")}</button>{gameTypes.map((gameType) => <button key={gameType} onClick={() => setActiveGame(gameType)} className={`filter-chip ${activeGame === gameType ? "filter-chip-active" : ""}`}>{gameType}</button>)}</div></div></section>
+
+      <section className="container space-y-8 pb-16">{grouped.map(({ gameType, vouchers: gameVouchers }) => <GameSection key={gameType} gameType={gameType} vouchers={gameVouchers} compact={activeGame !== "all"} />)}</section>
     </div>
   );
 }

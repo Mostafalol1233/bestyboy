@@ -1,119 +1,37 @@
-import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { FormEvent, useMemo, useState } from "react";
+import { BarChart3, ClipboardList, Database, Download, LogIn, Package, Percent, Save, Settings, ShoppingBag, Users, X } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getOrders, saveOrders, Order } from "@/contexts/CartContext";
+import { useVouchers } from "@/contexts/VoucherContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { apiRequest } from "@/lib/queryClient";
 
-const loginSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
+const sections = ["overview", "manageCards", "manageOrders", "customers", "coupons", "settings", "backup"] as const;
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+type Section = typeof sections[number];
 
 export default function Admin() {
-  const [, navigate] = useLocation();
-  const { isAuthenticated, isAdmin, login, user } = useAuth();
+  const { isAuthenticated, isAdmin, login, logout, isLoading } = useAuth();
+  const { vouchers, updateVoucher } = useVouchers();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
+  const [section, setSection] = useState<Section>("overview");
+  const [orders, setOrders] = useState<Order[]>(getOrders);
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [coupon, setCoupon] = useState("");
 
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
+  if (!isAuthenticated || !isAdmin) return <LoginView loginData={loginData} setLoginData={setLoginData} onLogin={async (event) => { event.preventDefault(); try { await login(loginData); } catch (error: any) { toast({ variant: "destructive", title: t("adminLogin"), description: error.message || t("loginHint") }); } }} isLoading={isLoading} t={t} />;
 
-  useEffect(() => {
-    if (isAuthenticated && isAdmin) {
-      navigate("/");
-      toast({
-        title: "Already authenticated",
-        description: "You're already logged in as an admin.",
-      });
-    } else if (isAuthenticated && !isAdmin) {
-      toast({
-        variant: "destructive",
-        title: "Access Denied",
-        description: "You don't have admin privileges.",
-      });
-      navigate("/");
-    }
-  }, [isAuthenticated, isAdmin, navigate, toast]);
+  const revenue = orders.filter((order) => order.status !== "cancelled").reduce((sum, order) => sum + order.total, 0);
+  const updateStatus = (id: string, status: Order["status"]) => { const next = orders.map((order) => order.id === id ? { ...order, status } : order); setOrders(next); saveOrders(next); toast({ title: t("save") }); };
+  const downloadBackup = () => { const blob = new Blob([JSON.stringify({ vouchers, orders, exportedAt: new Date().toISOString() }, null, 2)], { type: "application/json" }); const url = URL.createObjectURL(blob); const anchor = document.createElement("a"); anchor.href = url; anchor.download = `bestyboy-backup-${new Date().toISOString().slice(0, 10)}.json`; anchor.click(); URL.revokeObjectURL(url); };
 
-  const onSubmit = async (data: LoginFormValues) => {
-    try {
-      await login(data);
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Login failed",
-        description: error.message || "Invalid credentials. Please try again.",
-      });
-    }
-  };
-
-  return (
-    <div className="container mx-auto py-10 flex justify-center items-center min-h-[80vh]">
-      <Card className="w-full max-w-md border border-purple-900 shadow-[0_0_25px_rgba(124,58,237,0.15)]">
-        <CardHeader>
-          <CardTitle className="font-orbitron text-3xl text-center neon-text">
-            <span className="text-purple-500">Besty</span>
-            <span className="text-red-500">Boy</span>
-          </CardTitle>
-          <CardDescription className="text-center flex items-center justify-center gap-2">
-            <span className="bg-purple-500/20 p-1 rounded">🔒</span> Admin Access
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="admin" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full gaming-btn" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Logging in..." : "Login"}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <p className="text-sm text-purple-500">
-            Please enter your admin credentials
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
-  );
+  return <div className="container py-10"><div className="mb-8 flex flex-wrap items-center justify-between gap-4"><div><span className="eyebrow"><Settings size={15} />{t("admin")}</span><h1 className="mt-2 font-rajdhani text-4xl font-bold text-white">{t("adminDashboard")}</h1></div><Button variant="outline" onClick={logout} className="border-white/15 text-slate-300">{t("logout")}</Button></div><div className="grid gap-6 lg:grid-cols-[220px_1fr]"><aside className="h-fit rounded-2xl border border-white/10 bg-white/[0.03] p-3"><nav className="grid gap-1">{sections.map((item) => <button key={item} onClick={() => setSection(item)} className={`admin-nav ${section === item ? "admin-nav-active" : ""}`}>{item === "overview" ? <BarChart3 size={17} /> : item === "manageCards" ? <Package size={17} /> : item === "manageOrders" ? <ClipboardList size={17} /> : item === "customers" ? <Users size={17} /> : item === "coupons" ? <Percent size={17} /> : item === "backup" ? <Database size={17} /> : <Settings size={17} />}{t(item)}</button>)}</nav></aside><section>{section === "overview" && <Overview revenue={revenue} vouchers={vouchers.length} orders={orders} t={t} />}{section === "manageCards" && <Cards vouchers={vouchers} updateVoucher={updateVoucher} t={t} />}{section === "manageOrders" && <Orders orders={orders} updateStatus={updateStatus} t={t} language={language} />}{section === "customers" && <div className="admin-panel-card"><Users className="text-cyan-300" /><h2 className="admin-heading">{t("customers")}</h2><p className="text-slate-400">{new Set(orders.map((order) => order.email)).size} {t("customers")}</p></div>}{section === "coupons" && <div className="admin-panel-card"><Percent className="text-fuchsia-300" /><h2 className="admin-heading">{t("coupons")}</h2><div className="mt-5 flex max-w-md gap-2"><Input value={coupon} onChange={(event) => setCoupon(event.target.value.toUpperCase())} placeholder="WELCOME10" className="field-input" /><Button className="gaming-btn" onClick={() => toast({ title: t("save"), description: coupon || "WELCOME10" })}>{t("save")}</Button></div></div>}{section === "settings" && <div className="admin-panel-card"><Settings className="text-cyan-300" /><h2 className="admin-heading">{t("settings")}</h2><p className="text-slate-400">{t("deliveryNote")}</p><Button className="gaming-btn mt-5" onClick={() => toast({ title: t("save") })}><Save size={16} />{t("save")}</Button></div>}{section === "backup" && <div className="admin-panel-card"><Database className="text-emerald-300" /><h2 className="admin-heading">{t("backup")}</h2><p className="text-slate-400">{language === "ar" ? "نزّل نسخة من المنتجات والطلبات الحالية للاحتفاظ بها." : "Download a copy of the current products and orders."}</p><Button className="gaming-btn mt-5" onClick={downloadBackup}><Download size={16} />{t("backup")}</Button></div>}</section></div></div>;
 }
+
+function LoginView({ loginData, setLoginData, onLogin, isLoading, t }: any) { return <div className="container flex min-h-[70vh] items-center justify-center py-12"><form onSubmit={onLogin} className="w-full max-w-md rounded-[2rem] border border-cyan-300/20 bg-white/[0.04] p-8 shadow-2xl shadow-cyan-500/10"><div className="mb-8 text-center"><span className="brand-mark"><LogIn /></span><h1 className="mt-4 font-rajdhani text-4xl font-bold text-white">{t("adminLogin")}</h1><p className="mt-2 text-sm text-slate-400">{t("loginHint")}</p></div><label className="field-label">{t("username")}<Input required value={loginData.username} onChange={(e) => setLoginData({ ...loginData, username: e.target.value })} className="field-input" placeholder="admin" /></label><label className="field-label mt-4">{t("password")}<Input required type="password" value={loginData.password} onChange={(e) => setLoginData({ ...loginData, password: e.target.value })} className="field-input" placeholder="••••••••" /></label><Button type="submit" disabled={isLoading} className="gaming-btn mt-6 w-full">{t("login")}</Button></form></div>; }
+function Overview({ revenue, vouchers, orders, t }: any) { const cards = [[Package, t("totalProducts"), vouchers, "text-cyan-300"], [ShoppingBag, t("totalOrders"), orders.length, "text-fuchsia-300"], [BarChart3, t("totalRevenue"), `${revenue.toLocaleString()} ${t("currency")}`, "text-emerald-300"], [ClipboardList, t("pendingOrders"), orders.filter((order: Order) => order.status === "pending").length, "text-amber-300"]]; return <div><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{cards.map(([Icon, label, value, color]) => <div key={label as string} className="admin-stat"><Icon className={color as string} size={22} /><span>{label as string}</span><strong>{value as any}</strong></div>)}</div><div className="admin-panel-card mt-6"><h2 className="admin-heading">{t("manageOrders")}</h2>{orders.length === 0 ? <p className="text-slate-400">{t("noOrders")}</p> : orders.slice(0, 5).map((order: Order) => <div key={order.id} className="flex flex-wrap justify-between gap-3 border-b border-white/10 py-4 text-sm"><span className="font-orbitron text-cyan-300">{order.id}</span><span className="text-slate-400">{order.email}</span><span className="text-white">{order.total.toLocaleString()} {t("currency")}</span></div>)}</div></div>; }
+function Cards({ vouchers, updateVoucher, t }: any) { return <div className="admin-panel-card"><h2 className="admin-heading">{t("manageCards")}</h2><div className="mt-5 space-y-3">{vouchers.map((voucher: any) => <div key={voucher.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4"><div><p className="font-semibold text-white">{voucher.gameType} — {voucher.amount.toLocaleString()} {voucher.currency}</p><p className="text-xs text-slate-500">{t("bonus")}: {voucher.bonus.toLocaleString()}</p></div><label className="flex items-center gap-2 text-sm text-slate-400">{t("currency")}<Input type="number" defaultValue={voucher.price} onBlur={(e) => updateVoucher(voucher.id, { price: Number(e.target.value) })} className="w-28 border-white/10 bg-black/20 text-white" /></label></div>)}</div></div>; }
+function Orders({ orders, updateStatus, t, language }: any) { return <div className="admin-panel-card"><h2 className="admin-heading">{t("manageOrders")}</h2>{orders.length === 0 ? <p className="text-slate-400">{t("noOrders")}</p> : <div className="mt-5 space-y-3">{orders.map((order: Order) => <div key={order.id} className="rounded-xl border border-white/10 p-4"><div className="flex flex-wrap justify-between gap-3"><span className="font-orbitron text-cyan-300">{order.id}</span><span className="text-xs text-slate-500">{new Date(order.createdAt).toLocaleString(language === "ar" ? "ar-EG" : "en-EG")}</span></div><div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm"><span className="text-slate-300">{order.email} · {order.playerId}</span><strong className="text-white">{order.total.toLocaleString()} {t("currency")}</strong><select value={order.status} onChange={(e) => updateStatus(order.id, e.target.value)} className="rounded-lg border border-white/10 bg-[#0d1019] px-3 py-2 text-white"><option value="pending">{t("pending")}</option><option value="paid">{t("paid")}</option><option value="delivered">{t("delivered")}</option><option value="cancelled">{t("cancelled")}</option></select></div></div>)}</div>}</div>; }

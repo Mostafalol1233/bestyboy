@@ -1,108 +1,33 @@
-import { useMemo } from "react";
+import { Link } from "wouter";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { Voucher } from "@shared/schema";
 import GameCard from "@/components/GameCard";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-// Game background images
-const baseUrl = window.location.origin;
-const gameBackgrounds = {
-  crossfire: `${baseUrl}/attached_assets/FB_IMG_1747248207377.jpg`,
-  pubg: `${baseUrl}/attached_assets/images(5).jpg`,
-  freefire: `${baseUrl}/attached_assets/FB_IMG_1747248882099.jpg`
+interface GameSectionProps { gameType: string; vouchers: Voucher[]; isLoading?: boolean; compact?: boolean; }
+
+const gameMeta: Record<string, { title: string; titleAr: string; description: string; descriptionAr: string; color: string; image: string }> = {
+  crossfire: { title: "CrossFire vouchers", titleAr: "بطاقات كروس فاير", description: "ZP vouchers with bonus points for every loadout.", descriptionAr: "بطاقات زد بي مع نقاط إضافية لكل عملية شحن.", color: "#22d3ee", image: "/attached_assets/image_1747413124482.png" },
+  pubg: { title: "PUBG Mobile UC", titleAr: "شدات ببجي موبايل", description: "Get UC quickly and keep your squad ready for the next match.", descriptionAr: "اشحن شداتك بسرعة واستعد للمباراة القادمة.", color: "#fbbf24", image: "/attached_assets/image_1747413124482.png" },
+  freefire: { title: "Free Fire diamonds", titleAr: "جواهر فري فاير", description: "Diamonds for skins, bundles and your next victory.", descriptionAr: "جواهر للسكنات والباقات وانتصارك القادم.", color: "#fb7185", image: "/attached_assets/image_1747413124482.png" },
 };
 
-// Game section titles
-const gameTitles = {
-  crossfire: {
-    main: "CrossFire",
-    accent: "Vouchers",
-    color: "text-red-500"
-  },
-  pubg: {
-    main: "PUBG Mobile",
-    accent: "Vouchers",
-    color: "text-yellow-500"
-  },
-  freefire: {
-    main: "Free Fire",
-    accent: "Vouchers",
-    color: "text-green-500"
-  }
-};
-
-// Buy button color by game type - Now using gaming-btn class
-
-interface GameSectionProps {
-  gameType: string;
-  vouchers: Voucher[];
-  isLoading: boolean;
-}
-
-export default function GameSection({ 
-  gameType, 
-  vouchers,
-  isLoading
-}: GameSectionProps) {
-  const { main, accent, color } = useMemo(() => 
-    gameTitles[gameType as keyof typeof gameTitles] || gameTitles.crossfire,
-    [gameType]
-  );
-  
-  const background = useMemo(() => 
-    gameBackgrounds[gameType as keyof typeof gameBackgrounds] || gameBackgrounds.crossfire,
-    [gameType]
-  );
-  
-  // We're now using the gaming-btn class instead of custom button styles
-  const buttonStyle = "";
-
+export default function GameSection({ gameType, vouchers, isLoading, compact }: GameSectionProps) {
+  const { language, t } = useLanguage();
+  const meta = gameMeta[gameType] || gameMeta.crossfire;
+  const BackIcon = language === "ar" ? ArrowLeft : ArrowRight;
   return (
-    <section className="game-section mb-10">
-      {/* Game Hero Banner */}
-      <div className="game-bg rounded-xl overflow-hidden mb-8 relative h-48 md:h-64 shadow-[0_0_15px_rgba(124,58,237,0.5)] border border-purple-900">
-        <img 
-          src="/attached_assets/image_1747413124482.png" 
-          alt={`${main} game background`} 
-          className="w-full h-full object-contain bg-gradient-to-r from-pink-500 to-blue-500"
-          style={{ imageRendering: 'high-quality', maxWidth: '100%' }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center z-10">
-          <h2 className="text-3xl md:text-6xl font-orbitron font-bold text-white text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            {main} <span className={color + " neon-text"}>{accent}</span>
-          </h2>
+    <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#10131d] p-5 shadow-2xl shadow-cyan-500/5 sm:p-8">
+      {!compact && <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url(${meta.image})`, backgroundSize: "cover", backgroundPosition: "center" }} />}
+      <div className="relative">
+        <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+          <div><span className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: meta.color }}><Sparkles size={14} />{t("games")}</span><h2 className="font-rajdhani text-3xl font-bold text-white sm:text-4xl">{language === "ar" ? meta.titleAr : meta.title}</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">{language === "ar" ? meta.descriptionAr : meta.description}</p></div>
+          {!compact && <Link href={`/game/${gameType}`} className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-white">{t("viewAll")} <BackIcon size={16} /></Link>}
         </div>
-      </div>
-      
-      {/* Game Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {isLoading ? (
-          // Loading skeletons
-          Array(3).fill(0).map((_, index) => (
-            <div key={`skeleton-${index}`} className="game-card">
-              <Skeleton className="h-40 w-full" />
-              <div className="p-4">
-                <Skeleton className="h-6 w-3/4 mb-2 mx-auto" />
-                <Skeleton className="h-4 w-5/6 mb-4 mx-auto" />
-                <Skeleton className="h-10 w-full rounded-lg" />
-              </div>
-            </div>
-          ))
-        ) : vouchers.length > 0 ? (
-          // Actual voucher cards
-          vouchers.map((voucher) => (
-            <GameCard 
-              key={voucher.id}
-              voucher={voucher}
-              buttonStyle={buttonStyle}
-            />
-          ))
-        ) : (
-          // No vouchers found
-          <div className="col-span-full text-center py-10">
-            <h3 className="text-xl font-medium text-gray-400">No vouchers available for this game.</h3>
-          </div>
-        )}
+        {isLoading ? <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"><div className="h-80 animate-pulse rounded-2xl bg-white/5" /><div className="h-80 animate-pulse rounded-2xl bg-white/5" /><div className="h-80 animate-pulse rounded-2xl bg-white/5" /></div> : vouchers.length === 0 ? <div className="rounded-2xl border border-dashed border-white/15 p-10 text-center text-slate-400">{t("noOrders")}</div> : <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{vouchers.map((voucher) => <GameCard key={voucher.id} voucher={voucher} />)}</div>}
       </div>
     </section>
   );
 }
+
+export { gameMeta };

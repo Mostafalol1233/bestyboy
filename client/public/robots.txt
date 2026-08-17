@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bestyboy-gamma.vercel.app/sitemap.xml
