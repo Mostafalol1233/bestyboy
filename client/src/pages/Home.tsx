@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const gameImages: Record<string, string> = {
-  crossfire: "/assets/games/crossfire-generated.jpg",
-  pubg: "/assets/games/pubg-generated.jpg",
-  freefire: "/assets/games/freefire-generated.jpg",
-  codm: "/assets/games/codm-generated.jpg",
-  mobilelegends: "/assets/games/mobilelegends-generated.jpg",
-  valorant: "/assets/games/valorant-generated.jpg",
-  roblox: "/assets/games/roblox-generated.jpg",
-  fcmobile: "/assets/games/fcmobile-generated.jpg",
+  crossfire: "/assets/games/crossfire.webp",
+  pubg: "/assets/games/pubg.webp",
+  freefire: "/assets/games/freefire.webp",
+  codm: "/assets/games/codm.webp",
+  mobilelegends: "/assets/games/mobilelegends.webp",
+  valorant: "/assets/games/valorant.jpg",
+  roblox: "/assets/games/roblox.jpg",
+  fcmobile: "/assets/games/fcmobile.webp",
 };
 
 const games = [
